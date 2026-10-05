@@ -4,6 +4,31 @@ import PublicForm from './PublicForm.jsx'
 import PrintRecord from './PrintRecord.jsx'
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+const ADMIN_SESSION_MS = 60 * 60 * 1000
+const clearStoredAdminSession = () => {
+  localStorage.removeItem('adminToken')
+  localStorage.removeItem('adminLoginAt')
+  localStorage.removeItem('adminExpiresAt')
+}
+const getStoredAdminToken = () => {
+  if (typeof window === 'undefined') return ''
+  const storedToken = localStorage.getItem('adminToken')
+  const expiresAt = Number(localStorage.getItem('adminExpiresAt'))
+  if (!storedToken || !Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
+    clearStoredAdminSession()
+    return ''
+  }
+  return storedToken
+}
+const getJwtExpiry = token => {
+  try {
+    const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const paddedPayload = payload.padEnd(Math.ceil(payload.length / 4) * 4, '=')
+    return JSON.parse(atob(paddedPayload)).exp * 1000
+  } catch {
+    return Date.now() + ADMIN_SESSION_MS
+  }
+}
 const initialMemberCount = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches ? 1 : 4
 const blankMember = () => ({ nameAddress: '', phoneNumber: '', gender: '', age: '', maritalStatus: '', education: '', workDetails: '', centralGovernment: false, stateGovernment: false, private: false, villageName: '', name: '', temples: '', templeBoard: '', temporaryAddress: '', taxPayingVillage: '', familyAnnualIncome: '' })
 const blankFamily = () => ({ familyHeadName: '', pitagaiName: '', villageName: '', localBody: '', townPanchayat: '', municipality: '', corporation: '', district: '', wardNumber: '', postOffice: '', postalCode: '', revenueVillage: '', division: '', circle: '', assemblyConstituency: '', parliamentConstituency: '', wardSerial: '', phoneNumber: '', members: Array.from({ length: initialMemberCount() }, blankMember) })
@@ -38,7 +63,8 @@ function App() {
   const [family, setFamily] = useState(blankFamily())
   const [notice, setNotice] = useState('')
   const [error, setError] = useState('')
-  const [token, setToken] = useState(localStorage.getItem('adminToken') || '')
+  const [token, setToken] = useState(() => getStoredAdminToken())
+  const [validatedToken, setValidatedToken] = useState('')
   const [records, setRecords] = useState([])
   const [selected, setSelected] = useState(null)
   const [login, setLogin] = useState({ username: '', password: '' })
@@ -57,6 +83,70 @@ function App() {
   const withSnackbar = content => <>{content}<Snackbar message={snackbarMessage} variant={snackbarVariant} onClose={clearAlerts} /></>
   const go = (url) => { history.pushState({}, '', url); setPath(url); setNotice(''); setError('') }
   useEffect(() => { const onPop = () => setPath(location.pathname); addEventListener('popstate', onPop); return () => removeEventListener('popstate', onPop) }, [])
+  useEffect(() => {
+    if (!path.startsWith('/admin')) return
+    const storedToken = getStoredAdminToken()
+    if (!storedToken) {
+      if (token) setToken('')
+      if (path !== '/admin/login') {
+        history.replaceState({}, '', '/admin/login')
+        setPath('/admin/login')
+      }
+      return
+    }
+    if (storedToken !== token) setToken(storedToken)
+    let target = path
+    if (path === '/admin' || path === '/admin/login' || path === '/admin/records') target = '/admin/dashboard'
+    else if (path.startsWith('/admin/records/')) target = `/admin/dashboard/${path.slice('/admin/records/'.length)}`
+    else if (path !== '/admin/dashboard' && !path.startsWith('/admin/dashboard/') && !/^\/admin\/edit\/[^/]+$/.test(path)) target = '/admin/dashboard'
+    if (target !== path) {
+      history.replaceState({}, '', target)
+      setPath(target)
+    }
+  }, [path, token])
+  const expireAdminSession = useCallback(() => {
+    clearStoredAdminSession()
+    setToken('')
+    setValidatedToken('')
+    setRecords([])
+    setSelected(null)
+    clearAlerts()
+    if (location.pathname.startsWith('/admin') && location.pathname !== '/admin/login') {
+      history.replaceState({}, '', '/admin/login')
+      setPath('/admin/login')
+    }
+  }, [clearAlerts])
+  useEffect(() => {
+    if (!token) return
+    const expiresAt = Number(localStorage.getItem('adminExpiresAt'))
+    const remaining = expiresAt - Date.now()
+    if (!Number.isFinite(expiresAt) || remaining <= 0) {
+      expireAdminSession()
+      return
+    }
+    const timer = window.setTimeout(expireAdminSession, remaining)
+    const recheck = () => { if (!getStoredAdminToken()) expireAdminSession() }
+    window.addEventListener('focus', recheck)
+    document.addEventListener('visibilitychange', recheck)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('focus', recheck)
+      document.removeEventListener('visibilitychange', recheck)
+    }
+  }, [token, expireAdminSession])
+  useEffect(() => {
+    if (!token) {
+      setValidatedToken('')
+      return
+    }
+    let active = true
+    request('/admin/me', { token }).then(() => {
+      if (active) setValidatedToken(token)
+    }).catch(() => {
+      if (active) expireAdminSession()
+    })
+    return () => { active = false }
+  }, [token, expireAdminSession])
   const loadRecords = useCallback(async () => {
     if (recordsRequest.current) return
     recordsRequest.current = true
@@ -71,12 +161,12 @@ function App() {
       setRecordsLoading(false)
     }
   }, [token])
-  useEffect(() => { if (token && path.startsWith('/admin')) loadRecords() }, [token, path, loadRecords])
+  useEffect(() => { if (token && validatedToken === token && path.startsWith('/admin')) loadRecords() }, [token, validatedToken, path, loadRecords])
   useEffect(() => {
-    if (!token || path !== '/admin/dashboard') return
+    if (!token || validatedToken !== token || path !== '/admin/dashboard') return
     const timer = window.setInterval(() => loadRecords(), 10000)
     return () => window.clearInterval(timer)
-  }, [token, path, loadRecords])
+  }, [token, validatedToken, path, loadRecords])
   const update = (key, value) => setFamily(prev => ({ ...prev, [key]: value }))
   const updateMember = (index, key, value) => setFamily(prev => ({ ...prev, members: prev.members.map((m, i) => i === index ? { ...m, [key]: value } : m) }))
   const submitFamily = async (e) => {
@@ -110,7 +200,11 @@ function App() {
       const data = await request('/admin/login', { method: 'POST', body: JSON.stringify(login) })
       const t = data.token
       setToken(t)
+      const loginAt = Date.now()
+      const expiresAt = getJwtExpiry(t)
       localStorage.setItem('adminToken', t)
+      localStorage.setItem('adminLoginAt', String(loginAt))
+      localStorage.setItem('adminExpiresAt', String(expiresAt))
       go('/admin/dashboard')
       setNotice('நிர்வாகி உள்நுழைவு வெற்றிகரமாக முடிந்தது.')
     } catch (e) {
@@ -119,13 +213,26 @@ function App() {
       setLoginLoading(false)
     }
   }
-  const logout = () => { localStorage.removeItem('adminToken'); setToken(''); go('/admin/login') }
+  const logout = () => {
+    clearStoredAdminSession()
+    setToken('')
+    setValidatedToken('')
+    setRecords([])
+    setSelected(null)
+    history.replaceState({}, '', '/admin/login')
+    setPath('/admin/login')
+    clearAlerts()
+  }
   const deleteRecord = async (id) => { if (!confirm('இந்த குடும்பப் பதிவை நீக்க வேண்டுமா?')) return; try { await request(`/families/${id}`, { method: 'DELETE', token }); await loadRecords(); setNotice('பதிவு வெற்றிகரமாக நீக்கப்பட்டது.') } catch (e) { setError(tamilApiError(e)) } }
   const filtered = useMemo(() => records.filter(r => `${r.familyHeadName} ${r.villageName} ${r.district} ${r.phoneNumber}`.toLowerCase().includes(query.toLowerCase()) && (!district || r.district === district) && (!village || r.villageName === village)).sort((a,b) => sort === 'newest' ? new Date(b.createdAt)-new Date(a.createdAt) : new Date(a.createdAt)-new Date(b.createdAt)), [records, query, district, village, sort])
   const pageSize = 8, pages = Math.max(1, Math.ceil(filtered.length/pageSize)), rows = filtered.slice((page-1)*pageSize, page*pageSize)
   const totals = { members: records.reduce((n, r) => n + (r.members?.length || 0), 0), today: records.filter(r => new Date(r.createdAt).toDateString() === new Date().toDateString()).length }
+  if (path === '/admin/login' && token) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> அமர்வு சரிபார்க்கப்படுகிறது...</div></main>)
   if (path === '/admin/login') return withSnackbar(<main className="login-wrap"><form className="login-card" onSubmit={doLogin}><div className="seal">◈</div><p className="eyebrow">குடும்பப் பதிவு மேலாண்மை</p><h1>நிர்வாகி உள்நுழைவு</h1><label>பயனர் பெயர்<input autoComplete="username" value={login.username} onChange={e=>setLogin({...login,username:e.target.value})} required /></label><label>கடவுச்சொல்<input type="password" autoComplete="current-password" value={login.password} onChange={e=>setLogin({...login,password:e.target.value})} required /></label><button className="primary full" disabled={loginLoading}>{loginLoading && <span className="button-spinner" aria-hidden="true" />} {loginLoading ? "உள்நுழைகிறது..." : "உள்நுழைக"} {!loginLoading && <span>→</span>}</button><button type="button" className="text-button" onClick={()=>go('/')}>← பதிவு படிவத்திற்குத் திரும்பு</button></form></main>)
-  if (path.startsWith('/admin') && !token) return withSnackbar(<main className="login-wrap"><div className="login-card"><h1>நிர்வாக அணுகல் தேவை</h1><p>இந்தப் பக்கத்தைப் பார்க்க நிர்வாகியாக உள்நுழையவும்.</p><button className="primary full" onClick={()=>go('/admin/login')}>உள்நுழைவு பக்கம்</button></div></main>)
+  if (path === '/admin/login' && token && validatedToken !== token) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> அமர்வு சரிபார்க்கப்படுகிறது...</div></main>)
+  if (path === '/admin/login' && token) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> நிர்வாகப் பக்கத்திற்கு மாற்றப்படுகிறது...</div></main>)
+  if (path.startsWith('/admin') && (!token || validatedToken !== token)) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> உள்நுழைவு பக்கத்திற்கு மாற்றப்படுகிறது...</div></main>)
+  if (path.startsWith('/admin') && path !== '/admin/dashboard' && !path.startsWith('/admin/dashboard/') && !/^\/admin\/edit\/[^/]+$/.test(path)) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> நிர்வாகப் பக்கம் திறக்கப்படுகிறது...</div></main>)
   if (path === '/admin/dashboard' || path.startsWith('/admin/dashboard')) {
     const id = path.split('/')[3]; const record = selected || records.find(r => r._id === id)
     if (id && record) return withSnackbar(<><header className="admin-top no-print"><button className="brand" onClick={()=>go('/admin/dashboard')}><span className="mini-seal">◈</span> குடும்பப் பதிவேடு</button><div><button className="quiet" onClick={()=>printWithMemberName(record.members,record.familyHeadName)}>அச்சிடு ↗</button><button className="quiet" onClick={()=>go('/admin/dashboard')}>பதிவுகள்</button><button className="quiet" onClick={logout}>வெளியேறு</button></div></header><PrintRecord record={record} /></>)
