@@ -25,16 +25,19 @@ function MemberInput({field,member,index,updateMember}) {
  if(field==='temporaryAddress') return <textarea className="cell-input member-address" aria-label={memberRows.find(([key])=>key===field)?.[1]} value={member[field]||''} onChange={e=>updateMember(index,field,e.target.value)}/>
  return <input className="cell-input" aria-label={memberRows.find(([key])=>key===field)?.[1]} value={member[field]||''} onChange={e=>updateMember(index,field,e.target.value)}/>
 }
-export default function PublicForm({family,setFamily,update,updateMember,submitFamily,go,notice,error}) {
+export default function PublicForm({family,setFamily,update,updateMember,submitFamily,submitting,printDocument,go,notice,error}) {
  const addRow=()=>setFamily(current=>({...current,members:[...current.members,makeMember()]}))
  const removeRow=index=>setFamily(current=>({...current,members:current.members.length>1?current.members.filter((_,i)=>i!==index):current.members}))
  return <main className="reference-page"><div className="reference-scroll"><form className="reference-sheet" onSubmit={submitFamily}>
   <header className="reference-title"><h1>கிருஷ்ணன் வக சமுதாய பிடாகைகளின் மக்கள் தொகை கணக்கு - (ஒரு குடும்பத்திற்கு ஒரு படிவம்)</h1></header>
   <section className="reference-meta" aria-label="குடும்ப விவரங்கள்">{groups.map((group,gi)=><div className="reference-info-block" key={gi}>{group.map(([key,label])=><label className={`reference-field field-${key}`} key={key}><span>{label}{['pitagaiName','villageName','district'].includes(key)&&<b> *</b>}</span><input value={family[key]||''} onChange={e=>update(key,e.target.value)} required={['pitagaiName','villageName','district'].includes(key)}/></label>)}</div>)}</section>
   <section className="reference-table-scroll" aria-label="குடும்ப உறுப்பினர் விவரங்கள்"><table className="reference-table member-reference-table"><colgroup><col className="col-number"/>{memberRows.map(([key])=><col key={key} className={`col-${key}`}/>)}<col className="col-actions no-print"/></colgroup><thead><tr><th>வ எண்.</th>{memberRows.map(([key,label])=><th key={key}>{label}</th>)}<th className="no-print">செயல்</th></tr></thead><tbody>{family.members.map((member,index)=><tr key={index}><td className="row-number" data-label="வ எண்.">{index+1}</td>{memberRows.map(([key])=><td key={key} data-label={memberRows.find(([rowKey])=>rowKey===key)?.[1]}><MemberInput field={key} member={member} index={index} updateMember={updateMember}/></td>)}<td className="no-print row-action"><button type="button" onClick={()=>removeRow(index)} aria-label="வரிசையை நீக்கு">×</button></td></tr>)}</tbody></table></section>
-  {error&&<p className="reference-message error no-print">{error}</p>}{notice&&<p className="reference-message success no-print">{notice}</p>}<div className="reference-paper-note">மக்கள் கணக்கெடுப்பு பயன்பாட்டிற்கு மட்டும்</div>
-  <footer className="reference-controls no-print"><button type="button" className="plain-action" onClick={addRow}>+ உறுப்பினரைச் சேர்க்க</button><button type="button" className="plain-action" onClick={()=>window.print()}>அச்சிடு</button><button type="button" className="plain-action" onClick={()=>go('/admin/login')}>நிர்வாகி உள்நுழைவு</button><button type="submit" className="save-action">படிவத்தைச் சேமி</button></footer>
+<div className="reference-paper-note">மக்கள் கணக்கெடுப்பு பயன்பாட்டிற்கு மட்டும்</div>
+  <footer className="reference-controls no-print"><button type="button" className="plain-action" onClick={addRow}>+ உறுப்பினரைச் சேர்க்க</button><button type="button" className="plain-action" onClick={printDocument}>அச்சிடு</button><button type="button" className="plain-action" onClick={()=>go('/admin/login')}>நிர்வாகி உள்நுழைவு</button><button type="submit" className="save-action" disabled={submitting}>{submitting && <span className="button-spinner" aria-hidden="true" />} {submitting ? "சேமிக்கிறது..." : "படிவத்தைச் சேமி"}</button></footer>
  </form></div></main>
 }
+
+
+
 
 
