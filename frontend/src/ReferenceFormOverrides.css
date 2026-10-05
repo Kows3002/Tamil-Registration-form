@@ -1,0 +1,66 @@
+:root:has(.reference-page){background:#fff}
+.reference-title h1{font-size:16px;line-height:1.5}.reference-title p{display:none}
+.reference-meta{grid-template-columns:1.25fr 1fr 1fr 1.15fr;border:0;align-items:stretch}
+.reference-info-block{display:flex;flex-direction:column;min-width:0;min-height:190px;border:1px solid #173978;margin-right:-1px;margin-bottom:-1px;padding:0 5px}
+.reference-field{flex:1;min-height:0;border:0;border-bottom:1px solid #173978;padding:4px 2px 2px}
+.reference-field:last-child{border-bottom:0}
+.field-familyHeadName,.field-villageName,.field-localBody,.field-townPanchayat,.field-district,.field-block,.field-taluk,.field-postalCode,.field-revenueVillage,.field-division,.field-wardNumber,.field-assemblyConstituency,.field-parliamentConstituency,.field-phoneNumber,.field-surveyorName{grid-column:auto}
+.reference-paper-note{text-align:right;padding:3px 3px 0;color:#173978;font-size:8px}
+@media(max-width:700px){.reference-meta{min-width:0}}
+@media print{.reference-title h1{font-size:10pt;line-height:1.4}.reference-meta{grid-template-columns:1.25fr 1fr 1fr 1.15fr}.reference-info-block{min-height:58mm;padding:0 1mm}.reference-field{padding:0.8mm 0.5mm 0.3mm}.reference-paper-note{font-size:5.5pt;padding-top:1mm}}
+.member-reference-table{min-width:1580px}
+.member-reference-table .col-number{width:3%}
+.member-reference-table .col-nameAddress{width:17%}
+.member-reference-table .col-gender{width:4%}
+.member-reference-table .col-age{width:4%}
+.member-reference-table .col-maritalStatus{width:6%}
+.member-reference-table .col-education{width:5%}
+.member-reference-table .col-workDetails{width:7%}
+.member-reference-table .col-centralGovernment,.member-reference-table .col-stateGovernment,.member-reference-table .col-private{width:4%}
+.member-reference-table .col-villageName,.member-reference-table .col-name{width:5%}
+.member-reference-table .col-temples{width:4%}
+.member-reference-table .col-templeBoard{width:6%}
+.member-reference-table .col-temporaryAddress{width:10%}
+.member-reference-table .col-taxPayingVillage{width:6%}
+.member-reference-table .col-familyAnnualIncome{width:6%}
+.member-reference-table .col-actions{width:4%}
+.member-reference-table thead th{overflow-wrap:anywhere}
+.member-reference-table .member-address{height:39px;resize:vertical;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere}
+.member-reference-table .member-check{width:14px;height:14px;accent-color:#173978}
+@media print{.member-reference-table{min-width:0;table-layout:fixed}.member-reference-table .member-address{height:7mm;resize:none}.member-reference-table thead th{overflow-wrap:anywhere}}
+@media(max-width:700px){
+ .reference-page{width:100%;max-width:none;margin:8px 0;padding:0 8px;overflow:hidden}
+ .reference-scroll{overflow:visible}
+ .reference-sheet{box-sizing:border-box;width:100%;min-width:0;padding:6px}
+ .reference-title{padding:7px 4px}
+ .reference-title h1{font-size:15px;line-height:1.65;overflow-wrap:anywhere}
+ .reference-meta{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+ .reference-info-block{box-sizing:border-box;min-height:0;margin:0;padding:2px 5px;border-width:1px}
+ .reference-field{box-sizing:border-box;flex:none;min-height:54px;padding:5px 2px 3px;justify-content:flex-start;gap:5px}
+ .reference-field span{font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+ .reference-field input{height:22px;font-size:16px}
+ .reference-table-scroll{overflow:visible}
+ .member-reference-table{display:block;width:100%;min-width:0;table-layout:auto}
+ .member-reference-table colgroup,.member-reference-table thead{display:none}
+ .member-reference-table tbody{display:block;width:100%}
+ .member-reference-table tbody tr{display:block;margin:10px 0;border:1px solid #173978;background:#fff}
+ .member-reference-table tbody td{box-sizing:border-box;display:block;width:100%;height:auto;min-height:0;padding:6px 8px;border:0;border-bottom:1px solid #c4cee0;text-align:left}
+ .member-reference-table tbody td::before{content:attr(data-label);display:block;margin:0 0 4px;color:#173978;font-size:10px;font-weight:600;line-height:1.5;overflow-wrap:anywhere}
+ .member-reference-table tbody td.row-number{display:flex;align-items:center;min-height:32px;background:#f7f9fc;font-weight:700}
+ .member-reference-table tbody td.row-number::before{display:inline;margin:0 8px 0 0}
+ .member-reference-table tbody td.row-action{border-bottom:0;text-align:right}
+ .member-reference-table .cell-input{box-sizing:border-box;width:100%;height:36px;padding:5px 4px;border-bottom:1px dotted #7487aa;text-align:left;font-size:16px}
+ .member-reference-table .member-address{height:70px;resize:vertical}
+ .member-reference-table .cell-subinput{box-sizing:border-box;width:100%;height:34px;margin-top:5px;border-bottom:1px dotted #7487aa;text-align:left;font-size:16px}
+ .member-reference-table .member-check{display:block;width:20px;height:20px;margin:5px 0;accent-color:#173978}
+ .reference-paper-note{font-size:9px}
+ .reference-controls{flex-wrap:wrap;justify-content:center;gap:6px;padding-top:10px}
+ .plain-action,.save-action{min-height:40px;padding:8px;font-size:12px}
+}
+@media(max-width:420px){
+ .reference-page{padding:0 5px}
+ .reference-meta{grid-template-columns:minmax(0,1fr)}
+ .reference-info-block{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .reference-field{min-width:0;min-height:60px;border-right:1px solid #d5dceb!important}
+ .reference-title h1{font-size:14px}
+}
