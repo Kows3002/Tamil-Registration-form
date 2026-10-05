@@ -76,7 +76,7 @@
 .member-reference-table .cell-subinput{font-size:9px}
 @media(max-width:700px){.reference-page{padding:0 5px}.reference-title h1{font-size:16px}.member-reference-table tbody td::before{font-size:11px}}
 
-/* Match the intended desktop form scale at normal browser zoom on wide screens. */
+/* Match the intended desktop form scale at 100% browser zoom on wide screens. */
 @media screen and (min-width:1500px){
- .reference-page{width:80%;zoom:1.25}
+ .reference-page{width:90.91%;zoom:1.1}
 }
