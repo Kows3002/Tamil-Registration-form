@@ -4,3 +4,4 @@ node_modules/
 dist/
 .vscode/
 frontend/.env
+backend/data/generated/

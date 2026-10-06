@@ -22,6 +22,13 @@ const familySchema = new mongoose.Schema({
   district: { type: String, required: true, trim: true, maxlength: 120 }, block: String, wardNumber: String, taluk: String, postalCode: String,
   postOffice: String, wardSerial: String, circle: String, revenueVillage: String, division: String,
   assemblyConstituency: String, parliamentConstituency: String, phoneNumber: { type: String, trim: true, maxlength: 24 }, surveyorName: String,
+  districtId: { type: mongoose.Schema.Types.ObjectId, ref: 'District' }, districtCode: String, districtNameTamil: String,
+  blockId: { type: mongoose.Schema.Types.ObjectId, ref: 'Block' }, blockCode: String, blockNameTamil: String,
+  villagePanchayatId: { type: mongoose.Schema.Types.ObjectId, ref: 'VillagePanchayat' }, villagePanchayatCode: String, villagePanchayatNameTamil: String,
+  habitation: String, habitationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Habitation' }, habitationCode: String, habitationNameTamil: String,
+  assemblyConstituencyId: { type: mongoose.Schema.Types.ObjectId, ref: 'AssemblyConstituency' }, assemblyConstituencySourceKey: String,
+  postOfficeId: { type: mongoose.Schema.Types.ObjectId, ref: 'PostOffice' }, postOfficeSourceKey: String,
+  pincodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Pincode' }, pincodeCode: String,
   members: { type: [memberSchema], validate: { validator: a => a.length > 0, message: 'At least one family member is required' } },
 }, { timestamps: true, strict: true })
 

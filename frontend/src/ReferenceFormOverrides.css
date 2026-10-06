@@ -69,6 +69,13 @@
 .reference-title h1{font-size:clamp(16px,1.35vw,20px);line-height:1.5}
 .reference-field span{font-size:10px;line-height:1.45}
 .reference-field input{font-size:12px}
+.master-input-wrap{position:relative;width:100%;min-width:0}
+.master-input-wrap>input{box-sizing:border-box}
+.master-options{position:absolute;z-index:30;top:100%;left:0;right:0;max-height:220px;overflow:auto;border:1px solid #173978;background:#fff;box-shadow:0 3px 8px #132f6b26}
+.master-options button,.master-options .master-state{display:block;width:100%;box-sizing:border-box;padding:7px 8px;border:0;border-bottom:1px solid #d8dfeb;background:#fff;text-align:left;color:#173978;font:inherit;font-size:12px}
+.master-options button:hover,.master-options button:focus{background:#f1f5fb}
+.master-options .master-state{color:#536581}
+.reference-field input:disabled{color:#687b9d;background:#f5f7fa}
 .member-reference-table{font-size:10px}
 .member-reference-table thead th{font-size:10px;line-height:1.45}
 .member-reference-table tbody td{font-size:10px}

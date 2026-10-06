@@ -1,0 +1,2744 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<table width="90%" border="1" cellpadding="0" cellspacing="0" bordercolor="#5FC1F5" style="border-collapse:collapse; font: bold 10pt Verdana, Geneva, sans-serif; color:#000;" align="center" valign="middle" >
+<thead> 
+<tr style="background-image: -moz-linear-gradient(top, #dcf4fe 25%, #b6eaff 80%); " >
+    <th height="30" align="center"><span id="sorternew"><strong>LGD District Code</strong></span></th>
+    <th height="30" align="center"><span id="sorternew"><strong>District Name</strong></span></th>
+      <th align="center">LGD Block code</th>
+    <th align="center">Block Name</th>
+  
+</tr>
+</thead> 
+<tbody> 
+<tr>
+    <td height="30" align="center">528</td>
+    <td height="30" align="left"> காஞ்சிபுரம்</td>
+    <td align="center">6482</td>
+    <td align="left">காஞ்சிபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">528</td>
+    <td height="30" align="left"> காஞ்சிபுரம்</td>
+    <td align="center">6492</td>
+    <td align="left">வாலாஜாபாத்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">528</td>
+    <td height="30" align="left"> காஞ்சிபுரம்</td>
+    <td align="center">6491</td>
+    <td align="left">உத்திரமேரூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">528</td>
+    <td height="30" align="left"> காஞ்சிபுரம்</td>
+    <td align="center">6487</td>
+    <td align="left">ஸ்ரீபெரும்புதூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">528</td>
+    <td height="30" align="left"> காஞ்சிபுரம்</td>
+    <td align="center">6484</td>
+    <td align="left">குன்றத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6664</td>
+    <td align="left">வில்லிவாக்கம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6658</td>
+    <td align="left">புழல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6654</td>
+    <td align="left">மீஞ்சூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6660</td>
+    <td align="left">சோழவரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6652</td>
+    <td align="left">கும்மிடிப்பூண்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6663</td>
+    <td align="left">திருவாலங்காடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6661</td>
+    <td align="left">திருத்தணி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6655</td>
+    <td align="left">பள்ளிப்பட்டு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6659</td>
+    <td align="left">ஆர் கே பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6662</td>
+    <td align="left">திருவள்ளூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6657</td>
+    <td align="left">பூண்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6653</td>
+    <td align="left">கடம்பத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6651</td>
+    <td align="left">எல்லாபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">543</td>
+    <td height="30" align="left"> திருவள்ளுர்</td>
+    <td align="center">6656</td>
+    <td align="left">பூந்தமல்லி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6426</td>
+    <td align="left">கடலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6425</td>
+    <td align="left">அண்ணாகிராமம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6435</td>
+    <td align="left">பண்ருட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6431</td>
+    <td align="left">குறிஞ்சிப்பாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6428</td>
+    <td align="left">காட்டுமன்னார்கோயில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6430</td>
+    <td align="left">குமராட்சி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6429</td>
+    <td align="left">கீரப்பாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6433</td>
+    <td align="left">மேல்புவனகிரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6436</td>
+    <td align="left">பரங்கிபேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6437</td>
+    <td align="left">விருத்தாசலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6427</td>
+    <td align="left">கம்மாபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6434</td>
+    <td align="left">நல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">6432</td>
+    <td align="left">மங்களூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">524</td>
+    <td height="30" align="left"> கடலூர்</td>
+    <td align="center">296875</td>
+    <td align="left">ஸ்ரீமுஷ்ணம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6768</td>
+    <td align="left">முகையூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6773</td>
+    <td align="left">திருவெண்ணெய்நல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6762</td>
+    <td align="left">கானை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6764</td>
+    <td align="left">கோளியனூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6763</td>
+    <td align="left">கண்டமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6779</td>
+    <td align="left">விக்கிரவாண்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6769</td>
+    <td align="left">ஒலக்கூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6765</td>
+    <td align="left">மயிலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6766</td>
+    <td align="left">மரக்காணம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6778</td>
+    <td align="left">வானூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6759</td>
+    <td align="left">செஞ்சி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6777</td>
+    <td align="left">வல்லம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">550</td>
+    <td height="30" align="left"> விழுப்புரம்</td>
+    <td align="center">6767</td>
+    <td align="left">மேல்மலையனூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">549</td>
+    <td height="30" align="left"> வேலூர்</td>
+    <td align="center">6756</td>
+    <td align="left">வேலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">549</td>
+    <td height="30" align="left"> வேலூர்</td>
+    <td align="center">6746</td>
+    <td align="left">கணியம்பாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">549</td>
+    <td height="30" align="left"> வேலூர்</td>
+    <td align="center">6739</td>
+    <td align="left">அணைக்கட்டு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">549</td>
+    <td height="30" align="left"> வேலூர்</td>
+    <td align="center">6747</td>
+    <td align="left">காட்பாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">549</td>
+    <td height="30" align="left"> வேலூர்</td>
+    <td align="center">6744</td>
+    <td align="left">கே வி குப்பம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">549</td>
+    <td height="30" align="left"> வேலூர்</td>
+    <td align="center">6742</td>
+    <td align="left">குடியாத்தம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">549</td>
+    <td height="30" align="left"> வேலூர்</td>
+    <td align="center">6752</td>
+    <td align="left">பேர்ணாம்பட்டு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6722</td>
+    <td align="left">திருவண்ணாமலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6715</td>
+    <td align="left">கீழ்பென்னாத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6721</td>
+    <td align="left">துரிஞ்சாபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6717</td>
+    <td align="left">போளுர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6714</td>
+    <td align="left">களசபாக்கம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6711</td>
+    <td align="left">சேத்துப்பட்டு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6710</td>
+    <td align="left">செங்கம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6718</td>
+    <td align="left">புதுப்பாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6719</td>
+    <td align="left">தண்டராம்பட்டு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6713</td>
+    <td align="left">ஜவ்வாது மலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6712</td>
+    <td align="left">செய்யார்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6708</td>
+    <td align="left">அனக்காவூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6724</td>
+    <td align="left">வெம்பாக்கம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6723</td>
+    <td align="left">வந்தவாசி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6720</td>
+    <td align="left">தெள்ளார்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6716</td>
+    <td align="left">பெரணமல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6709</td>
+    <td align="left">ஆரணி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">547</td>
+    <td height="30" align="left"> திருவண்ணாமலை</td>
+    <td align="center">6725</td>
+    <td align="left">ஆரணி (மேற்கு)</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6606</td>
+    <td align="left">சேலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6611</td>
+    <td align="left">வீரபாண்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6604</td>
+    <td align="left">பனமரத்துப்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6594</td>
+    <td align="left">அயோத்தியாபட்டணம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6610</td>
+    <td align="left">வாழப்பாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6612</td>
+    <td align="left">ஏற்காடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6605</td>
+    <td align="left">பெத்தநாயக்கன்பாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6593</td>
+    <td align="left">ஆத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6595</td>
+    <td align="left">கெங்கவல்லி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6608</td>
+    <td align="left">தலைவாசல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6598</td>
+    <td align="left">கொளத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6602</td>
+    <td align="left">நங்கவள்ளி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6601</td>
+    <td align="left">மேச்சேரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6603</td>
+    <td align="left">ஓமலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6609</td>
+    <td align="left">தாரமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6597</td>
+    <td align="left">காடையாம்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6607</td>
+    <td align="left">சங்ககிரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6596</td>
+    <td align="left">எடப்பாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6599</td>
+    <td align="left">கொங்கணாபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">538</td>
+    <td height="30" align="left"> சேலம்</td>
+    <td align="center">6600</td>
+    <td align="left">மேக்.சௌழ்த்ரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6544</td>
+    <td align="left">எலச்சிப்பாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6545</td>
+    <td align="left">எருமபட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6546</td>
+    <td align="left">கபிலர்மலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6547</td>
+    <td align="left">கொல்லி மலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6548</td>
+    <td align="left">மல்லசமுத்திரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6549</td>
+    <td align="left">மோகனூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6551</td>
+    <td align="left">நாமக்கல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6550</td>
+    <td align="left">நாமகிரிப்பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6554</td>
+    <td align="left">புதுச்சத்திரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6553</td>
+    <td align="left">பரமத்தி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6552</td>
+    <td align="left">பள்ளிபாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6555</td>
+    <td align="left">இராசிபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6556</td>
+    <td align="left">சேந்தமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6557</td>
+    <td align="left">திருச்செங்கோடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">534</td>
+    <td height="30" align="left"> நாமக்கல்</td>
+    <td align="center">6558</td>
+    <td align="left">வெண்ணந்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6438</td>
+    <td align="left">தர்மபுரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6442</td>
+    <td align="left">நல்லம்பள்ளி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6445</td>
+    <td align="left">பென்னகரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6439</td>
+    <td align="left">அரூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6441</td>
+    <td align="left">மொரப்பூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6444</td>
+    <td align="left">பாப்பிரெட்டிப்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6440</td>
+    <td align="left">காரிமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">6443</td>
+    <td align="left">பாலக்கோடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">296943</td>
+    <td align="left">ஏரியூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">525</td>
+    <td height="30" align="left"> தர்மபுரி</td>
+    <td align="center">296944</td>
+    <td align="left">கடத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6466</td>
+    <td align="left">ஈரோடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6471</td>
+    <td align="left">மொடக்குறிச்சி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6469</td>
+    <td align="left">கொடுமுடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6474</td>
+    <td align="left">பெருந்துறை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6464</td>
+    <td align="left">சென்னிமலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6460</td>
+    <td align="left">அம்மாபேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6461</td>
+    <td align="left">அந்தியூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6462</td>
+    <td align="left">பவானி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6467</td>
+    <td align="left">கோபி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6473</td>
+    <td align="left">நம்பியூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6477</td>
+    <td align="left">தூக்கநாயக்கன்பாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6475</td>
+    <td align="left">சத்தியமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6463</td>
+    <td align="left">பவானிசாகர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">527</td>
+    <td height="30" align="left"> ஈரோடு</td>
+    <td align="center">6476</td>
+    <td align="left">தாளவாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6410</td>
+    <td align="left">காரமடை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6413</td>
+    <td align="left">மதுக்கரை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6415</td>
+    <td align="left">பெரியநாயக்கன்பாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6419</td>
+    <td align="left">சர்க்கார்சாமக்குளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6422</td>
+    <td align="left">தொண்டாமுத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6406</td>
+    <td align="left">ஆனைமலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6411</td>
+    <td align="left">கிணத்துக்கடவு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6416</td>
+    <td align="left">பொள்ளாச்சி வடக்கு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6417</td>
+    <td align="left">பொள்ளாச்சி தெற்கு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6407</td>
+    <td align="left">அன்னூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6421</td>
+    <td align="left">சூலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">523</td>
+    <td height="30" align="left"> கோயம்புத்தூர்</td>
+    <td align="center">6420</td>
+    <td align="left">சுல்தான்பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">541</td>
+    <td height="30" align="left"> நீலகிரி</td>
+    <td align="center">6642</td>
+    <td align="left">உதகமண்டலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">541</td>
+    <td height="30" align="left"> நீலகிரி</td>
+    <td align="center">6639</td>
+    <td align="left">குன்னூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">541</td>
+    <td height="30" align="left"> நீலகிரி</td>
+    <td align="center">6641</td>
+    <td align="left">கோத்தகிரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">541</td>
+    <td height="30" align="left"> நீலகிரி</td>
+    <td align="center">6640</td>
+    <td align="left">கூடலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6634</td>
+    <td align="left">தஞ்சாவூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6626</td>
+    <td align="left">பூதலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6636</td>
+    <td align="left">திருவையாறு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6629</td>
+    <td align="left">ஒரத்தநாடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6637</td>
+    <td align="left">திருவோணம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6627</td>
+    <td align="left">கும்பகோணம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6638</td>
+    <td align="left">திருவிடைமருதூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6635</td>
+    <td align="left">திருப்பானந்தாள்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6630</td>
+    <td align="left">பாபநாசம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6625</td>
+    <td align="left">அம்மாபேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6631</td>
+    <td align="left">பட்டுக்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6628</td>
+    <td align="left">மதுக்கூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6632</td>
+    <td align="left">பேராவூரணி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">540</td>
+    <td height="30" align="left"> தஞ்சாவூர்</td>
+    <td align="center">6633</td>
+    <td align="left">சேதுபாவா சத்திரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">533</td>
+    <td height="30" align="left"> நாகப்பட்டினம்</td>
+    <td align="center">6538</td>
+    <td align="left">நாகப்பட்டினம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">533</td>
+    <td height="30" align="left"> நாகப்பட்டினம்</td>
+    <td align="center">6533</td>
+    <td align="left">கீழையூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">533</td>
+    <td height="30" align="left"> நாகப்பட்டினம்</td>
+    <td align="center">6534</td>
+    <td align="left">கீவளுர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">533</td>
+    <td height="30" align="left"> நாகப்பட்டினம்</td>
+    <td align="center">6542</td>
+    <td align="left">திருமருகல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">533</td>
+    <td height="30" align="left"> நாகப்பட்டினம்</td>
+    <td align="center">6541</td>
+    <td align="left">தலைஞாயிறு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">533</td>
+    <td height="30" align="left"> நாகப்பட்டினம்</td>
+    <td align="center">6543</td>
+    <td align="left">வேதாரண்யம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6674</td>
+    <td align="left">வலங்கைமான்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6670</td>
+    <td align="left">நன்னிலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6665</td>
+    <td align="left">குடவாசல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6672</td>
+    <td align="left">திருவாரூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6666</td>
+    <td align="left">கொரடாச்சேரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6668</td>
+    <td align="left">மன்னார்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6671</td>
+    <td align="left">நீடாமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6667</td>
+    <td align="left">கோட்டூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6673</td>
+    <td align="left">திருத்துறைப்பூண்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">544</td>
+    <td height="30" align="left"> திருவாரூர்</td>
+    <td align="center">6669</td>
+    <td align="left">முத்துப்பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6675</td>
+    <td align="left">அந்தநல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6679</td>
+    <td align="left">மணிகண்டம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6684</td>
+    <td align="left">திருவரம்பூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6678</td>
+    <td align="left">மணப்பாறை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6680</td>
+    <td align="left">மருங்காபுரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6688</td>
+    <td align="left">வையம்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6676</td>
+    <td align="left">லால்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6677</td>
+    <td align="left">மணச்சநல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6682</td>
+    <td align="left">புல்லம்பாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6681</td>
+    <td align="left">முசிறி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6685</td>
+    <td align="left">தொட்டியம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6683</td>
+    <td align="left">தாத்தையங்கார்பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6686</td>
+    <td align="left">துறையூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">545</td>
+    <td height="30" align="left"> திருச்சிராப்பள்ளி</td>
+    <td align="center">6687</td>
+    <td align="left">உப்பிலியாபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6505</td>
+    <td align="left">கரூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6508</td>
+    <td align="left">தாந்தோணி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6502</td>
+    <td align="left">அரவக்குறிச்சி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6503</td>
+    <td align="left">க.பரமத்தி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6507</td>
+    <td align="left">குளித்தலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6506</td>
+    <td align="left">கிருஷ்ணராயபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6504</td>
+    <td align="left">கடவூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">530</td>
+    <td height="30" align="left"> கரூர்</td>
+    <td align="center">6509</td>
+    <td align="left">தோகைமலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">535</td>
+    <td height="30" align="left"> பெரம்பலூர்</td>
+    <td align="center">6563</td>
+    <td align="left">பெரம்பலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">535</td>
+    <td height="30" align="left"> பெரம்பலூர்</td>
+    <td align="center">6567</td>
+    <td align="left">வேப்பந்தட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">535</td>
+    <td height="30" align="left"> பெரம்பலூர்</td>
+    <td align="center">6559</td>
+    <td align="left">ஆலத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">535</td>
+    <td height="30" align="left"> பெரம்பலூர்</td>
+    <td align="center">6568</td>
+    <td align="left">வேப்பூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6569</td>
+    <td align="left">அன்னவாசல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6571</td>
+    <td align="left">அரிமளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6575</td>
+    <td align="left">குன்றாண்டார்கோவில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6577</td>
+    <td align="left">பொன்னமராவதி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6578</td>
+    <td align="left">புதுக்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6580</td>
+    <td align="left">திருமயம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6581</td>
+    <td align="left">விராலிமலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6570</td>
+    <td align="left">அறந்தாங்கி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6572</td>
+    <td align="left">ஆவுடையார் கோயில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6573</td>
+    <td align="left">கந்தவர்வ கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6574</td>
+    <td align="left">கரம்பக்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6576</td>
+    <td align="left">மணமேல்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">536</td>
+    <td height="30" align="left"> புதுக்கோட்டை</td>
+    <td align="center">6579</td>
+    <td align="left">திருவரங்குளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6524</td>
+    <td align="left">மதுரை (கிழக்கு)</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6525</td>
+    <td align="left">மதுரை (மேற்கு)</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6530</td>
+    <td align="left">திருப்பரங்குன்றம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6526</td>
+    <td align="left">மேலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6523</td>
+    <td align="left">கொட்டாம்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6532</td>
+    <td align="left">வாடிப்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6520</td>
+    <td align="left">அலங்காநல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6531</td>
+    <td align="left">உசிலம்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6521</td>
+    <td align="left">செல்லம்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6527</td>
+    <td align="left">சேடபட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6529</td>
+    <td align="left">திருமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6528</td>
+    <td align="left">தே.கல்லுப்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">532</td>
+    <td height="30" align="left"> மதுரை</td>
+    <td align="center">6522</td>
+    <td align="left">கள்ளிக்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6643</td>
+    <td align="left">ஆண்டிபட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6646</td>
+    <td align="left">க.மயிலாடும்பாறை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6648</td>
+    <td align="left">பெரியகுளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6649</td>
+    <td align="left">தேனி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6644</td>
+    <td align="left">போடிநாயக்கனூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6645</td>
+    <td align="left">சின்னமனூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6650</td>
+    <td align="left">உத்தமபாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">542</td>
+    <td height="30" align="left"> தேனி</td>
+    <td align="center">6647</td>
+    <td align="left">கம்பம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6447</td>
+    <td align="left">திண்டுக்கல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6446</td>
+    <td align="left">ஆத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6454</td>
+    <td align="left">ரெட்டியார்சத்திரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6455</td>
+    <td align="left">சாணார்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6450</td>
+    <td align="left">நத்தம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6451</td>
+    <td align="left">நிலக்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6458</td>
+    <td align="left">வத்தலக்குண்டு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6453</td>
+    <td align="left">பழனி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6452</td>
+    <td align="left">ஒட்டன்சத்திரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6456</td>
+    <td align="left">தொப்பம்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6459</td>
+    <td align="left">வேடசந்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6457</td>
+    <td align="left">வடமதுரை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6448</td>
+    <td align="left">குஜிலியம்பாறை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">526</td>
+    <td height="30" align="left"> திண்டுக்கல்</td>
+    <td align="center">6449</td>
+    <td align="left">கொடைக்கானல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6585</td>
+    <td align="left">மண்டபம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6590</td>
+    <td align="left">இராமநாதபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6589</td>
+    <td align="left">ஆர் எஸ் மங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6591</td>
+    <td align="left">திருப்புல்லாணி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6592</td>
+    <td align="left">திருவாடானை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6582</td>
+    <td align="left">போகலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6583</td>
+    <td align="left">கடலாடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6584</td>
+    <td align="left">கமுதி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6586</td>
+    <td align="left">முதுகுளத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6587</td>
+    <td align="left">நயினார் கோயில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">537</td>
+    <td height="30" align="left"> இராமநாதபுரம்</td>
+    <td align="center">6588</td>
+    <td align="left">பரமக்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6780</td>
+    <td align="left">அருப்புக்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6789</td>
+    <td align="left">விருதுநகர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6781</td>
+    <td align="left">காரியாபட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6787</td>
+    <td align="left">திருச்சுழி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6782</td>
+    <td align="left">நரிக்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6783</td>
+    <td align="left">இராஜபாளையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6786</td>
+    <td align="left">ஸ்ரீவில்லிபுத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6790</td>
+    <td align="left">வத்திராயிருப்பு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6785</td>
+    <td align="left">சிவகாசி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6788</td>
+    <td align="left">வெம்பக்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">551</td>
+    <td height="30" align="left"> விருதுநகர்</td>
+    <td align="center">6784</td>
+    <td align="left">சாத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6622</td>
+    <td align="left">சிவகங்கை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6615</td>
+    <td align="left">காளையார்கோவில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6618</td>
+    <td align="left">மானாமதுரை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6624</td>
+    <td align="left">திருப்புவனம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6614</td>
+    <td align="left">இளையாங்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6623</td>
+    <td align="left">திருப்பத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6621</td>
+    <td align="left">சிங்கம்புனரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6620</td>
+    <td align="left">சக்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6616</td>
+    <td align="left">கல்லல்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6613</td>
+    <td align="left">தேவகோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6617</td>
+    <td align="left">கண்ணங்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">539</td>
+    <td height="30" align="left"> சிவகங்கை</td>
+    <td align="center">6619</td>
+    <td align="left">எஸ் புதூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6700</td>
+    <td align="left">பாளையங்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6697</td>
+    <td align="left">மானூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6690</td>
+    <td align="left">அம்பாசமுத்திரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6691</td>
+    <td align="left">சேரன்மாதேவி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6701</td>
+    <td align="left">பாப்பாக்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6699</td>
+    <td align="left">நாங்குனேரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6694</td>
+    <td align="left">களக்காடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6706</td>
+    <td align="left">வள்ளியூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">546</td>
+    <td height="30" align="left"> திருநெல்வேலி</td>
+    <td align="center">6702</td>
+    <td align="left">இராதாபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6734</td>
+    <td align="left">தூத்துக்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6727</td>
+    <td align="left">கருங்குளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6733</td>
+    <td align="left">ஸ்ரீவைகுண்டம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6726</td>
+    <td align="left">ஆழ்வார்திருநகரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6735</td>
+    <td align="left">திருச்செந்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6736</td>
+    <td align="left">உடன்குடி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6732</td>
+    <td align="left">சாத்தான்குளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6729</td>
+    <td align="left">கோவில்பட்டி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6728</td>
+    <td align="left">கயத்தார்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6730</td>
+    <td align="left">ஓட்டப்பிடாரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6737</td>
+    <td align="left">விளாத்திகுளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">548</td>
+    <td height="30" align="left"> தூத்துக்குடி</td>
+    <td align="center">6731</td>
+    <td align="left">புதூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6493</td>
+    <td align="left">அகஸ்தீஸ்வரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6501</td>
+    <td align="left">தோவாளை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6498</td>
+    <td align="left">இராஜாக்கமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6499</td>
+    <td align="left">தக்கலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6495</td>
+    <td align="left">குருந்தன்கோடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6500</td>
+    <td align="left">திருவட்டாறு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6494</td>
+    <td align="left">கிள்ளியூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6497</td>
+    <td align="left">முன்சிறை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">529</td>
+    <td height="30" align="left"> கன்னியாகுமரி</td>
+    <td align="center">6496</td>
+    <td align="left">மேல்புறம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6514</td>
+    <td align="left">கிருஷ்ணகிரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6512</td>
+    <td align="left">காவேரிப்பட்டினம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6519</td>
+    <td align="left">வேப்பனப்பள்ளி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6510</td>
+    <td align="left">பர்கூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6515</td>
+    <td align="left">மத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6518</td>
+    <td align="left">ஊத்தங்கரை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6511</td>
+    <td align="left">ஓசூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6516</td>
+    <td align="left">சூளகிரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6513</td>
+    <td align="left">கெலமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">531</td>
+    <td height="30" align="left"> கிருஷ்ணகிரி</td>
+    <td align="center">6517</td>
+    <td align="left">தளி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">560</td>
+    <td height="30" align="left"> அரியலூர்</td>
+    <td align="center">6561</td>
+    <td align="left">அரியலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">560</td>
+    <td height="30" align="left"> அரியலூர்</td>
+    <td align="center">6566</td>
+    <td align="left">திருமானூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">560</td>
+    <td height="30" align="left"> அரியலூர்</td>
+    <td align="center">6562</td>
+    <td align="left">ஜெயங்கொண்டம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">560</td>
+    <td height="30" align="left"> அரியலூர்</td>
+    <td align="center">6560</td>
+    <td align="left">ஆண்டிமடம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">560</td>
+    <td height="30" align="left"> அரியலூர்</td>
+    <td align="center">6565</td>
+    <td align="left">த.பலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">560</td>
+    <td height="30" align="left"> அரியலூர்</td>
+    <td align="center">6564</td>
+    <td align="left">செந்துறை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6478</td>
+    <td align="left">ஊத்துக்குளி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6409</td>
+    <td align="left">குடிமங்கலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6479</td>
+    <td align="left">வெள்ளக்கோயில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6412</td>
+    <td align="left">மடத்துக்குளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6470</td>
+    <td align="left">குண்டடம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6472</td>
+    <td align="left">மூலனூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6424</td>
+    <td align="left">உடுமலைப்பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6408</td>
+    <td align="left">அவினாசி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6414</td>
+    <td align="left">பல்லடம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6418</td>
+    <td align="left">பொங்கலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6423</td>
+    <td align="left">திருப்பூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6468</td>
+    <td align="left">காங்கேயம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">578</td>
+    <td height="30" align="left"> திருப்பூர்</td>
+    <td align="center">6465</td>
+    <td align="left">தாராபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6698</td>
+    <td align="left">மேலநீலதநல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6696</td>
+    <td align="left">குருவிகுளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6703</td>
+    <td align="left">சங்கரன்கோயில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6693</td>
+    <td align="left">கடையம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6689</td>
+    <td align="left">ஆலங்குளம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6695</td>
+    <td align="left">கீழப்பாவூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6692</td>
+    <td align="left">கடையநல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6704</td>
+    <td align="left">செங்கோட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6705</td>
+    <td align="left">தென்காசி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296956</td>
+    <td height="30" align="left"> தென்காசி</td>
+    <td align="center">6707</td>
+    <td align="left">வாசுதேவநல்லூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6774</td>
+    <td align="left">திருகோவிலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6775</td>
+    <td align="left">திருநாவலூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6776</td>
+    <td align="left">உளுந்தூர்பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6760</td>
+    <td align="left">கள்ளக்குறிச்சி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6758</td>
+    <td align="left">சின்ன சேலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6770</td>
+    <td align="left">ரிஷிவந்தியம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6771</td>
+    <td align="left">சங்கராபுரம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6772</td>
+    <td align="left">தியாகதுர்கம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296959</td>
+    <td height="30" align="left"> கள்ளக்குறிச்சி</td>
+    <td align="center">6761</td>
+    <td align="left">கல்வராயன்மலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6489</td>
+    <td align="left">திருப்போரூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6483</td>
+    <td align="left">காட்டாங்கொளத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6490</td>
+    <td align="left">திருக்கழுக்குன்றம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6488</td>
+    <td align="left">தாமஸ் மலை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6480</td>
+    <td align="left">அச்சரப்பாக்கம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6486</td>
+    <td align="left">மதுராந்தகம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6485</td>
+    <td align="left">லத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296974</td>
+    <td height="30" align="left"> செங்கல்பட்டு</td>
+    <td align="center">6481</td>
+    <td align="left">சித்தாமூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296957</td>
+    <td height="30" align="left"> ராணிப்பேட்டை</td>
+    <td align="center">6757</td>
+    <td align="left">வாலாஜாபேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296957</td>
+    <td height="30" align="left"> ராணிப்பேட்டை</td>
+    <td align="center">6753</td>
+    <td align="left">சோளிங்கர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296957</td>
+    <td height="30" align="left"> ராணிப்பேட்டை</td>
+    <td align="center">6740</td>
+    <td align="left">அரக்கோணம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296957</td>
+    <td height="30" align="left"> ராணிப்பேட்டை</td>
+    <td align="center">6751</td>
+    <td align="left">நெமிலி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296957</td>
+    <td height="30" align="left"> ராணிப்பேட்டை</td>
+    <td align="center">6748</td>
+    <td align="left">காவேரிப்பாக்கம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296957</td>
+    <td height="30" align="left"> ராணிப்பேட்டை</td>
+    <td align="center">6741</td>
+    <td align="left">ஆற்காடு</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296957</td>
+    <td height="30" align="left"> ராணிப்பேட்டை</td>
+    <td align="center">6754</td>
+    <td align="left">திமிரி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296958</td>
+    <td height="30" align="left"> திருப்பத்தூர்</td>
+    <td align="center">6749</td>
+    <td align="left">மாதனூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296958</td>
+    <td height="30" align="left"> திருப்பத்தூர்</td>
+    <td align="center">6755</td>
+    <td align="left">திருப்பத்தூர்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296958</td>
+    <td height="30" align="left"> திருப்பத்தூர்</td>
+    <td align="center">6743</td>
+    <td align="left">ஜோலார்பேட்டை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296958</td>
+    <td height="30" align="left"> திருப்பத்தூர்</td>
+    <td align="center">6745</td>
+    <td align="left">கந்திலி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296958</td>
+    <td height="30" align="left"> திருப்பத்தூர்</td>
+    <td align="center">6750</td>
+    <td align="left">நாட்ராம்பள்ளி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">296958</td>
+    <td height="30" align="left"> திருப்பத்தூர்</td>
+    <td align="center">6738</td>
+    <td align="left">ஆலங்காயம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">299380</td>
+    <td height="30" align="left"> மயிலாடுதுறை</td>
+    <td align="center">6537</td>
+    <td align="left">மயிலாடுதுறை</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">299380</td>
+    <td height="30" align="left"> மயிலாடுதுறை</td>
+    <td align="center">6536</td>
+    <td align="left">குத்தாலம்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">299380</td>
+    <td height="30" align="left"> மயிலாடுதுறை</td>
+    <td align="center">6539</td>
+    <td align="left">செம்பனார் கோயில்</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">299380</td>
+    <td height="30" align="left"> மயிலாடுதுறை</td>
+    <td align="center">6540</td>
+    <td align="left">சீர்காழி</td>
+
+</tr>
+<tr>
+    <td height="30" align="center">299380</td>
+    <td height="30" align="left"> மயிலாடுதுறை</td>
+    <td align="center">6535</td>
+    <td align="left">கொள்ளிடம்</td>
+
+</tr>
+
+</tbody>
+</table>
+
+
+
+			
+</body>
+</html>

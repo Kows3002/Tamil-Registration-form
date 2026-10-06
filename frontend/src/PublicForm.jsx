@@ -1,10 +1,11 @@
 ﻿import './ReferenceForm.css'
 import './ReferenceFormOverrides.css'
+import MasterAutocomplete from './MasterAutocomplete.jsx'
 
 const groups = [
  [['pitagaiName','பிடாகையின் பெயர் :'],['localBody','ஊராட்சி / பேரூராட்சி /'],['municipality','நகராட்சி/'],['townPanchayat','ஊராட்சி ஒன்றியம்:']],
  [['corporation','மாநகராட்சி:'],['wardNumber','வார்டு எண்:'],['postOffice','தபால் நிலையம்:'],['postalCode','அஞ்சலக எண் :']],
- [['revenueVillage','வருவாய் கிராமம்:'],['division','வட்டம் :'],['circle','கோட்டம் :'],['district','மாவட்டம்:']],
+ [['revenueVillage','வருவாய் கிராமம்:'],['division','வட்டம் :'],['circle','கோட்டம் :'],['district','மாவட்டம்:'],['block','ஊராட்சி ஒன்றியம் / வட்டாரம்:'],['habitation','குடியிருப்பு / குக்கிராமம்:']],
  [['assemblyConstituency','சட்டமன்ற தொகுதி'],['parliamentConstituency','பாராளுமன்ற தொகுதி'],['villageName','ஊர் பெயர் :'],['wardSerial','வ எண்.']],
 ]
 const memberRows = [
@@ -30,7 +31,25 @@ export default function PublicForm({family,setFamily,update,updateMember,submitF
  const removeRow=index=>setFamily(current=>({...current,members:current.members.length>1?current.members.filter((_,i)=>i!==index):current.members}))
  return <main className="reference-page"><div className="reference-scroll"><form className="reference-sheet" onSubmit={submitFamily}>
   <header className="reference-title"><h1>கிருஷ்ணன் வக சமுதாய பிடாகைகளின் மக்கள் தொகை கணக்கு - (ஒரு குடும்பத்திற்கு ஒரு படிவம்)</h1></header>
-  <section className="reference-meta" aria-label="குடும்ப விவரங்கள்">{groups.map((group,gi)=><div className="reference-info-block" key={gi}>{group.map(([key,label])=><label className={`reference-field field-${key}`} key={key}><span>{label}{['pitagaiName','villageName','district'].includes(key)&&<b> *</b>}</span><input value={family[key]||''} onChange={e=>update(key,e.target.value)} required={['pitagaiName','villageName','district'].includes(key)}/></label>)}</div>)}</section>
+  <section className="reference-meta" aria-label="குடும்ப விவரங்கள்">{groups.map((group,gi)=><div className="reference-info-block" key={gi}>{group.map(([key,label])=>{
+    const kinds={district:'district',block:'block',villageName:'village',habitation:'habitation',assemblyConstituency:'assembly',postOffice:'postOffice',postalCode:'pincode'}
+    const required=['pitagaiName','villageName','district'].includes(key)
+    if(kinds[key]) return <MasterAutocomplete key={key} kind={kinds[key]} label={label} value={family[key]} family={family} required={required}
+      disabled={(key==='block'&&!family.districtId)||(key==='villageName'&&!family.blockId)||(key==='habitation'&&!family.villagePanchayatId)}
+      onInputChange={value=>setFamily(current=>{const next={...current,[key]:value};const clear=fields=>fields.forEach(field=>{next[field]=''});if(key==='district')clear(['districtId','districtCode','districtNameTamil','block','blockId','blockCode','blockNameTamil','villageName','villagePanchayatId','villagePanchayatCode','villagePanchayatNameTamil','habitation','habitationId','habitationCode','habitationNameTamil']);if(key==='block')clear(['blockId','blockCode','blockNameTamil','villageName','villagePanchayatId','villagePanchayatCode','villagePanchayatNameTamil','habitation','habitationId','habitationCode','habitationNameTamil']);if(key==='villageName')clear(['villagePanchayatId','villagePanchayatCode','villagePanchayatNameTamil','habitation','habitationId','habitationCode','habitationNameTamil']);if(key==='habitation')clear(['habitationId','habitationCode','habitationNameTamil']);if(key==='assemblyConstituency')clear(['assemblyConstituencyId','assemblyConstituencySourceKey']);if(key==='postOffice')clear(['postOfficeId','postOfficeSourceKey','pincodeId','pincodeCode','postalCode']);if(key==='postalCode')clear(['pincodeId','pincodeCode','postOfficeId','postOfficeSourceKey','postOffice']);return next})}
+      onSelect={row=>setFamily(current=>{
+        const next={...current}
+        if(key==='district') { next.district=row?.nameTamil||'';next.districtId=row?._id||'';next.districtCode=row?.code||'';next.districtNameTamil=row?.nameTamil||'';for(const field of ['block','blockId','blockCode','blockNameTamil','villageName','villagePanchayatId','villagePanchayatCode','villagePanchayatNameTamil','habitation','habitationId','habitationCode','habitationNameTamil'])next[field]='' }
+        if(key==='block') { next.block=row?.nameTamil||'';next.blockId=row?._id||'';next.blockCode=row?.code||'';next.blockNameTamil=row?.nameTamil||'';for(const field of ['villageName','villagePanchayatId','villagePanchayatCode','villagePanchayatNameTamil','habitation','habitationId','habitationCode','habitationNameTamil'])next[field]='' }
+        if(key==='villageName') { next.villageName=row?.nameTamil||'';next.villagePanchayatId=row?._id||'';next.villagePanchayatCode=row?.code||'';next.villagePanchayatNameTamil=row?.nameTamil||'';for(const field of ['habitation','habitationId','habitationCode','habitationNameTamil'])next[field]='' }
+        if(key==='habitation') { next.habitation=row?.nameTamil||'';next.habitationId=row?._id||'';next.habitationCode=row?.code||'';next.habitationNameTamil=row?.nameTamil||'' }
+        if(key==='assemblyConstituency') { next.assemblyConstituency=row?.name||'';next.assemblyConstituencyId=row?._id||'';next.assemblyConstituencySourceKey=row?.sourceKey||'' }
+        if(key==='postOffice') { next.postOffice=row?.name||'';next.postOfficeId=row?._id||'';next.postOfficeSourceKey=row?.sourceKey||'';next.postalCode=row?.pincode||'';next.pincodeCode=row?.pincode||'';next.pincodeId=row?.pincodeId||'' }
+        if(key==='postalCode') { next.postalCode=row?.code||'';next.pincodeCode=row?.code||'';next.pincodeId=row?._id||'';next.postOffice='';next.postOfficeId='';next.postOfficeSourceKey='' }
+        return next
+      })}/>
+    return <label className={`reference-field field-${key}`} key={key}><span>{label}{required&&<b> *</b>}</span><input value={family[key]||''} onChange={e=>update(key,e.target.value)} required={required}/></label>
+  })}</div>)}</section>
   <section className="reference-table-scroll" aria-label="குடும்ப உறுப்பினர் விவரங்கள்"><table className="reference-table member-reference-table"><colgroup><col className="col-number"/>{memberRows.map(([key])=><col key={key} className={`col-${key}`}/>)}<col className="col-actions no-print"/></colgroup><thead><tr><th>வ எண்.</th>{memberRows.map(([key,label])=><th key={key}>{label}</th>)}<th className="no-print">செயல்</th></tr></thead><tbody>{family.members.map((member,index)=><tr key={index}><td className="row-number" data-label="வ எண்.">{index+1}</td>{memberRows.map(([key])=><td key={key} data-label={memberRows.find(([rowKey])=>rowKey===key)?.[1]}><MemberInput field={key} member={member} index={index} updateMember={updateMember}/></td>)}<td className="no-print row-action"><button type="button" onClick={()=>removeRow(index)} aria-label="வரிசையை நீக்கு">×</button></td></tr>)}</tbody></table></section>
 <div className="reference-paper-note">மக்கள் கணக்கெடுப்பு பயன்பாட்டிற்கு மட்டும்</div>
   <footer className="reference-controls no-print"><button type="button" className="plain-action" onClick={addRow}>+ உறுப்பினரைச் சேர்க்க</button><button type="button" className="plain-action" onClick={printDocument}>அச்சிடு</button><button type="button" className="plain-action" onClick={()=>go('/admin/login')}>நிர்வாகி உள்நுழைவு</button><button type="submit" className="save-action" disabled={submitting}>{submitting && <span className="button-spinner" aria-hidden="true" />} {submitting ? "சேமிக்கிறது..." : "படிவத்தைச் சேமி"}</button></footer>

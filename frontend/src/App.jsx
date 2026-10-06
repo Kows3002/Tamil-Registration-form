@@ -31,7 +31,7 @@ const getJwtExpiry = token => {
 }
 const initialMemberCount = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches ? 1 : 4
 const blankMember = () => ({ nameAddress: '', phoneNumber: '', gender: '', age: '', maritalStatus: '', education: '', workDetails: '', centralGovernment: false, stateGovernment: false, private: false, villageName: '', name: '', temples: '', templeBoard: '', temporaryAddress: '', taxPayingVillage: '', familyAnnualIncome: '' })
-const blankFamily = () => ({ familyHeadName: '', pitagaiName: '', villageName: '', localBody: '', townPanchayat: '', municipality: '', corporation: '', district: '', wardNumber: '', postOffice: '', postalCode: '', revenueVillage: '', division: '', circle: '', assemblyConstituency: '', parliamentConstituency: '', wardSerial: '', phoneNumber: '', members: Array.from({ length: initialMemberCount() }, blankMember) })
+const blankFamily = () => ({ familyHeadName: '', pitagaiName: '', villageName: '', villagePanchayatId: '', villagePanchayatCode: '', villagePanchayatNameTamil: '', habitation: '', habitationId: '', habitationCode: '', habitationNameTamil: '', localBody: '', townPanchayat: '', municipality: '', corporation: '', district: '', districtId: '', districtCode: '', districtNameTamil: '', block: '', blockId: '', blockCode: '', blockNameTamil: '', wardNumber: '', postOffice: '', postOfficeId: '', postOfficeSourceKey: '', postalCode: '', pincodeId: '', pincodeCode: '', revenueVillage: '', division: '', circle: '', assemblyConstituency: '', assemblyConstituencyId: '', assemblyConstituencySourceKey: '', parliamentConstituency: '', wardSerial: '', phoneNumber: '', members: Array.from({ length: initialMemberCount() }, blankMember) })
 const labels = { familyHeadName: 'குடும்பத் தலைவர் பெயர்', villageName: 'ஊர் பெயர்', localBody: 'ஊராட்சி / பேரூராட்சி', townPanchayat: 'நகராட்சி ஒன்றியம்', municipality: 'நகராட்சி', district: 'மாவட்டம்', block: 'வட்டாரம்', wardNumber: 'வார்டு எண்', taluk: 'தாலுகா', postalCode: 'அஞ்சல் எண்', revenueVillage: 'வருவாய் கிராமம்', division: 'வட்டம்', assemblyConstituency: 'சட்டமன்றத் தொகுதி', parliamentConstituency: 'பாராளுமன்றத் தொகுதி', phoneNumber: 'தொலைபேசி எண்', surveyorName: 'கணக்கெடுப்பாளர் பெயர்' }
 const memberLabels = [['name','பெயர்'],['idNumber','குடும்ப அட்டை எண்'],['gender','ஆண் / பெண்'],['age','வயது'],['education','கல்வித் தகுதி'],['familyIncome','குடும்ப வருமானம்'],['religion','மதம்'],['governmentScheme','அரசுத் திட்டம்'],['residenceType','குடியிருப்பு வகை'],['birthDate','பிறந்த தேதி'],['additionalPhone','கூடுதல் தொலைபேசி'],['governmentId','அரசு அடையாள எண்'],['remarks','குறிப்புகள்']]
 const request = async (path, options = {}) => { const res = await fetch(`${API}${path}`, { ...options, headers: { 'Content-Type': 'application/json', ...(options.token ? { Authorization: `Bearer ${options.token}` } : {}), ...options.headers } }); const data = await res.json().catch(() => ({})); if (!res.ok || data.success === false) throw new Error(data.message || 'சேவையகப் பிழை'); return data.data }
@@ -173,12 +173,13 @@ function App() {
     e.preventDefault()
     setError('')
     setNotice('')
+    const editId = location.pathname.startsWith('/admin/edit/') ? location.pathname.split('/').pop() : null
+    if (!editId && (!family.districtId || !family.villagePanchayatId)) { setError('மாவட்டம் மற்றும் ஊர் பெயரை முதன்மைத் தரவிலிருந்து தேர்ந்தெடுக்கவும்.'); return }
     if (!family.members.some(m => m.nameAddress.trim())) { setError('குறைந்தது ஒரு குடும்ப உறுப்பினர் பெயரை உள்ளிடவும்.'); return }
     if (family.phoneNumber && !/^[+\d\s()-]{7,16}$/.test(family.phoneNumber)) { setError('சரியான தொலைபேசி எண்ணை உள்ளிடவும்.'); return }
     for (const m of family.members) if (m.age && (+m.age < 0 || +m.age > 120)) { setError('வயது 0 முதல் 120 வரை இருக்க வேண்டும்.'); return }
     setSubmitting(true)
     try {
-      const editId = location.pathname.startsWith('/admin/edit/') ? location.pathname.split('/').pop() : null
       const firstMember = family.members.find(m => m.nameAddress.trim())
       await request(editId ? `/families/${editId}` : '/families', {
         method: editId ? 'PUT' : 'POST', token,
@@ -242,9 +243,6 @@ function App() {
   return withSnackbar(<PublicForm family={family} setFamily={setFamily} update={update} updateMember={updateMember} submitFamily={submitFamily} submitting={submitting} printDocument={()=>printWithMemberName(family.members,family.familyHeadName)} go={go} notice={notice} error={error} />)
 }
 export default App
-
-
-
 
 
 

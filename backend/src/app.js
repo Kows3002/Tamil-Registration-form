@@ -2,6 +2,7 @@
 const cors = require('cors')
 const familyRoutes = require('./routes/familyRoutes')
 const adminRoutes = require('./routes/adminRoutes')
+const masterDataRoutes = require('./routes/masterDataRoutes')
 const app = express()
 const origins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',').map(x => x.trim()).filter(Boolean)
 const isAllowedVercelOrigin = origin => /^https:\/\/tamil-registration-frontend(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin || '')
@@ -10,6 +11,8 @@ app.use(express.json({ limit: '1mb' }))
 app.get('/api/health', (req, res) => res.json({ success: true, data: { status: 'ok' } }))
 app.use('/api/families', familyRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/master', masterDataRoutes)
+app.locals.masterDataGetRoutes = masterDataRoutes.masterDataGetRoutes
 app.use((req, res) => res.status(404).json({ success: false, message: 'இந்த API வழி கிடைக்கவில்லை.' }))
 app.use((err, req, res, next) => {
   console.error(err.message)
