@@ -1,27 +1,167 @@
-# Tamil family registration
+# Sangam Community Family Register
 
-React/Vite frontend and Express/MongoDB API for a Tamil household registration form.
+A React/Vite + Express application for collecting a complete family record for each community. MongoDB stores the household, individual members, place selections, support needs and contribution offers together in one community-scoped family document.
 
-## Start MongoDB and configure the API
+## What is included
 
-1. Install and start MongoDB, or use a MongoDB Atlas connection string.
-2. Copy `backend/.env.example` to `backend/.env` and set your Atlas `MONGODB_URI` and a long, private `JWT_SECRET`.
-3. In `backend/`, run `npm install`, then `npm run create-admin -- <username> <password-at-least-10-chars>`.
-4. Start the API with `npm run dev` (port 5000).
-5. In `frontend/`, run `npm install` and `npm run dev` (port 5173).
+- An English-only, section-by-section registration workspace with a restrained charcoal/grey palette, consistent Segoe UI typography, a compact section navigator and readable mobile controls. The root URL opens the form directly.
+- Primary information, places and address, family members, household/livelihood, help needed, contributions, and review/consent sections.
+- One member to start, with add/remove controls and individual age, relationship, education, occupation, phone and skills fields.
+- Searchable, paginated dropdowns for State, District, Taluk / Tehsil / Mandal, Block, Gram / Village Panchayat, Village / Town, Habitation / Hamlet, Ward No., Street / Area, PIN Code and Post Office. Rural / Urban is a fixed-choice dropdown. Changing a parent clears its children.
+- Place IDs and names are verified against MongoDB masters on the server; incompatible parent/child selections are rejected.
+- Optional help categories, request priority and description; optional contribution categories, skills, availability and description. This registers interest in contributing and does not collect payments.
+- A submission receipt/reference, loading states and notifications in the top right corner.
+- An authenticated admin workspace with real counts, searchable family/member lists, help and contribution directories, and full family details. Lists refresh every 10 seconds while the tab is visible and have a manual refresh button.
+- Existing JWT authentication, one-hour admin sessions, community access permissions, community management and versioned form builder.
+- All new fields are additive. Existing family records and administrator-customised forms are retained. Only recognised, unchanged starter templates are automatically upgraded; old submitted form versions remain recorded.
 
-The frontend uses `VITE_API_URL` when set and otherwise calls `http://localhost:5000/api`. Set `CLIENT_ORIGIN` in `backend/.env` to the exact frontend origin when it differs from `http://localhost:5173`.
+## Run locally (Windows PowerShell)
 
-If Node reports `querySrv ECONNREFUSED` or `ETIMEOUT`, MongoDB has not reached the authentication stage. On Windows, check the active DNS resolver, VPN, firewall, or DNS filtering software. Test SRV lookup with `node -e "require('node:dns').promises.resolveSrv('_mongodb._tcp.<your-atlas-host>').then(console.log).catch(console.error)"`. Atlas network access and outbound TCP port 27017 must also be allowed once SRV resolution succeeds.
+### 1. Backend
 
-Admin pages are `/admin/login` and `/admin/dashboard`. The public registration endpoint accepts submissions without login; editing, listing, viewing, and deleting require an admin JWT. No credentials or database secrets are checked into this project.
+Open a terminal in the project root:
 
-## Part 1: import government master data
+```powershell
+cd backend
+npm install
+```
 
-The Part 1 source files are kept unchanged in `backend/data/master-source/`. Install Python dependencies once from `backend/` with `python -m pip install -r requirements-master-import.txt`, then run `npm run import:master`. The importer reads those files, validates and normalizes them, and upserts District, Block, Village Panchayat, Habitation, Assembly Constituency, Post Office, and PIN Code records. It creates indexes without dropping indexes or collections. Running it again is safe and updates the same master records. English district names are matched to the official LGD district codes listed by [Tamil Nadu Rural Development & Panchayat Raj](https://training.tnrd.tn.gov.in/tnrd/project/admin/district_lgd_dcode.php?lang=en&pdf=1).
+If `backend/.env` already exists, keep your existing MongoDB URI and JWT secret. Otherwise copy `.env.example` to `.env` and set:
 
-The public read-only lookup routes are under `/api/master`: `districts`, `blocks?districtId=...`, `village-panchayats?blockId=...`, `habitations?villagePanchayatId=...`, `assembly-constituencies?search=...`, `post-offices?search=...`, and `pincodes?search=...`. List responses include `data.items` and pagination metadata; page sizes are capped at 100. The registration form uses these routes for cascading master-data selections and stores both selected IDs/codes and the existing Tamil/English text snapshots.
+```dotenv
+PORT=5000
+MONGODB_URI=your-MongoDB-Atlas-connection-string
+JWT_SECRET=your-long-private-random-secret
+CLIENT_ORIGIN=http://localhost:5173
+```
 
-Import requires the configured `MONGODB_URI` to be reachable from the machine running the command. No records were imported during this implementation because the configured Atlas cluster could not be reached from this environment; rerun the command after Atlas network access/DNS is available.
+Start the backend:
 
-For the Render web service, set **Root Directory** to `backend`, **Build Command** to `npm ci`, and **Start Command** to `npm start`. The start script launches `src/server.js` directly; this app has no compiled backend build directory. Configure `MONGODB_URI` and `JWT_SECRET` as Render environment variables. `MONGODB_URI` must include the intended database path (`tamil_family_registration` in the checked local environment); the code does not use a separate database-name variable. `CLIENT_ORIGIN` is optional for the current local and Vercel frontend origins. A successful startup logs every registered `/api/master` GET route after connecting to MongoDB.
+```powershell
+npm run dev
+```
+
+Wait for `MongoDB connected` and `API listening on 5000`. Startup creates the default `krishnan-community` and its published family form when needed. Existing legacy records are assigned to that community.
+
+### 2. Location directory (only when missing / for a fresh database)
+
+The source files already live in `backend/data/master-source/`. From `backend`:
+
+```powershell
+python -m pip install -r requirements-master-import.txt
+npm run import:master
+npm run import:english
+```
+
+The master importer upserts location records without replacing collections. The English importer adds English names by authoritative codes; it preserves original names and IDs. Python and `pypdf` are needed only for these import commands, not for the running backend.
+
+The supplied rural directory covers **Tamil Nadu: 37 rural districts, 388 blocks, 12,525 panchayats and 79,395 habitations**. The state dropdown lists all 28 states and 8 union territories; district lists currently contain the supplied Tamil Nadu data. It does not imply nationwide district coverage or a complete urban directory.
+
+Official English names were matched for all 388 blocks and 12,525 panchayats, and 75,378 habitations. The remaining 4,017 habitation names use deterministic Latin-script romanisation of the source names. Romanisation is not presented as an official translation; `englishSource` records the origin. Ambiguous legacy-code matches are never guessed.
+
+English reference files are included in `backend/data/master-source/`:
+
+- [Tamil Nadu Rural Development block list](https://tnrd.tn.gov.in/rdweb_newsite/project/admin/block_lgd_bcode.php?xls=1&lang=en)
+- [English village panchayat PDF](https://tnrd.tn.gov.in/pdf/village_eng.pdf)
+- [English district/block/village/habitation workbook](https://tnrd.tn.gov.in/databases/dist_blk_vill_hab.xlsx)
+
+Taluk, independent village/town, ward and street directories are community-managed because the uploaded files do not contain reliable complete mappings for these levels. Open **Admin > Location directory** (`/admin/locations`) to add verified English names and their parent locations. Active entries immediately appear in the public dropdowns; deactivating an entry retains historical family records. Community administrators and the platform owner can maintain these lists; other community staff can read them.
+
+Families can explicitly choose a village with the same name as the selected panchayat; a panchayat is not silently treated as a village. For missing taluks or streets, the form records a `locationMissing` flag rather than inventing a location ID. Names, contact details, a house/door number and request descriptions remain text inputs because they cannot be supplied from a fixed master list.
+
+
+### 3. Frontend
+
+In another terminal, from the project root:
+
+```powershell
+cd frontend
+npm install
+```
+
+Set `frontend/.env`:
+
+```dotenv
+VITE_API_URL=http://localhost:5000/api
+```
+
+Restart Vite after changing this file:
+
+```powershell
+npm run dev
+```
+
+Use `http://localhost:5173` (the configured CORS origin).
+
+| Page | Local URL |
+| --- | --- |
+| Public family form | http://localhost:5173/ |
+| Community-specific form | http://localhost:5173/register/krishnan-community |
+| Admin login | http://localhost:5173/admin/login |
+| Admin overview | http://localhost:5173/admin/dashboard |
+| Families | http://localhost:5173/admin/families |
+| Members | http://localhost:5173/admin/members |
+| Help requests | http://localhost:5173/admin/requests |
+| Contributions | http://localhost:5173/admin/contributions |
+| Location directory | http://localhost:5173/admin/locations |
+| Form builder | http://localhost:5173/admin/form-builder |
+
+Use your existing admin account. If the database has no admin yet, create the first platform owner from `backend`:
+
+```powershell
+npm run create-admin -- your-username your-password-at-least-10-characters
+```
+
+Additional community users can be created by the platform owner in Users & roles. No password is stored in frontend localStorage.
+
+## How families use it
+
+1. Open the public form without logging in.
+2. Enter the primary contact and family details.
+3. Choose each place in order; type in the dropdown search to filter names. Browse more names where the directory spans multiple pages.
+4. Add every member, including the family head.
+5. Fill any relevant household information.
+6. Select help categories and describe the request if support is wanted.
+7. Select contribution categories and describe the offer if interested.
+8. Review the record, give consent and submit. Keep the reference shown after a successful save.
+
+Only authorised administrators can browse the collected family data. Help requests and contribution offers appear in the admin directories for follow-up; matching, payment processing and message delivery are not implemented.
+
+## Community-specific forms
+
+Every community has its own registration URL and published form version. Administrators can add ordinary questions and sections using the form builder. The structured field types `location`, `members`, `support` and `contribution` use the system keys `district`, `members`, `support` and `contribution` respectively. Required system fields must stay visible when publishing.
+
+Administrator-customised existing forms are not overwritten. To use the new sections for such a community, add the structured fields in the form builder and publish. Normal questions are stored as schema fields when applicable or in `customData` otherwise.
+
+## Production
+
+This change does not deploy either application. Deploy the updated backend and frontend together so production serves the new form configuration, schemas and code.
+
+- Render service root: `backend`; build: `npm ci`; start: `npm start`.
+- Keep the existing Render `MONGODB_URI`, `JWT_SECRET`, and approved `CLIENT_ORIGIN` values.
+- Vercel root: `frontend`; build: `npm run build`; output: `dist`.
+- Vercel environment variable: `VITE_API_URL=https://tamil-registration-form.onrender.com/api`.
+- The existing `frontend/vercel.json` SPA rewrite is retained.
+- `.env` files remain ignored by Git. API requests share `frontend/src/api.js`.
+
+## Checks
+
+```powershell
+cd frontend
+npm run build
+npm run lint
+```
+
+From `backend`, syntax-check the source files:
+
+```powershell
+Get-ChildItem src -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName }
+```
+
+The optional MongoDB integration check needs the running database, default community and imported masters:
+
+```powershell
+node scripts/checkCommunityCollection.js
+```
+
+It validates a write/read round trip inside a transaction and aborts the transaction, leaving no committed test family. It also checks invalid age, categories and location selections.

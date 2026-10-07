@@ -5,3 +5,6 @@ dist/
 .vscode/
 frontend/.env
 backend/data/generated/
+.qa-browser/
+artifacts/community-checks/
+__pycache__/

@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
 
 const memberSchema = new mongoose.Schema({
+  communityId: { type: mongoose.Schema.Types.ObjectId, ref: 'Community', required: true, index: true },
   serialNumber: { type: Number, required: true }, nameAddress: { type: String, required: true, trim: true, maxlength: 600 },
   name: { type: String, trim: true, maxlength: 160 },
+  relationship: { type: String, trim: true, maxlength: 80 },
+  occupation: { type: String, trim: true, maxlength: 200 },
+  skills: { type: String, trim: true, maxlength: 500 },
   idNumber: { type: String, trim: true, maxlength: 80 }, phoneNumber: { type: String, trim: true, maxlength: 24 },
   gender: { type: String, trim: true, maxlength: 20 }, age: { type: Number, min: 0, max: 120 }, maritalStatus: { type: String, trim: true, maxlength: 20 },
   education: { type: String, trim: true, maxlength: 100 }, familyIncome: { type: String, trim: true, maxlength: 80 },
@@ -17,6 +21,36 @@ const memberSchema = new mongoose.Schema({
 }, { _id: true })
 
 const familySchema = new mongoose.Schema({
+  communityId: { type: mongoose.Schema.Types.ObjectId, ref: 'Community', required: true, index: true },
+  formVersion: { type: Number, default: 1 },
+  customData: { type: Map, of: mongoose.Schema.Types.Mixed, default: undefined },
+  status: { type: String, enum: ['ACTIVE', 'PENDING', 'VERIFIED', 'REJECTED', 'ARCHIVED'], default: 'PENDING', index: true },
+  archivedAt: Date,
+  verifiedAt: Date,
+  verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' },
+  rejectionReason: { type: String, trim: true, maxlength: 500 },
+  email: { type: String, trim: true, maxlength: 160 }, alternatePhone: { type: String, trim: true, maxlength: 24 },
+  familyType: { type: String, trim: true, maxlength: 80 }, preferredContact: { type: String, trim: true, maxlength: 40 },
+  address: { type: String, trim: true, maxlength: 600 }, landmark: { type: String, trim: true, maxlength: 160 },
+  state: { type: String, trim: true }, stateCode: { type: String, trim: true },
+  settlementType: { type: String, enum: ['Rural', 'Urban'] }, streetArea: { type: String, trim: true, maxlength: 160 },
+  villagePanchayat: { type: String, trim: true, maxlength: 160 },
+  talukChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' }, villageChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' },
+  streetChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' }, wardChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' },
+  villageSameAsPanchayat: Boolean, locationMissing: [String],
+  housingType: { type: String, trim: true, maxlength: 100 }, familyAnnualIncome: { type: String, trim: true, maxlength: 100 },
+  mainOccupation: { type: String, trim: true, maxlength: 200 }, governmentSchemes: { type: String, trim: true, maxlength: 1000 },
+  accessibilityNeeds: { type: String, trim: true, maxlength: 1000 }, householdNotes: { type: String, trim: true, maxlength: 1000 },
+  consent: { type: Boolean, default: false }, consentAt: Date,
+  support: {
+    needed: { type: Boolean, default: false }, categories: [{ type: String, maxlength: 80 }],
+    details: { type: String, trim: true, maxlength: 2000 }, priority: { type: String, enum: ['Routine', 'Soon', 'Urgent'], default: 'Routine' },
+  },
+  contribution: {
+    willing: { type: Boolean, default: false }, categories: [{ type: String, maxlength: 80 }],
+    skills: { type: String, trim: true, maxlength: 1000 }, availability: { type: String, trim: true, maxlength: 160 },
+    details: { type: String, trim: true, maxlength: 2000 },
+  },
   familyHeadName: { type: String, required: true, trim: true, maxlength: 160 }, villageName: { type: String, required: true, trim: true, maxlength: 120 },
   pitagaiName: { type: String, trim: true, maxlength: 160 }, localBody: String, townPanchayat: String, municipality: String, corporation: String,
   district: { type: String, required: true, trim: true, maxlength: 120 }, block: String, wardNumber: String, taluk: String, postalCode: String,
@@ -31,5 +65,7 @@ const familySchema = new mongoose.Schema({
   pincodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Pincode' }, pincodeCode: String,
   members: { type: [memberSchema], validate: { validator: a => a.length > 0, message: 'At least one family member is required' } },
 }, { timestamps: true, strict: true })
+
+familySchema.index({ communityId: 1, createdAt: -1 })
 
 module.exports = mongoose.model('Family', familySchema)

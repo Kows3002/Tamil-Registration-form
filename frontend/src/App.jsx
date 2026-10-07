@@ -1,253 +1,174 @@
-﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { api } from './api'
+import Registration from './FamilyRegistration'
+import CommunityRecords from './CommunityRecords'
+import LocationDirectory from './LocationDirectory'
 import './App.css'
-import PublicForm from './PublicForm.jsx'
-import PrintRecord from './PrintRecord.jsx'
+import './CommunityAdmin.css'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
-const ADMIN_SESSION_MS = 60 * 60 * 1000
-const clearStoredAdminSession = () => {
-  localStorage.removeItem('adminToken')
-  localStorage.removeItem('adminLoginAt')
-  localStorage.removeItem('adminExpiresAt')
-}
-const getStoredAdminToken = () => {
-  if (typeof window === 'undefined') return ''
-  const storedToken = localStorage.getItem('adminToken')
-  const expiresAt = Number(localStorage.getItem('adminExpiresAt'))
-  if (!storedToken || !Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
-    clearStoredAdminSession()
-    return ''
-  }
-  return storedToken
-}
-const getJwtExpiry = token => {
+const SESSION_MS = 60 * 60 * 1000
+const DEFAULT_SLUG = 'krishnan-community'
+const blankSession = () => ({ token: '', expiresAt: 0, admin: null })
+function clearStoredSession() { localStorage.removeItem('sangam.adminSession'); localStorage.removeItem('adminToken'); localStorage.removeItem('adminLoginAt'); localStorage.removeItem('adminExpiresAt') }
+function readSession() {
   try {
-    const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
-    const paddedPayload = payload.padEnd(Math.ceil(payload.length / 4) * 4, '=')
-    return JSON.parse(atob(paddedPayload)).exp * 1000
-  } catch {
-    return Date.now() + ADMIN_SESSION_MS
-  }
+    const value = JSON.parse(localStorage.getItem('sangam.adminSession') || 'null')
+    localStorage.removeItem('adminToken'); localStorage.removeItem('adminLoginAt'); localStorage.removeItem('adminExpiresAt')
+    if (!value?.token || !value?.expiresAt || value.expiresAt <= Date.now()) { clearStoredSession(); return blankSession() }
+    return value
+  } catch { clearStoredSession(); return blankSession() }
 }
-const initialMemberCount = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches ? 1 : 4
-const blankMember = () => ({ nameAddress: '', phoneNumber: '', gender: '', age: '', maritalStatus: '', education: '', workDetails: '', centralGovernment: false, stateGovernment: false, private: false, villageName: '', name: '', temples: '', templeBoard: '', temporaryAddress: '', taxPayingVillage: '', familyAnnualIncome: '' })
-const blankFamily = () => ({ familyHeadName: '', pitagaiName: '', villageName: '', villagePanchayatId: '', villagePanchayatCode: '', villagePanchayatNameTamil: '', habitation: '', habitationId: '', habitationCode: '', habitationNameTamil: '', localBody: '', townPanchayat: '', municipality: '', corporation: '', district: '', districtId: '', districtCode: '', districtNameTamil: '', block: '', blockId: '', blockCode: '', blockNameTamil: '', wardNumber: '', postOffice: '', postOfficeId: '', postOfficeSourceKey: '', postalCode: '', pincodeId: '', pincodeCode: '', revenueVillage: '', division: '', circle: '', assemblyConstituency: '', assemblyConstituencyId: '', assemblyConstituencySourceKey: '', parliamentConstituency: '', wardSerial: '', phoneNumber: '', members: Array.from({ length: initialMemberCount() }, blankMember) })
-const labels = { familyHeadName: 'குடும்பத் தலைவர் பெயர்', villageName: 'ஊர் பெயர்', localBody: 'ஊராட்சி / பேரூராட்சி', townPanchayat: 'நகராட்சி ஒன்றியம்', municipality: 'நகராட்சி', district: 'மாவட்டம்', block: 'வட்டாரம்', wardNumber: 'வார்டு எண்', taluk: 'தாலுகா', postalCode: 'அஞ்சல் எண்', revenueVillage: 'வருவாய் கிராமம்', division: 'வட்டம்', assemblyConstituency: 'சட்டமன்றத் தொகுதி', parliamentConstituency: 'பாராளுமன்றத் தொகுதி', phoneNumber: 'தொலைபேசி எண்', surveyorName: 'கணக்கெடுப்பாளர் பெயர்' }
-const memberLabels = [['name','பெயர்'],['idNumber','குடும்ப அட்டை எண்'],['gender','ஆண் / பெண்'],['age','வயது'],['education','கல்வித் தகுதி'],['familyIncome','குடும்ப வருமானம்'],['religion','மதம்'],['governmentScheme','அரசுத் திட்டம்'],['residenceType','குடியிருப்பு வகை'],['birthDate','பிறந்த தேதி'],['additionalPhone','கூடுதல் தொலைபேசி'],['governmentId','அரசு அடையாள எண்'],['remarks','குறிப்புகள்']]
-const request = async (path, options = {}) => { const res = await fetch(`${API}${path}`, { ...options, headers: { 'Content-Type': 'application/json', ...(options.token ? { Authorization: `Bearer ${options.token}` } : {}), ...options.headers } }); const data = await res.json().catch(() => ({})); if (!res.ok || data.success === false) throw new Error(data.message || 'சேவையகப் பிழை'); return data.data }
-function tamilApiError(error, operation = 'general') {
-  const message = error?.message || ''
-  if (!message || /failed to fetch|network|cors|load failed|fetch/i.test(message) || /^[\x00-\x7F]*$/.test(message)) return operation === 'submit' ? 'தரவைச் சமர்ப்பிக்க முடியவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.' : 'சேவையகத்தை அணுக முடியவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.'
-  return message
+function getTokenExpiry(token) {
+  try { const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'); return JSON.parse(atob(payload.padEnd(Math.ceil(payload.length / 4) * 4, '='))).exp * 1000 }
+  catch { return Date.now() + SESSION_MS }
 }
-function Snackbar({ message, variant, onClose }) {
-  useEffect(() => {
-    if (!message) return
-    const timer = window.setTimeout(onClose, 5000)
-    return () => window.clearTimeout(timer)
-  }, [message, onClose])
-  if (!message) return null
-  return <div className={`api-snackbar ${variant}`} role={variant === 'failure' ? 'alert' : 'status'} aria-live={variant === 'failure' ? 'assertive' : 'polite'}><span>{message}</span><button type="button" onClick={onClose} aria-label="அறிவிப்பை மூடு">×</button></div>
+const slugFromPath = path => path.match(/^\/(?:register|preview)\/([^/]+)/)?.[1] || DEFAULT_SLUG
+const routeInfo = path => ({ path, slug: slugFromPath(path), isAdmin: path.startsWith('/admin'), section: path.split('/')[2] || 'dashboard' })
+const makeKey = label => String(label || 'field').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 48) || `field_${Date.now()}`
+
+function Brand({ name = 'Sangam', compact = false }) {
+  return <div className={`brand-mark ${compact ? 'compact' : ''}`}><span className="brand-icon">S</span><span><strong>{name}</strong>{!compact && <small>COMMUNITY RECORDS</small>}</span></div>
 }
-function printWithMemberName(members = [], fallback = '') {
-  const first = members.find(member => member?.name?.trim() || member?.nameAddress?.trim())
-  const rawName = first?.name?.trim() || first?.nameAddress?.trim() || fallback || 'குடும்ப பதிவு'
-  const filename = rawName.split(/[\r\n,،]/)[0].trim().replace(/[<>:"/\\|?*\u0000-\u001F]/g, '-').replace(/\s+/g, ' ').slice(0, 80) || 'குடும்ப பதிவு'
-  const previousTitle = document.title
-  document.title = filename
-  window.addEventListener('afterprint', () => { document.title = previousTitle }, { once: true })
-  window.print()
-}function Field({ label, value, onChange, required, type = 'text' }) { return <label className="field"><span>{label}{required && <b> *</b>}</span><input type={type} value={value || ''} onChange={onChange} required={required} /></label> }
-function App() {
-  const [path, setPath] = useState(location.pathname)
-  const [family, setFamily] = useState(blankFamily())
-  const [notice, setNotice] = useState('')
-  const [error, setError] = useState('')
-  const [token, setToken] = useState(() => getStoredAdminToken())
-  const [validatedToken, setValidatedToken] = useState('')
-  const [records, setRecords] = useState([])
-  const [selected, setSelected] = useState(null)
-  const [login, setLogin] = useState({ username: '', password: '' })
-  const [query, setQuery] = useState('')
-  const [district, setDistrict] = useState('')
-  const [village, setVillage] = useState('')
-  const [sort, setSort] = useState('newest')
-  const [page, setPage] = useState(1)
-  const [loginLoading, setLoginLoading] = useState(false)
+function Toast({ toast, close }) {
+  useEffect(() => { if (!toast) return; const timer = setTimeout(close, 4400); return () => clearTimeout(timer) }, [toast, close])
+  return toast ? <div className={`toast ${toast.type}`} role={toast.type === 'error' ? 'alert' : 'status'}><span className="toast-icon">{toast.type === 'error' ? '!' : '✓'}</span><span>{toast.message}</span><button onClick={close} aria-label="Dismiss notification">×</button></div> : null
+}
+function Login({ onLogin, onToast, loading }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
-  const [recordsLoading, setRecordsLoading] = useState(false)
-  const recordsRequest = useRef(false)
-  const clearAlerts = useCallback(() => { setNotice(''); setError('') }, [])
-  const snackbarMessage = error || notice
-  const snackbarVariant = error ? 'failure' : 'success'
-  const withSnackbar = content => <>{content}<Snackbar message={snackbarMessage} variant={snackbarVariant} onClose={clearAlerts} /></>
-  const go = (url) => { history.pushState({}, '', url); setPath(url); setNotice(''); setError('') }
-  useEffect(() => { const onPop = () => setPath(location.pathname); addEventListener('popstate', onPop); return () => removeEventListener('popstate', onPop) }, [])
-  useEffect(() => {
-    if (!path.startsWith('/admin')) return
-    const storedToken = getStoredAdminToken()
-    if (!storedToken) {
-      if (token) setToken('')
-      if (path !== '/admin/login') {
-        history.replaceState({}, '', '/admin/login')
-        setPath('/admin/login')
-      }
-      return
-    }
-    if (storedToken !== token) setToken(storedToken)
-    let target = path
-    if (path === '/admin' || path === '/admin/login' || path === '/admin/records') target = '/admin/dashboard'
-    else if (path.startsWith('/admin/records/')) target = `/admin/dashboard/${path.slice('/admin/records/'.length)}`
-    else if (path !== '/admin/dashboard' && !path.startsWith('/admin/dashboard/') && !/^\/admin\/edit\/[^/]+$/.test(path)) target = '/admin/dashboard'
-    if (target !== path) {
-      history.replaceState({}, '', target)
-      setPath(target)
-    }
-  }, [path, token])
-  const expireAdminSession = useCallback(() => {
-    clearStoredAdminSession()
-    setToken('')
-    setValidatedToken('')
-    setRecords([])
-    setSelected(null)
-    clearAlerts()
-    if (location.pathname.startsWith('/admin') && location.pathname !== '/admin/login') {
-      history.replaceState({}, '', '/admin/login')
-      setPath('/admin/login')
-    }
-  }, [clearAlerts])
-  useEffect(() => {
-    if (!token) return
-    const expiresAt = Number(localStorage.getItem('adminExpiresAt'))
-    const remaining = expiresAt - Date.now()
-    if (!Number.isFinite(expiresAt) || remaining <= 0) {
-      expireAdminSession()
-      return
-    }
-    const timer = window.setTimeout(expireAdminSession, remaining)
-    const recheck = () => { if (!getStoredAdminToken()) expireAdminSession() }
-    window.addEventListener('focus', recheck)
-    document.addEventListener('visibilitychange', recheck)
-    return () => {
-      window.clearTimeout(timer)
-      window.removeEventListener('focus', recheck)
-      document.removeEventListener('visibilitychange', recheck)
-    }
-  }, [token, expireAdminSession])
-  useEffect(() => {
-    if (!token) {
-      setValidatedToken('')
-      return
-    }
-    let active = true
-    request('/admin/me', { token }).then(() => {
-      if (active) setValidatedToken(token)
-    }).catch(() => {
-      if (active) expireAdminSession()
-    })
-    return () => { active = false }
-  }, [token, expireAdminSession])
-  const loadRecords = useCallback(async () => {
-    if (recordsRequest.current) return
-    recordsRequest.current = true
-    setRecordsLoading(true)
-    try {
-      const data = await request('/families', { token })
-      setRecords(Array.isArray(data) ? data : data.families || [])
-    } catch (e) {
-      setError(tamilApiError(e))
-    } finally {
-      recordsRequest.current = false
-      setRecordsLoading(false)
-    }
-  }, [token])
-  useEffect(() => { if (token && validatedToken === token && path.startsWith('/admin')) loadRecords() }, [token, validatedToken, path, loadRecords])
-  useEffect(() => {
-    if (!token || validatedToken !== token || path !== '/admin/dashboard') return
-    const timer = window.setInterval(() => loadRecords(), 10000)
-    return () => window.clearInterval(timer)
-  }, [token, validatedToken, path, loadRecords])
-  const update = (key, value) => setFamily(prev => ({ ...prev, [key]: value }))
-  const updateMember = (index, key, value) => setFamily(prev => ({ ...prev, members: prev.members.map((m, i) => i === index ? { ...m, [key]: value } : m) }))
-  const submitFamily = async (e) => {
-    e.preventDefault()
-    setError('')
-    setNotice('')
-    const editId = location.pathname.startsWith('/admin/edit/') ? location.pathname.split('/').pop() : null
-    if (!editId && (!family.districtId || !family.villagePanchayatId)) { setError('மாவட்டம் மற்றும் ஊர் பெயரை முதன்மைத் தரவிலிருந்து தேர்ந்தெடுக்கவும்.'); return }
-    if (!family.members.some(m => m.nameAddress.trim())) { setError('குறைந்தது ஒரு குடும்ப உறுப்பினர் பெயரை உள்ளிடவும்.'); return }
-    if (family.phoneNumber && !/^[+\d\s()-]{7,16}$/.test(family.phoneNumber)) { setError('சரியான தொலைபேசி எண்ணை உள்ளிடவும்.'); return }
-    for (const m of family.members) if (m.age && (+m.age < 0 || +m.age > 120)) { setError('வயது 0 முதல் 120 வரை இருக்க வேண்டும்.'); return }
-    setSubmitting(true)
-    try {
-      const firstMember = family.members.find(m => m.nameAddress.trim())
-      await request(editId ? `/families/${editId}` : '/families', {
-        method: editId ? 'PUT' : 'POST', token,
-        body: JSON.stringify({ ...family, familyHeadName: firstMember?.nameAddress.split(/[\r\n]/)[0] || '', phoneNumber: firstMember?.phoneNumber || '', members: family.members.filter(m => m.nameAddress.trim()).map((m, i) => ({ ...m, serialNumber: i + 1 })) })
-      })
-      if (editId) { go('/admin/dashboard'); setNotice('குடும்பப் பதிவு வெற்றிகரமாகத் திருத்தப்பட்டது.') }
-      else { setFamily(blankFamily()); setNotice('தரவு வெற்றிகரமாகச் சமர்ப்பிக்கப்பட்டது.') }
-    } catch (e) {
-      setError(tamilApiError(e, 'submit'))
-    } finally {
-      setSubmitting(false)
-    }
-  }
-  const doLogin = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoginLoading(true)
-    try {
-      const data = await request('/admin/login', { method: 'POST', body: JSON.stringify(login) })
-      const t = data.token
-      setToken(t)
-      const loginAt = Date.now()
-      const expiresAt = getJwtExpiry(t)
-      localStorage.setItem('adminToken', t)
-      localStorage.setItem('adminLoginAt', String(loginAt))
-      localStorage.setItem('adminExpiresAt', String(expiresAt))
-      go('/admin/dashboard')
-      setNotice('நிர்வாகி உள்நுழைவு வெற்றிகரமாக முடிந்தது.')
-    } catch (e) {
-      setError(tamilApiError(e))
-    } finally {
-      setLoginLoading(false)
-    }
-  }
-  const logout = () => {
-    clearStoredAdminSession()
-    setToken('')
-    setValidatedToken('')
-    setRecords([])
-    setSelected(null)
-    history.replaceState({}, '', '/admin/login')
-    setPath('/admin/login')
-    clearAlerts()
-  }
-  const deleteRecord = async (id) => { if (!confirm('இந்த குடும்பப் பதிவை நீக்க வேண்டுமா?')) return; try { await request(`/families/${id}`, { method: 'DELETE', token }); await loadRecords(); setNotice('பதிவு வெற்றிகரமாக நீக்கப்பட்டது.') } catch (e) { setError(tamilApiError(e)) } }
-  const filtered = useMemo(() => records.filter(r => `${r.familyHeadName} ${r.villageName} ${r.district} ${r.phoneNumber}`.toLowerCase().includes(query.toLowerCase()) && (!district || r.district === district) && (!village || r.villageName === village)).sort((a,b) => sort === 'newest' ? new Date(b.createdAt)-new Date(a.createdAt) : new Date(a.createdAt)-new Date(b.createdAt)), [records, query, district, village, sort])
-  const pageSize = 8, pages = Math.max(1, Math.ceil(filtered.length/pageSize)), rows = filtered.slice((page-1)*pageSize, page*pageSize)
-  const totals = { members: records.reduce((n, r) => n + (r.members?.length || 0), 0), today: records.filter(r => new Date(r.createdAt).toDateString() === new Date().toDateString()).length }
-  if (path === '/admin/login' && token) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> அமர்வு சரிபார்க்கப்படுகிறது...</div></main>)
-  if (path === '/admin/login') return withSnackbar(<main className="login-wrap"><form className="login-card" onSubmit={doLogin}><div className="seal">◈</div><p className="eyebrow">குடும்பப் பதிவு மேலாண்மை</p><h1>நிர்வாகி உள்நுழைவு</h1><label>பயனர் பெயர்<input autoComplete="username" value={login.username} onChange={e=>setLogin({...login,username:e.target.value})} required /></label><label>கடவுச்சொல்<input type="password" autoComplete="current-password" value={login.password} onChange={e=>setLogin({...login,password:e.target.value})} required /></label><button className="primary full" disabled={loginLoading}>{loginLoading && <span className="button-spinner" aria-hidden="true" />} {loginLoading ? "உள்நுழைகிறது..." : "உள்நுழைக"} {!loginLoading && <span>→</span>}</button><button type="button" className="text-button" onClick={()=>go('/')}>← பதிவு படிவத்திற்குத் திரும்பு</button></form></main>)
-  if (path === '/admin/login' && token && validatedToken !== token) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> அமர்வு சரிபார்க்கப்படுகிறது...</div></main>)
-  if (path === '/admin/login' && token) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> நிர்வாகப் பக்கத்திற்கு மாற்றப்படுகிறது...</div></main>)
-  if (path.startsWith('/admin') && (!token || validatedToken !== token)) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> உள்நுழைவு பக்கத்திற்கு மாற்றப்படுகிறது...</div></main>)
-  if (path.startsWith('/admin') && path !== '/admin/dashboard' && !path.startsWith('/admin/dashboard/') && !/^\/admin\/edit\/[^/]+$/.test(path)) return withSnackbar(<main className="login-wrap"><div className="login-card"><span className="button-spinner" aria-hidden="true" /> நிர்வாகப் பக்கம் திறக்கப்படுகிறது...</div></main>)
-  if (path === '/admin/dashboard' || path.startsWith('/admin/dashboard')) {
-    const id = path.split('/')[3]; const record = selected || records.find(r => r._id === id)
-    if (id && record) return withSnackbar(<><header className="admin-top no-print"><button className="brand" onClick={()=>go('/admin/dashboard')}><span className="mini-seal">◈</span> குடும்பப் பதிவேடு</button><div><button className="quiet" onClick={()=>printWithMemberName(record.members,record.familyHeadName)}>அச்சிடு ↗</button><button className="quiet" onClick={()=>go('/admin/dashboard')}>பதிவுகள்</button><button className="quiet" onClick={logout}>வெளியேறு</button></div></header><PrintRecord record={record} /></>)
-    return withSnackbar(<div className="dashboard"><header className="admin-top"><button className="brand" onClick={()=>go('/admin/dashboard')}><span className="mini-seal">◈</span> குடும்பப் பதிவேடு <small>நிர்வாகம்</small></button><div><button className="quiet" onClick={()=>go('/')}>புதிய பதிவு +</button><button className="quiet" onClick={logout}>வெளியேறு ↗</button><button className="quiet refresh-button" onClick={loadRecords} disabled={recordsLoading}><span className={recordsLoading ? "refresh-icon spinning" : "refresh-icon"}>↻</span> புதுப்பிக்க</button></div></header><main className="dash-content"><div className="dash-heading"><div><p className="eyebrow">நிர்வாக பலகை / பதிவுகள்</p><h1>குடும்பப் பதிவுகள்</h1><p>பதிவுகளைப் பார்வையிட்டு நிர்வகிக்கவும்.</p></div><button className="primary" onClick={()=>go('/')}>+ புதிய குடும்பப் பதிவு</button></div><section className="stats"><div className="stat"><span>மொத்த குடும்பங்கள்</span><strong>{records.length}</strong><i>◫</i></div><div className="stat"><span>மொத்த உறுப்பினர்கள்</span><strong>{totals.members}</strong><i>♧</i></div><div className="stat"><span>இன்றைய பதிவுகள்</span><strong>{totals.today}</strong><i>◷</i></div></section><section className="record-panel"><div className="panel-head"><div><h2>அனைத்து பதிவுகள்</h2><p>{filtered.length} குடும்பங்கள் பட்டியலிடப்பட்டுள்ளன</p></div><span className="live-dot">● நேரடி தரவு</span></div><div className="filters"><label className="search">⌕<input placeholder="பெயர், ஊர், மாவட்டம் தேடுக" value={query} onChange={e=>{setQuery(e.target.value);setPage(1)}} /></label><select value={district} onChange={e=>setDistrict(e.target.value)}><option value="">அனைத்து மாவட்டங்கள்</option>{[...new Set(records.map(r=>r.district).filter(Boolean))].map(x=><option key={x}>{x}</option>)}</select><select value={village} onChange={e=>setVillage(e.target.value)}><option value="">அனைத்து ஊர்கள்</option>{[...new Set(records.map(r=>r.villageName).filter(Boolean))].map(x=><option key={x}>{x}</option>)}</select><select value={sort} onChange={e=>setSort(e.target.value)}><option value="newest">புதியவை முதலில்</option><option value="oldest">பழையவை முதலில்</option></select></div><div className="table-scroll"><table className="admin-table"><thead><tr><th>குடும்பத் தலைவர்</th><th>ஊர்</th><th>மாவட்டம்</th><th>தொலைபேசி</th><th>உறுப்பினர்கள்</th><th>பதிவு தேதி</th><th>செயல்கள்</th></tr></thead><tbody>{rows.map(r=><tr key={r._id}><td><strong>{r.familyHeadName}</strong><small>பதிவு #{r._id?.slice(-6).toUpperCase()}</small></td><td>{r.villageName}</td><td>{r.district}</td><td>{r.phoneNumber||'—'}</td><td><span className="count-pill">{r.members?.length||0}</span></td><td>{new Date(r.createdAt).toLocaleDateString('ta-IN')}</td><td className="actions"><button title="பார்க்க" onClick={()=>{setSelected(r);go(`/admin/dashboard/${r._id}`)}}>காண்க</button><button title="திருத்த" onClick={()=>{setFamily({...r,members:[...(r.members||[])]});go(`/admin/edit/${r._id}`)}}>திருத்து</button><button className="danger-link" title="நீக்கு" onClick={()=>deleteRecord(r._id)}>நீக்கு</button></td></tr>)}</tbody></table>{rows.length===0&&<div className="empty">பதிவுகள் எதுவும் இல்லை</div>}</div><div className="pagination"><span>{filtered.length?`${(page-1)*pageSize+1}–${Math.min(page*pageSize,filtered.length)} / ${filtered.length}`:'0 பதிவுகள்'}</span><div><button disabled={page<=1} onClick={()=>setPage(page-1)}>← முந்தைய</button><span>பக்கம் {page} / {pages}</span><button disabled={page>=pages} onClick={()=>setPage(page+1)}>அடுத்து →</button></div></div></section></main></div>)
-  }
-  const editId = path.startsWith('/admin/edit/') ? path.split('/').pop() : null
-  return withSnackbar(<PublicForm family={family} setFamily={setFamily} update={update} updateMember={updateMember} submitFamily={submitFamily} submitting={submitting} printDocument={()=>printWithMemberName(family.members,family.familyHeadName)} go={go} notice={notice} error={error} />)
+  const submit = async event => { event.preventDefault(); setSubmitting(true); try { await onLogin(username, password) } catch (error) { onToast(error.message, 'error') } finally { setSubmitting(false) } }
+  return <main className="login-page"><header className="login-header"><a href="/"><Brand /></a><a className="back-link" href="/">Back to family registration</a></header><section className="login-main"><div className="login-box"><span className="overline">ADMINISTRATION</span><h1>Sign in to Sangam</h1><p>Use your administrator account to open the community workspace.</p><form onSubmit={submit}><label>Email or username<input autoComplete="username" value={username} onChange={event => setUsername(event.target.value)} required /></label><label>Password<input type="password" autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} required /></label><button className="button primary wide" disabled={submitting || loading}>{submitting ? <><span className="spinner light" /> Signing in...</> : 'Sign in'}</button></form><div className="login-security">Your session lasts for one hour.</div></div><footer className="login-footer">For account access, contact your community administrator.</footer></section><footer className="login-bottom">Sangam / Community records</footer></main>
 }
-export default App
 
+function AdminShell({ admin, community, setCommunity, communities, onLogout, path, go, children }) {
+  const isSuper = admin?.role === 'SUPER_ADMIN'
+  const nav = [
+    { title: 'Community', items: [['dashboard', 'Overview', '01'], ['families', 'Family register', '02'], ['members', 'Members', '03'], ['requests', 'Help requests', '04'], ['contributions', 'Contributions', '05']] },
+    { title: 'Configure', items: [['locations', 'Location directory', '06'], ['form-builder', 'Registration form', '07'], ['settings', 'Community profile', '08'], ...(isSuper ? [['users', 'Users & roles', '09']] : [])] },
+  ]
+  return <div className="admin-layout"><aside className="sidebar"><a href="/admin"><Brand /></a><div className="workspace-label">WORKSPACE</div><label className="community-select-label">ACTIVE COMMUNITY<select value={community?._id || ''} onChange={event => setCommunity(communities.find(item => item._id === event.target.value) || null)} aria-label="Select community">{communities.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}</select></label><nav className="side-nav">{nav.map(group => <div className="nav-group" key={group.title}><span>{group.title}</span>{group.items.map(([key, label, icon]) => <button key={key} className={(path.includes(key) || (key === 'dashboard' && path === '/admin')) ? 'selected' : ''} onClick={() => go(key === 'dashboard' ? '/admin' : `/admin/${key}`)}><i>{icon}</i>{label}</button>)}</div>)}{isSuper && <div className="nav-group"><span>Platform</span><button className={path.includes('communities') ? 'selected' : ''} onClick={() => go('/admin/communities')}><i>◫</i>Communities</button></div>}</nav><div className="sidebar-bottom"><div className="help-card"><span>Need a hand?</span><small>Visit the help center for setup guidance.</small><button onClick={() => go('/admin/help')}>Open help center ↗</button></div><div className="profile-button"><span className="avatar">{(admin?.username || 'A').slice(0, 1).toUpperCase()}</span><span><strong>{admin?.username}</strong><small>{(admin?.role || '').replaceAll('_', ' ').toLowerCase()}</small></span><button onClick={onLogout} aria-label="Log out" title="Log out">↗</button></div></div></aside><div className="admin-main"><header className="topbar"><div className="breadcrumbs"><span>Workspace</span><b>/</b><strong>{path === '/admin' ? 'Overview' : (/^[a-f0-9]{24}$/.test(path.split('/').pop()) ? 'Family information' : path.split('/').pop().replaceAll('-', ' ').replace(/\b\w/g, char => char.toUpperCase()))}</strong></div><div className="top-actions"><select className="mobile-community-switcher" value={community?._id || ''} onChange={event => setCommunity(communities.find(item => item._id === event.target.value) || null)} aria-label="Select community">{communities.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}</select><button className="icon-button" aria-label="Notifications">♧<i /></button><button className="button secondary top-logout" onClick={onLogout}>Log out</button><span className="top-divider" /><button className="avatar top-avatar">{(admin?.username || 'A').slice(0, 1).toUpperCase()}</button></div></header><main className="admin-content">{children}</main></div></div>
+}
 
+function PageHeader({ eyebrow, title, description, action }) { return <div className="page-header"><div><span className="overline">{eyebrow}</span><h1>{title}</h1><p>{description}</p></div>{action}</div> }
+function EmptyTable({ message = 'Nothing here yet.' }) { return <div className="empty-table"><span>⌕</span><strong>{message}</strong><small>When new records are available, they will appear here.</small></div> }
 
+function Communities({ token, communities, refresh, onToast, setCommunity, go }) {
+  const [form, setForm] = useState({ name: '', code: '', description: '', primaryColor: '#2457c5' })
+  const [saving, setSaving] = useState(false)
+  const submit = async event => { event.preventDefault(); setSaving(true); try { const community = await api('/communities', { token, method: 'POST', body: JSON.stringify(form) }); await refresh(); setCommunity(community); setForm({ name: '', code: '', description: '', primaryColor: '#2457c5' }); onToast(`${community.name} is ready. Its registration form was created.`, 'success') } catch (error) { onToast(error.message, 'error') } finally { setSaving(false) } }
+  return <><PageHeader eyebrow="PLATFORM MANAGEMENT" title="Communities" description="Create and manage independent community workspaces." /><div className="community-layout"><section className="content-panel"><div className="panel-title"><div><h2>All communities</h2><p>{communities.length} workspaces</p></div></div><div className="table-wrap"><table className="data-table"><thead><tr><th>COMMUNITY</th><th>CODE</th><th>PUBLIC REGISTRATION</th><th>STATUS</th><th /></tr></thead><tbody>{communities.map(item => <tr key={item._id}><td><div className="community-row"><span className="community-avatar small-avatar" style={{ background: item.branding?.secondaryColor }}>{item.name.slice(0, 1)}</span><span><strong>{item.name}</strong><small>/{item.slug}</small></span></div></td><td><span className="badge count">{item.code}</span></td><td><a href={`/register/${item.slug}`} target="_blank" rel="noreferrer">Open form ↗</a></td><td><span className={`badge ${item.status === 'ACTIVE' ? 'verified' : 'pending'}`}>{item.status}</span></td><td><button className="button text small" onClick={() => { setCommunity(item); go('/admin/dashboard') }}>Open workspace →</button></td></tr>)}</tbody></table></div></section><section className="content-panel create-community"><div className="panel-title"><div><h2>Create a community</h2><p>Each community gets its own workspace and starter form.</p></div></div><form onSubmit={submit}><label>Community name<input value={form.name} onChange={event => setForm({ ...form, name: event.target.value })} placeholder="e.g. Salem Community" required /></label><label>Community code<input value={form.code} onChange={event => setForm({ ...form, code: event.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, '') })} placeholder="SALEM-01" minLength="2" maxLength="24" required /></label><label>Description<textarea rows="3" value={form.description} onChange={event => setForm({ ...form, description: event.target.value })} placeholder="A short introduction" /></label><label>Primary color<input type="color" value={form.primaryColor} onChange={event => setForm({ ...form, primaryColor: event.target.value })} /></label><button className="button primary wide" disabled={saving}>{saving ? 'Creating…' : 'Create community'}</button></form></section></div></>
+}
 
+const COMMUNITY_ROLES = ['COMMUNITY_ADMIN', 'COMMUNITY_MANAGER', 'DATA_ENTRY_OPERATOR', 'VERIFIER', 'VIEWER']
+function UsersRoles({ token, communities, onToast }) {
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [form, setForm] = useState({ username: '', password: '', role: 'COMMUNITY_ADMIN', communityIds: [] })
+  const load = useCallback(() => { setLoading(true); api('/admin/users', { token }).then(setUsers).catch(error => onToast(error.message, 'error')).finally(() => setLoading(false)) }, [token, onToast])
+  useEffect(() => { load() }, [load])
+  const submit = async event => { event.preventDefault(); setSaving(true); try { await api('/admin/users', { token, method: 'POST', body: JSON.stringify(form) }); setForm({ username: '', password: '', role: 'COMMUNITY_ADMIN', communityIds: [] }); await load(); onToast('Community user created.', 'success') } catch (error) { onToast(error.message, 'error') } finally { setSaving(false) } }
+  const updateUser = async (user, changes) => { try { await api(`/admin/users/${user._id}`, { token, method: 'PATCH', body: JSON.stringify(changes) }); await load(); onToast('User permissions updated.', 'success') } catch (error) { onToast(error.message, 'error') } }
+  const toggleCommunity = id => setForm(current => ({ ...current, communityIds: current.communityIds.includes(id) ? current.communityIds.filter(value => value !== id) : [...current.communityIds, id] }))
+  return <><PageHeader eyebrow="ACCESS CONTROL" title="Users & roles" description="Give each team member access to only the communities and tools they need." /><div className="user-admin-layout"><section className="content-panel"><div className="panel-title"><div><h2>Admin accounts</h2><p>{users.length} team members</p></div><button className="button secondary small" onClick={load}>↻ Refresh</button></div>{loading ? <div className="loading-row"><span className="spinner" /> Loading users…</div> : users.length ? <div className="table-wrap"><table className="data-table"><thead><tr><th>USER</th><th>ROLE</th><th>COMMUNITIES</th><th>STATUS</th><th>ADDED</th></tr></thead><tbody>{users.map(user => <tr key={user._id}><td><strong>{user.username}</strong><small>{user._id.slice(-8).toUpperCase()}</small></td><td><select className="role-select" value={user.role} onChange={event => updateUser(user, { role: event.target.value })}>{COMMUNITY_ROLES.map(role => <option key={role}>{role}</option>)}</select></td><td>{(user.communityIds || []).map(id => communities.find(item => item._id === id)?.name).filter(Boolean).join(', ') || '—'}</td><td><button className={`badge ${user.status === 'ACTIVE' ? 'verified' : 'pending'} status-button`} onClick={() => updateUser(user, { status: user.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE' })}>{user.status}</button></td><td>{new Date(user.createdAt).toLocaleDateString('en-IN')}</td></tr>)}</tbody></table></div> : <EmptyTable message="No admin accounts found" />}</section><section className="content-panel create-community"><div className="panel-title"><div><h2>Invite a teammate</h2><p>Create an account and assign access.</p></div></div><form onSubmit={submit}><label>Username<input autoComplete="off" value={form.username} onChange={event => setForm({ ...form, username: event.target.value })} placeholder="name@community.org" required /></label><label>Temporary password<input autoComplete="new-password" type="password" value={form.password} onChange={event => setForm({ ...form, password: event.target.value })} minLength="12" placeholder="At least 12 characters" required /></label><label>Role<select value={form.role} onChange={event => setForm({ ...form, role: event.target.value })}>{COMMUNITY_ROLES.map(role => <option key={role} value={role}>{role.replaceAll('_', ' ')}</option>)}</select></label><fieldset className="community-checkboxes"><legend>Community access</legend>{communities.map(item => <label key={item._id}><input type="checkbox" checked={form.communityIds.includes(item._id)} onChange={() => toggleCommunity(item._id)} />{item.name}</label>)}</fieldset><button className="button primary wide" disabled={saving}>{saving ? 'Creating…' : 'Create account'}</button></form></section></div></>
+}
 
+function CommunityProfile({ community, token, updateCommunity, onToast }) {
+  const [profile, setProfile] = useState({ name: community.name || '', description: community.description || '', branding: { primaryColor: community.branding?.primaryColor || '#2457c5', secondaryColor: community.branding?.secondaryColor || '#e9efff' }, contact: { ...(community.contact || {}) } })
+  const [saving, setSaving] = useState(false)
+  useEffect(() => { setProfile({ name: community.name || '', description: community.description || '', branding: { primaryColor: community.branding?.primaryColor || '#2457c5', secondaryColor: community.branding?.secondaryColor || '#e9efff' }, contact: { ...(community.contact || {}) } }) }, [community])
+  const submit = async event => { event.preventDefault(); setSaving(true); try { const value = await api(`/communities/${community._id}/profile`, { token, communityId: community._id, method: 'PATCH', body: JSON.stringify(profile) }); updateCommunity(value); onToast('Community profile saved.', 'success') } catch (error) { onToast(error.message, 'error') } finally { setSaving(false) } }
+  return <><PageHeader eyebrow="COMMUNITY SETTINGS" title="Community profile" description="Manage the identity and public details shown to your members." /><form className="content-panel profile-form" onSubmit={submit}><div className="panel-title"><div><h2>Public identity</h2><p>Your registration experience reflects these details.</p></div><span className="badge verified">{community.status}</span></div><div className="profile-fields"><label>Community name<input value={profile.name} onChange={event => setProfile({ ...profile, name: event.target.value })} required /></label><label>Community code<input value={community.code} disabled /></label><label className="profile-description">Description<textarea rows="3" value={profile.description} onChange={event => setProfile({ ...profile, description: event.target.value })} placeholder="Introduce your community" /></label><label>Primary color<input type="color" value={profile.branding.primaryColor} onChange={event => setProfile({ ...profile, branding: { ...profile.branding, primaryColor: event.target.value } })} /></label><label>Secondary color<input type="color" value={profile.branding.secondaryColor} onChange={event => setProfile({ ...profile, branding: { ...profile.branding, secondaryColor: event.target.value } })} /></label><label>Contact name<input value={profile.contact.name || ''} onChange={event => setProfile({ ...profile, contact: { ...profile.contact, name: event.target.value } })} /></label><label>Contact phone<input type="tel" value={profile.contact.phone || ''} onChange={event => setProfile({ ...profile, contact: { ...profile.contact, phone: event.target.value } })} /></label><label>Contact email<input type="email" value={profile.contact.email || ''} onChange={event => setProfile({ ...profile, contact: { ...profile.contact, email: event.target.value } })} /></label></div><div className="profile-actions"><span className="profile-link">Public form: <a href={`/register/${community.slug}`} target="_blank" rel="noreferrer">/register/{community.slug} ↗</a></span><button className="button primary" disabled={saving}>{saving ? 'Saving…' : 'Save changes'}</button></div></form></>
+}
 
+const FIELD_TYPES = ['text', 'textarea', 'number', 'phone', 'email', 'date', 'select', 'checkbox', 'location', 'members', 'support', 'contribution']
+function FormBuilder({ community, token, onToast }) {
+  const [config, setConfig] = useState(null)
+  const [sections, setSections] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [selected, setSelected] = useState(null)
+  const load = useCallback(() => { if (!community?._id) return; setLoading(true); api(`/communities/${community._id}/forms`, { token, communityId: community._id }).then(data => { setConfig(data); const editing = [...data.versions].filter(version => version.status === 'DRAFT').sort((a, b) => b.version - a.version)[0] || data.versions.find(version => version.version === data.activeVersion); setSections(JSON.parse(JSON.stringify(editing?.sections || []))) }).catch(error => onToast(error.message, 'error')).finally(() => setLoading(false)) }, [community, token, onToast])
+  useEffect(() => { load() }, [load])
+  const setField = (sectionIndex, fieldIndex, key, value) => setSections(current => current.map((section, i) => i !== sectionIndex ? section : { ...section, fields: section.fields.map((field, j) => j !== fieldIndex ? field : { ...field, [key]: value }) }))
+  const addSection = () => setSections(current => [...current, { key: `section_${Date.now()}`, title: 'New section', description: '', order: current.length + 1, enabled: true, fields: [] }])
+  const addField = sectionIndex => setSections(current => current.map((section, i) => i !== sectionIndex ? section : { ...section, fields: [...section.fields, { key: `custom_${Date.now()}`, label: 'New question', type: 'text', required: false, visible: true, order: section.fields.length + 1 }] }))
+  const saveDraft = async () => { setSaving(true); try { const next = await api(`/communities/${community._id}/forms/drafts`, { token, communityId: community._id, method: 'POST', body: JSON.stringify({ sections }) }); setConfig(next); onToast('Draft saved. Published registrations keep using their current version.', 'success') } catch (error) { onToast(error.message, 'error') } finally { setSaving(false) } }
+  const publish = async () => {
+    setSaving(true)
+    try {
+      const saved = await api(`/communities/${community._id}/forms/drafts`, { token, communityId: community._id, method: 'POST', body: JSON.stringify({ sections }) })
+      setConfig(saved)
+      const draft = [...saved.versions].filter(version => version.status === 'DRAFT').sort((a, b) => b.version - a.version)[0]
+      const next = await api(`/communities/${community._id}/forms/${draft._id}/publish`, { token, communityId: community._id, method: 'POST' })
+      setConfig(next); onToast('Registration form published.', 'success'); load()
+    } catch (error) { onToast(error.message, 'error') }
+    finally { setSaving(false) }
+  }
 
+  if (loading) return <div className="loading-row"><span className="spinner" /> Loading form builder…</div>
+  const active = config?.versions?.find(version => version.version === config?.activeVersion)
+  return <><PageHeader eyebrow="FORM CONFIGURATION" title="Registration form" description={`${community?.name || 'Community'} · Version ${active?.version || 1} is live`} action={<div className="page-actions"><span className="badge draft">{config?.versions?.some(version => version.status === 'DRAFT') ? 'DRAFT' : 'PUBLISHED'}</span><a className="button secondary" href={`/preview/${community.slug}`} target="_blank" rel="noreferrer">Preview form ↗</a><button className="button secondary" onClick={saveDraft} disabled={saving}>{saving ? 'Saving…' : 'Save draft'}</button><button className="button primary" onClick={publish} disabled={saving}>Publish form</button></div>} /><div className="builder-layout"><aside className="builder-sections"><div className="builder-panel-heading"><span>FORM SECTIONS</span><button className="icon-button" onClick={addSection} aria-label="Add section">＋</button></div>{sections.map((section, index) => <button key={section._id || section.key} className={`builder-section ${selected?.section === index ? 'active' : ''}`} onClick={() => setSelected({ section: index })}><span className="builder-section-number">{String(index + 1).padStart(2, '0')}</span><span><strong>{section.title}</strong><small>{section.fields.length} fields</small></span><i>⌄</i></button>)}<button className="add-section" onClick={addSection}>＋ Add section</button></aside><section className="builder-canvas">{sections.length ? sections.map((section, sectionIndex) => <article className="builder-section-card" key={section._id || section.key}><div className="builder-card-head"><div><span className="overline">SECTION {String(sectionIndex + 1).padStart(2, '0')}</span><input className="builder-title-input" value={section.title} onChange={event => setSections(current => current.map((item, index) => index === sectionIndex ? { ...item, title: event.target.value, key: item.key || makeKey(event.target.value) } : item))} /><input className="builder-desc-input" value={section.description || ''} onChange={event => setSections(current => current.map((item, index) => index === sectionIndex ? { ...item, description: event.target.value } : item))} placeholder="Add a short description" /></div><button className="icon-button danger" onClick={() => setSections(current => current.filter((_, index) => index !== sectionIndex))} title="Remove section">×</button></div><div className="builder-fields">{section.fields.map((field, fieldIndex) => <div className={`builder-field ${selected?.section === sectionIndex && selected?.field === fieldIndex ? 'selected' : ''}`} key={field._id || field.key} onClick={() => setSelected({ section: sectionIndex, field: fieldIndex })}><span className="drag-handle">⠿</span><div className="builder-field-main"><input value={field.label} onChange={event => setField(sectionIndex, fieldIndex, 'label', event.target.value)} aria-label="Field label" /><small>{field.key}</small></div><select value={field.type} onChange={event => setField(sectionIndex, fieldIndex, 'type', event.target.value)} aria-label="Field type">{FIELD_TYPES.map(type => <option key={type} value={type}>{type.replace(/^./, first => first.toUpperCase())}</option>)}</select>{field.type === 'select' && <input className="builder-options" value={(field.options || []).join(', ')} onChange={event => setField(sectionIndex, fieldIndex, 'options', event.target.value.split(',').map(option => option.trim()).filter(Boolean))} aria-label="Choice options" placeholder="Choices, comma separated" />}<label className="required-toggle"><input type="checkbox" checked={field.required} onChange={event => setField(sectionIndex, fieldIndex, 'required', event.target.checked)} /> Required</label><button className="icon-button danger" onClick={event => { event.stopPropagation(); setSections(current => current.map((item, index) => index === sectionIndex ? { ...item, fields: item.fields.filter((_, fi) => fi !== fieldIndex) } : item)) }} aria-label="Remove field">×</button></div>)}</div><button className="add-field" onClick={() => addField(sectionIndex)}>＋ Add question</button></article>) : <EmptyTable message="Your form does not have any sections" />}</section><aside className="builder-settings"><span className="overline">FORM DETAILS</span><h3>Registration form</h3><p>Changes are saved as a new version. The form families currently use stays unchanged until you publish.</p><div className="setting-divider" /><span className="setting-label">PUBLISHED VERSION</span><strong>Version {active?.version || '—'}</strong><div className="setting-divider" /><span className="setting-label">PUBLIC FORM URL</span><a className="public-url" href={`/register/${community.slug}`} target="_blank" rel="noreferrer">/register/{community.slug} ↗</a><button className="button secondary wide" onClick={() => navigator.clipboard?.writeText(`${location.origin}/register/${community.slug}`).then(() => onToast('Registration URL copied.', 'success'))}>Copy registration link</button></aside></div></>
+}
 
+export default function App() {
+  const [path, setPath] = useState(location.pathname)
+  const [session, setSession] = useState(readSession)
+  const [admin, setAdmin] = useState(session.admin)
+  const [communities, setCommunities] = useState([])
+  const [community, setCommunity] = useState(null)
+  const [toast, setToast] = useState(null)
+  const [authLoading, setAuthLoading] = useState(Boolean(session.token))
+  const sessionToken = session.token
+  const sessionExpiresAt = session.expiresAt
+  const adminId = admin?._id
+  const route = routeInfo(path)
+  const notify = useCallback((message, type = 'success') => setToast({ message, type }), [])
+  const closeToast = useCallback(() => setToast(null), [])
+  const go = useCallback(url => { history.pushState({}, '', url); setPath(location.pathname) }, [])
+  useEffect(() => { const onPop = () => setPath(location.pathname); addEventListener('popstate', onPop); return () => removeEventListener('popstate', onPop) }, [])
+  const expire = useCallback(() => { clearStoredSession(); setSession(blankSession()); setAdmin(null); setCommunities([]); setCommunity(null); if (location.pathname.startsWith('/admin') && location.pathname !== '/admin/login') { history.replaceState({}, '', '/admin/login'); setPath('/admin/login') } }, [])
+  useEffect(() => {
+    if (!sessionToken) { setAuthLoading(false); return }
+    const delay = sessionExpiresAt - Date.now()
+    if (delay <= 0) { expire(); return }
+    let alive = true
+    const timer = setTimeout(expire, delay)
+    api('/admin/me', { token: sessionToken }).then(value => { if (alive) { setAdmin(value); setSession(current => ({ ...current, admin: value })); localStorage.setItem('sangam.adminSession', JSON.stringify({ token: sessionToken, expiresAt: sessionExpiresAt, admin: value })) } }).catch(() => { if (alive) expire() }).finally(() => { if (alive) setAuthLoading(false) })
+    return () => { alive = false; clearTimeout(timer) }
+  }, [sessionToken, sessionExpiresAt, expire])
+  const refreshCommunities = useCallback(async () => { const values = await api('/communities', { token: sessionToken }); setCommunities(values); setCommunity(current => values.find(item => item._id === current?._id) || values[0] || null); return values }, [sessionToken])
+  useEffect(() => { if (sessionToken && adminId) refreshCommunities().catch(error => notify(error.message, 'error')) }, [sessionToken, adminId, refreshCommunities, notify])
+  const login = async (username, password) => { const result = await api('/admin/login', { method: 'POST', body: JSON.stringify({ username, password }) }); const value = { token: result.token, expiresAt: Math.min(Date.now() + SESSION_MS, getTokenExpiry(result.token)), admin: result.admin }; localStorage.setItem('sangam.adminSession', JSON.stringify(value)); setSession(value); setAdmin(value.admin); setAuthLoading(true); go('/admin/dashboard') }
+  const logout = () => { clearStoredSession(); setSession(blankSession()); setAdmin(null); setCommunity(null); setCommunities([]); go('/admin/login') }
+  if (route.isAdmin && route.path !== '/admin/login' && (!session.token || !admin || !community || authLoading)) {
+    if (route.path !== '/admin/login' && !session.token) { history.replaceState({}, '', '/admin/login'); if (path !== '/admin/login') setPath('/admin/login') }
+    return <><div className="auth-loading"><span className="spinner" /> Preparing your workspace…</div><Toast toast={toast} close={closeToast} /></>
+  }
+  if (route.path === '/admin/login') {
+    if (session.token && admin) { history.replaceState({}, '', '/admin/dashboard'); if (path !== '/admin/dashboard') setPath('/admin/dashboard'); return <div className="auth-loading"><span className="spinner" /> Opening your workspace…</div> }
+    return <><Login onLogin={login} onToast={notify} loading={authLoading} /><Toast toast={toast} close={closeToast} /></>
+  }
+  if (route.isAdmin) {
+    let page
+    if (route.path === '/admin' || route.path === '/admin/dashboard') page = <CommunityRecords mode="overview" community={community} token={session.token} go={go} onToast={notify} adminRole={admin.role} />
+    else if (route.path === '/admin/communities') page = admin.role === 'SUPER_ADMIN' ? <Communities token={session.token} communities={communities} refresh={refreshCommunities} onToast={notify} setCommunity={setCommunity} go={go} /> : <AccessDenied />
+    else if (route.path === '/admin/form-builder') page = <FormBuilder community={community} token={session.token} onToast={notify} />
+    else if (route.path === '/admin/locations') page = <LocationDirectory key={community._id} community={community} token={session.token} onToast={notify} adminRole={admin.role} />
+    else if (route.path === '/admin/families') page = <CommunityRecords community={community} token={session.token} onToast={notify} go={go} adminRole={admin.role} />
+    else if (['/admin/members', '/admin/requests', '/admin/contributions'].includes(route.path)) page = <CommunityRecords mode={route.section} community={community} token={session.token} onToast={notify} go={go} adminRole={admin.role} />
+    else if (/^\/admin\/families\/[a-f0-9]{24}$/.test(route.path)) page = <CommunityRecords recordId={route.path.split('/').pop()} community={community} token={session.token} onToast={notify} go={go} adminRole={admin.role} />
+    else if (route.path === '/admin/users') page = admin.role === 'SUPER_ADMIN' ? <UsersRoles token={session.token} communities={communities} onToast={notify} /> : <AccessDenied />
+    else if (route.path === '/admin/settings') page = <CommunityProfile community={community} token={session.token} updateCommunity={value => { setCommunity(value); setCommunities(current => current.map(item => item._id === value._id ? value : item)) }} onToast={notify} />
+    else if (route.path === '/admin/preview') page = <Registration key={community.slug} slug={community.slug} preview onToast={notify} />
+    else page = <ComingSoon path={route.path} />
+    return <><AdminShell admin={admin} community={community} setCommunity={setCommunity} communities={communities} onLogout={logout} path={route.path} go={go}>{page}</AdminShell><Toast toast={toast} close={closeToast} /></>
+  }
+  if (route.path.startsWith('/preview/')) return <><Registration key={route.slug} slug={route.slug} preview onToast={notify} /><Toast toast={toast} close={closeToast} /></>
+  if (route.path === '/') return <><Registration key={DEFAULT_SLUG} slug={DEFAULT_SLUG} onToast={notify} /><Toast toast={toast} close={closeToast} /></>
+  return <><Registration key={route.slug} slug={route.slug} onToast={notify} /><Toast toast={toast} close={closeToast} /></>
+}
+
+function AccessDenied() { return <section className="content-panel access-denied"><span>403</span><h2>Platform access required</h2><p>Only a platform administrator can manage communities.</p></section> }
+function ComingSoon({ path }) { const title = path.split('/').pop().replaceAll('-', ' '); return <><PageHeader eyebrow="COMMUNITY WORKSPACE" title={title.replace(/\b\w/g, letter => letter.toUpperCase())} description="This workspace is ready for the next platform module." /><section className="content-panel module-placeholder"><span className="module-icon">✳</span><h2>Your workspace is ready to grow</h2><p>This area will use the selected community's permissions and data scope.</p><span className="badge draft">FOUNDATION READY</span></section></> }
