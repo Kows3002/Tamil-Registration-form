@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { api } from './api'
 
-export function PlaceSelect({ label, endpoint, params = {}, disabled, value, onSelect, required, id, choices = [], allowUnlisted = false }) {
+function PlaceSelectInput({ label, endpoint, params = {}, disabled, value, onSelect, required, id, choices = [], allowUnlisted = false }) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
@@ -28,13 +28,13 @@ export function PlaceSelect({ label, endpoint, params = {}, disabled, value, onS
       setLoading(true); setError('')
       api(`/master/${endpoint}?limit=100&page=${page}&search=${encodeURIComponent(search)}&${parentQuery}`, { signal: controller.signal })
         .then(data => { if (controller.signal.aborted) return; setItems(previous => page === 1 ? data.items : [...previous, ...data.items]); setPages(data.pagination.pages) })
-        .catch(err => { if (err.name !== 'AbortError') { setError(err.message); if (page === 1) setItems([]) } })
+        .catch(err => { if (!controller.signal.aborted && err.name !== 'AbortError') { setError(err.message); if (page === 1) setItems([]) } })
         .finally(() => { if (!controller.signal.aborted) setLoading(false) })
     }, search ? 220 : 0)
     return () => { clearTimeout(timer); controller.abort() }
   }, [open, endpoint, parentQuery, disabled, search, page, retry])
   const select = item => { onSelect(item); setOpen(false); trigger.current?.focus() }
-  const name = item => item.displayName || item.nameEnglish || item.name || item.code
+  const name = item => item.displayName || item.nameEnglish || item.name || item.code || ''
   const available = [...choices.filter(item => name(item).toLowerCase().includes(search.toLowerCase())), ...items]
   return <div className="collection-field place-field" ref={container} onKeyDown={event => { if (event.key === 'Escape') { setOpen(false); trigger.current?.focus() } }}>
     <label className="collection-label" htmlFor={id}>{label}{required && <b> *</b>}</label>
@@ -50,9 +50,16 @@ export function PlaceSelect({ label, endpoint, params = {}, disabled, value, onS
   </div>
 }
 
+// Changing the request scope discards pagination, search and old results for
+// every dependent list, including the administrator's directory controls.
+export function PlaceSelect(props) {
+  const scope = JSON.stringify([props.endpoint, Boolean(props.disabled), Object.entries(props.params || {}).sort(([a], [b]) => a.localeCompare(b))])
+  return <PlaceSelectInput key={scope} {...props} />
+}
+
 export default function LocationFields({ values, change, communitySlug }) {
-  const children = ['districtId', 'district', 'talukChoiceId', 'talukCode', 'taluk', 'blockId', 'block', 'villagePanchayatId', 'villagePanchayat', 'villagePanchayatNameTamil', 'villageChoiceId', 'villageName', 'villageSameAsPanchayat', 'habitationId', 'habitation', 'wardNumber', 'wardChoiceId', 'streetChoiceId', 'streetArea', 'postalCode', 'pincodeId', 'postOfficeId', 'postOffice']
-  const reset = keys => Object.fromEntries(keys.map(key => [key, key === 'villageSameAsPanchayat' ? false : '']))
+  const children = ['districtId', 'district', 'talukChoiceId', 'talukCode', 'taluk', 'blockId', 'block', 'villagePanchayatId', 'villagePanchayat', 'villagePanchayatNameTamil', 'villageChoiceId', 'villageName', 'villageSameAsPanchayat', 'habitationId', 'habitation', 'wardNumber', 'wardChoiceId', 'streetChoiceId', 'streetArea', 'postalCode', 'pincodeId', 'postOfficeId', 'postOffice', 'villageSameAsHabitation']
+  const reset = keys => Object.fromEntries(keys.map(key => [key, ['villageSameAsPanchayat', 'villageSameAsHabitation'].includes(key) ? false : '']))
   const localParams = kind => ({ kind, communitySlug, districtId: values.districtId, blockId: kind === 'taluk' ? undefined : values.blockId, villagePanchayatId: kind === 'taluk' ? undefined : values.villagePanchayatId, habitationId: kind === 'street' ? values.habitationId : undefined })
   const rural = values.settlementType !== 'Urban'
   const choose = (id, key, item, clear = []) => change({ [id]: item._id, [key]: item.nameEnglish || item.displayName || item.name || item.code, ...reset(clear), ...(clear.length ? { locationMissing: (values.locationMissing || []).filter(kind => kind === 'taluk' && !clear.includes('taluk')) } : {}) })
@@ -64,13 +71,13 @@ export default function LocationFields({ values, change, communitySlug }) {
     <PlaceSelect key={`taluk-${values.districtId || 'none'}`} id="place-taluk" label="Taluk / Tehsil / Mandal" endpoint="location-choices" params={localParams('taluk')} disabled={!values.districtId} value={values.taluk} allowUnlisted onSelect={item => { change({ talukChoiceId: item.talukCode ? '' : item._id, talukCode: item.talukCode || '', taluk: item.nameEnglish }); missing('taluk', item) }} />
     <PlaceSelect id="place-block" label="Block" endpoint="blocks" params={{ districtId: values.districtId }} disabled={!values.districtId} required={rural} value={values.block} onSelect={item => choose('blockId', 'block', item, children.slice(7))} />
     {rural ? <PlaceSelect id="place-panchayat" label="Gram Panchayat / Village Panchayat" endpoint="village-panchayats" params={{ blockId: values.blockId }} disabled={!values.blockId} required value={values.villagePanchayat} onSelect={item => change({ ...reset(children.slice(10)), villagePanchayatId: item._id, villagePanchayat: item.nameEnglish, villagePanchayatNameTamil: item.nameEnglish, locationMissing: (values.locationMissing || []).filter(kind => kind === 'taluk') })} /> : <label className="collection-field"><span className="collection-label">Gram Panchayat / Village Panchayat</span><select disabled value="Not applicable"><option value="Not applicable">Not applicable for urban residence</option></select></label>}
-    <PlaceSelect id="place-village" label="Village / Town" endpoint="location-choices" params={localParams('village')} disabled={rural ? !values.villagePanchayatId : !values.districtId} required value={values.villageName} choices={rural && values.villagePanchayat ? [{ _id: 'same-as-panchayat', nameEnglish: `${values.villagePanchayat} (same as panchayat)` }] : []} onSelect={item => change({ ...reset(['habitationId', 'habitation', 'streetChoiceId', 'streetArea', 'wardNumber', 'wardChoiceId']), villageChoiceId: item._id === 'same-as-panchayat' ? '' : item._id, villageSameAsPanchayat: item._id === 'same-as-panchayat', villageName: item._id === 'same-as-panchayat' ? values.villagePanchayat : item.nameEnglish, locationMissing: (values.locationMissing || []).filter(kind => kind === 'taluk') })} />
-    <PlaceSelect id="place-habitation" label="Habitation / Hamlet" endpoint="habitations" params={{ villagePanchayatId: values.villagePanchayatId }} disabled={!values.villagePanchayatId || !values.villageName} required={rural} value={values.habitation} onSelect={item => choose('habitationId', 'habitation', item, ['streetChoiceId', 'streetArea', 'wardChoiceId', 'wardNumber'])} />
-    <PlaceSelect id="place-ward" label="Ward No." endpoint="location-choices" params={localParams('ward')} disabled={!values.districtId} value={values.wardNumber} choices={[{ _id: 'na', nameEnglish: 'Not applicable' }, ...Array.from({ length: 200 }, (_, index) => ({ _id: `number-${index + 1}`, nameEnglish: String(index + 1) }))]} onSelect={item => change({ wardChoiceId: /^number-|^na$/.test(item._id) ? '' : item._id, wardNumber: item.nameEnglish })} />
+    <PlaceSelect id="place-village" label={rural ? "Village / Hamlet" : "Village / Town"} endpoint="location-choices" params={localParams('village')} disabled={rural ? !values.villagePanchayatId : !values.districtId} required value={values.villageName} choices={rural && values.villagePanchayat ? [{ _id: 'same-as-panchayat', nameEnglish: `${values.villagePanchayat} (same as panchayat)` }] : []} onSelect={item => change({ ...reset(['habitationId', 'habitation', 'streetChoiceId', 'streetArea', 'wardNumber', 'wardChoiceId']), habitationId: item.masterHabitationId || '', habitation: item.masterHabitationId ? item.nameEnglish : '', villageSameAsHabitation: Boolean(item.masterHabitationId), villageChoiceId: item.masterHabitationId || item._id === 'same-as-panchayat' ? '' : item._id, villageSameAsPanchayat: item._id === 'same-as-panchayat', villageName: item._id === 'same-as-panchayat' ? values.villagePanchayat : item.nameEnglish, locationMissing: (values.locationMissing || []).filter(kind => kind === 'taluk') })} />
+    <PlaceSelect id="place-habitation" label="Habitation / Hamlet" endpoint="habitations" params={{ villagePanchayatId: values.villagePanchayatId }} disabled={!values.villagePanchayatId || !values.villageName} required={rural} value={values.habitation} onSelect={item => { choose('habitationId', 'habitation', item, ['streetChoiceId', 'streetArea', 'wardChoiceId', 'wardNumber']); if (values.villageSameAsHabitation) change({ villageName: item.nameEnglish }) }} />
+    <PlaceSelect id="place-ward" label="Ward No." endpoint="location-choices" params={localParams('ward')} disabled={!values.districtId} value={values.wardNumber} choices={[{ _id: 'na', nameEnglish: 'Not applicable' }]} allowUnlisted onSelect={item => change({ wardChoiceId: item._id === 'na' ? '' : item._id, wardNumber: item.nameEnglish })} />
     <PlaceSelect id="place-street" label="Street / Area" endpoint="location-choices" params={localParams('street')} disabled={!values.villageName} value={values.streetArea} allowUnlisted onSelect={item => { choose('streetChoiceId', 'streetArea', item); missing('street', item) }} />
     <PlaceSelect id="place-pincode" label="PIN Code" endpoint="pincodes" required value={values.postalCode} onSelect={item => choose('pincodeId', 'postalCode', item, ['postOfficeId', 'postOffice'])} />
     <PlaceSelect id="place-postoffice" label="Post Office" endpoint="post-offices" params={{ pincodeId: values.pincodeId }} disabled={!values.pincodeId} value={values.postOffice} onSelect={item => choose('postOfficeId', 'postOffice', item)} />
-    <div className="location-hint wide-field">If a taluk or street is missing, choose “My location is not listed”. Taluks are listed for the selected district. Your community administrator can add missing locations.</div>
+    <div className="location-hint wide-field">Blocks follow the district; panchayats follow the block; hamlets follow the panchayat. Ward and street lists use verified community entries. PIN codes cover the supplied postal directory; post offices follow the PIN code.</div>
   </div>
 }
 
