@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const { District, Block, VillagePanchayat, Habitation, AssemblyConstituency, PostOffice, Pincode } = require('../models/MasterData')
 const Family = require('../models/Family')
 const LocationChoice = require('../models/LocationChoice')
+const { taluksForDistrict, normalizeName } = require('../config/taluks')
 const { englishText } = require('../utils/english')
 const SUPPORT = ['Education', 'Healthcare', 'Employment', 'Food & essentials', 'Housing', 'Elder care', 'Disability support', 'Other']
 const CONTRIBUTIONS = ['Volunteer time', 'Teaching & mentoring', 'Professional skills', 'Job opportunities', 'Food & supplies', 'Financial support', 'Other']
@@ -82,6 +83,14 @@ async function resolveLocation(input, required = false, communityId) {
     if (!district || (district.stateCode || 'TN') !== state.code) invalid('District does not belong to the selected state.')
     if (required && !result.pincodeId) invalid('Select your PIN code.')
     result.state = state.nameEnglish; result.stateCode = state.code; result.settlementType = input.settlementType
+    if (input.talukCode) {
+      if (input.talukChoiceId) invalid('Choose only one taluk.')
+      const taluk = taluksForDistrict(district).find(item => item.talukCode === input.talukCode)
+      if (!taluk) invalid('The selected taluk does not belong to the selected district.')
+      const overrides = await LocationChoice.find({ communityId, kind: 'taluk', districtId: district._id }).lean()
+      if (overrides.some(item => normalizeName(item.nameEnglish) === normalizeName(taluk.nameEnglish))) invalid('Choose the taluk again from the current directory.')
+      result.talukCode = taluk.talukCode; result.taluk = taluk.nameEnglish
+    }
     result.villagePanchayat = result.villagePanchayatNameTamil
     if (input.villageSameAsPanchayat === true && result.villagePanchayat) { result.villageName = result.villagePanchayat; result.villageSameAsPanchayat = true }
     for (const [key, kind, label] of [['talukChoiceId', 'taluk', 'taluk'], ['villageChoiceId', 'village', 'villageName'], ['wardChoiceId', 'ward', 'wardNumber'], ['streetChoiceId', 'street', 'streetArea']]) {
@@ -97,8 +106,9 @@ async function resolveLocation(input, required = false, communityId) {
       result.wardNumber = String(input.wardNumber)
     }
     if (required && !result.villageName) invalid('Select your village or town.')
-    result.locationMissing = ['taluk', 'street'].filter(key => Array.isArray(input.locationMissing) && input.locationMissing.includes(key))
+    result.locationMissing = ['taluk', 'street'].filter(key => Array.isArray(input.locationMissing) && input.locationMissing.includes(key) && !(key === 'taluk' ? result.talukCode || result.talukChoiceId : result.streetChoiceId))
   }
   return result
 }
 module.exports = { engagement, members, resolveLocation, invalid }
+

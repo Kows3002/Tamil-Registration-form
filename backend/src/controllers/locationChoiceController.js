@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const LocationChoice = require('../models/LocationChoice')
 const Community = require('../models/Community')
 const { District, Block, VillagePanchayat, Habitation } = require('../models/MasterData')
+const { mergeTaluks } = require('../config/taluks')
 const kinds = ['taluk', 'village', 'ward', 'street']
 exports.list = async (req, res, next) => {
   try {
@@ -9,6 +10,18 @@ exports.list = async (req, res, next) => {
     if (!kinds.includes(kind) || !mongoose.isValidObjectId(districtId)) return res.status(400).json({ success: false, message: 'Choose a district and a valid location list.' })
     const community = await Community.findOne({ slug: String(communitySlug || ''), status: 'ACTIVE', 'settings.allowPublicRegistration': true }).select('_id').lean()
     if (!community) return res.status(404).json({ success: false, message: 'Community not found.' })
+    if (kind === 'taluk') {
+      const district = await District.findById(districtId).lean()
+      if (!district) return res.status(400).json({ success: false, message: 'District not found.' })
+      // Load overrides before filtering/paging so inactive entries remain hidden
+      // and duplicate names do not change totals between pages.
+      const choices = await LocationChoice.find({ communityId: community._id, kind, districtId }).lean()
+      const search = String(req.query.search || '').normalize('NFKC').trim().slice(0, 80).toLowerCase()
+      const matches = mergeTaluks(district, choices).filter(item => item.nameEnglish.toLowerCase().includes(search))
+      const page = Math.max(1, parseInt(req.query.page, 10) || 1)
+      const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 100))
+      return res.json({ success: true, data: { items: matches.slice((page - 1) * limit, page * limit), pagination: { page, limit, total: matches.length, pages: Math.ceil(matches.length / limit) } } })
+    }
     const query = { communityId: community._id, status: 'ACTIVE', kind, districtId }
     for (const key of ['blockId', 'villagePanchayatId', 'habitationId']) if (req.query[key]) {
       if (!mongoose.isValidObjectId(req.query[key])) return res.status(400).json({ success: false, message: 'Choose a valid parent location.' })
@@ -48,3 +61,4 @@ exports.update = async (req, res, next) => {
     res.json({ success: true, data: record })
   } catch (error) { next(error) }
 }
+
