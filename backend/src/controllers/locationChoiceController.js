@@ -3,6 +3,7 @@ const LocationChoice = require('../models/LocationChoice')
 const Community = require('../models/Community')
 const { District, Block, VillagePanchayat, Habitation } = require('../models/MasterData')
 const { mergeTaluks } = require('../config/taluks')
+const { englishText } = require('../utils/english')
 const kinds = ['taluk', 'village', 'ward', 'street']
 exports.list = async (req, res, next) => {
   try {
@@ -23,15 +24,34 @@ exports.list = async (req, res, next) => {
       return res.json({ success: true, data: { items: matches.slice((page - 1) * limit, page * limit), pagination: { page, limit, total: matches.length, pages: Math.ceil(matches.length / limit) } } })
     }
     const query = { communityId: community._id, status: 'ACTIVE', kind, districtId }
-    for (const key of ['blockId', 'villagePanchayatId', 'habitationId']) if (req.query[key]) {
-      if (!mongoose.isValidObjectId(req.query[key])) return res.status(400).json({ success: false, message: 'Choose a valid parent location.' })
+    // A narrowly scoped entry must never leak into a broader parent selection.
+    for (const [key, model, parent] of [['blockId', Block, 'districtId'], ['villagePanchayatId', VillagePanchayat, 'blockId'], ['habitationId', Habitation, 'villagePanchayatId']]) {
+      const value = req.query[key]
+      if (value && (!req.query[parent] || !mongoose.isValidObjectId(value) || !(await model.exists({ _id: value, [parent]: req.query[parent] })))) return res.status(400).json({ success: false, message: 'Choose a location belonging to the selected parent.' })
       query.$and ||= []
-      query.$and.push({ $or: [{ [key]: req.query[key] }, { [key]: { $exists: false } }] })
+      query.$and.push({ $or: [...(value ? [{ [key]: value }] : []), { [key]: { $exists: false } }, { [key]: null }] })
+    }
+    if (kind === 'village' && req.query.villagePanchayatId) {
+      // The supplied names are habitations, not an independent town directory.
+      // Expose their provenance and real ID rather than inventing village IDs.
+      const [local, habitations] = await Promise.all([
+        LocationChoice.find(query).lean(),
+        Habitation.find({ villagePanchayatId: req.query.villagePanchayatId }).lean(),
+      ])
+      const master = habitations.map(item => {
+        const nameEnglish = item.nameEnglish || englishText(item.nameTamil || item.code)
+        return { _id: `habitation:${item._id}`, nameEnglish, displayName: `${nameEnglish} (hamlet)`, masterHabitationId: item._id, locationType: 'habitation' }
+      })
+      const search = String(req.query.search || '').normalize('NFKC').trim().slice(0, 80).toLowerCase()
+      const matches = [...local, ...master].filter(item => item.nameEnglish.toLowerCase().includes(search)).sort((a, b) => a.nameEnglish.localeCompare(b.nameEnglish, 'en') || String(a._id).localeCompare(String(b._id)))
+      const page = Math.max(1, parseInt(req.query.page, 10) || 1)
+      const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 100))
+      return res.json({ success: true, data: { items: matches.slice((page - 1) * limit, page * limit), pagination: { page, limit, total: matches.length, pages: Math.ceil(matches.length / limit) } } })
     }
     if (req.query.search) query.nameEnglish = new RegExp(String(req.query.search).slice(0, 80).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
     const page = Math.max(1, parseInt(req.query.page, 10) || 1)
     const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 100))
-    const [items, total] = await Promise.all([LocationChoice.find(query).sort({ nameEnglish: 1 }).skip((page - 1) * limit).limit(limit).lean(), LocationChoice.countDocuments(query)])
+    const [items, total] = await Promise.all([LocationChoice.find(query).sort({ nameEnglish: 1, _id: 1 }).skip((page - 1) * limit).limit(limit).lean(), LocationChoice.countDocuments(query)])
     res.json({ success: true, data: { items, pagination: { page, limit, total, pages: Math.ceil(total / limit) } } })
   } catch (error) { next(error) }
 }

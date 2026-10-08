@@ -93,6 +93,11 @@ async function resolveLocation(input, required = false, communityId) {
     }
     result.villagePanchayat = result.villagePanchayatNameTamil
     if (input.villageSameAsPanchayat === true && result.villagePanchayat) { result.villageName = result.villagePanchayat; result.villageSameAsPanchayat = true }
+    if (input.villageSameAsHabitation === true) {
+      if (!result.habitationId || input.villageSameAsPanchayat === true || input.villageChoiceId) invalid('Choose a valid village or hamlet from the selected panchayat.')
+      result.villageName = result.habitation
+      result.villageSameAsHabitation = true
+    }
     for (const [key, kind, label] of [['talukChoiceId', 'taluk', 'taluk'], ['villageChoiceId', 'village', 'villageName'], ['wardChoiceId', 'ward', 'wardNumber'], ['streetChoiceId', 'street', 'streetArea']]) {
       if (!input[key]) continue
       if (!mongoose.isValidObjectId(input[key])) invalid(`Choose a valid ${label}.`)

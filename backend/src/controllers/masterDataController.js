@@ -31,18 +31,19 @@ const parentId = (req, res, key) => {
 }
 const nameSearch = (req, fields) => {
   const search = String(req.query.search || '').normalize('NFKC').trim().slice(0, 80).toLocaleLowerCase('en')
-  if (search.length < 2) return {}
+  if (!search.length) return {}
   const pattern = new RegExp(safePattern(search), 'i')
   return { $or: fields.map(field => ({ [field]: pattern })) }
 }
 const combine = (parent, search) => parent ? { $and: [parent, search] } : search
 
 module.exports = {
-  districts: paged(District, req => combine(req.query.stateCode ? req.query.stateCode === 'TN' ? { $or: [{ stateCode: 'TN' }, { stateCode: { $exists: false } }] } : { stateCode: String(req.query.stateCode) } : null, nameSearch(req, ['nameSearchEnglish'])), { nameEnglish: 1 }),
-  blocks: paged(Block, (req, res) => { const id = parentId(req, res, 'districtId'); return id ? combine({ districtId: id }, nameSearch(req, ['nameSearchEnglish'])) : null }, { nameEnglish: 1 }),
-  villages: paged(VillagePanchayat, (req, res) => { const id = parentId(req, res, 'blockId'); return id ? combine({ blockId: id }, nameSearch(req, ['nameSearchEnglish'])) : null }, { nameEnglish: 1 }),
-  habitations: paged(Habitation, (req, res) => { const id = parentId(req, res, 'villagePanchayatId'); return id ? combine({ villagePanchayatId: id }, nameSearch(req, ['nameSearchEnglish'])) : null }, { nameEnglish: 1 }),
-  assemblies: paged(AssemblyConstituency, req => nameSearch(req, ['nameSearch']), { sourceOrder: 1 }),
-  postOffices: paged(PostOffice, (req, res) => { const id = req.query.pincodeId ? parentId(req, res, 'pincodeId') : undefined; return req.query.pincodeId && !id ? null : combine(id ? { pincodeId: id } : null, nameSearch(req, ['nameSearch', 'pincode'])) }, { nameSearch: 1 }),
+  districts: paged(District, req => combine(req.query.stateCode ? req.query.stateCode === 'TN' ? { $or: [{ stateCode: 'TN' }, { stateCode: { $exists: false } }] } : { stateCode: String(req.query.stateCode) } : null, nameSearch(req, ['nameSearchEnglish', 'nameEnglish', 'nameTamil'])), { nameEnglish: 1, code: 1, _id: 1 }),
+  blocks: paged(Block, (req, res) => { const id = parentId(req, res, 'districtId'); return id ? combine({ districtId: id }, nameSearch(req, ['nameSearchEnglish', 'nameEnglish', 'nameTamil'])) : null }, { nameEnglish: 1, code: 1, _id: 1 }),
+  villages: paged(VillagePanchayat, (req, res) => { const id = parentId(req, res, 'blockId'); return id ? combine({ blockId: id }, nameSearch(req, ['nameSearchEnglish', 'nameEnglish', 'nameTamil'])) : null }, { nameEnglish: 1, code: 1, _id: 1 }),
+  habitations: paged(Habitation, (req, res) => { const id = parentId(req, res, 'villagePanchayatId'); return id ? combine({ villagePanchayatId: id }, nameSearch(req, ['nameSearchEnglish', 'nameEnglish', 'nameTamil'])) : null }, { nameEnglish: 1, code: 1, _id: 1 }),
+  assemblies: paged(AssemblyConstituency, req => nameSearch(req, ['nameSearch']), { sourceOrder: 1, _id: 1 }),
+  postOffices: paged(PostOffice, (req, res) => { const id = req.query.pincodeId ? parentId(req, res, 'pincodeId') : undefined; return req.query.pincodeId && !id ? null : combine(id ? { pincodeId: id } : null, nameSearch(req, ['nameSearch', 'nameEnglish', 'name', 'pincode'])) }, { nameSearch: 1, _id: 1 }),
   pincodes: paged(Pincode, req => nameSearch(req, ['code']), { code: 1 }),
 }
+
