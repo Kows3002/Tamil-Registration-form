@@ -1,0 +1,528 @@
+{
+  "verifiedOn": "2026-10-08",
+  "notes": "Revenue taluk snapshot from official district websites. Keys use uploaded rural-master district codes. Taluk keys are application identifiers, not official LGD codes. Site summary totals sometimes lag the named lists. Chennai is absent from the uploaded rural district master. Refresh the snapshot as revenue boundaries change.",
+  "districts": {
+    "560": {
+      "nameEnglish": "Ariyalur",
+      "sourceUrl": "https://ariyalur.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Andimadam",
+        "Ariyalur",
+        "Sendurai",
+        "Udayarpalayam"
+      ]
+    },
+    "296974": {
+      "nameEnglish": "Chengalpattu",
+      "sourceUrl": "https://chengalpattu.nic.in/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Chengalpattu",
+        "Thiruporur",
+        "Thirukalukundram",
+        "Madurantakam",
+        "Cheyyur",
+        "Tambaram",
+        "Pallavaram",
+        "Vandalur"
+      ]
+    },
+    "523": {
+      "nameEnglish": "Coimbatore",
+      "sourceUrl": "https://coimbatore.nic.in/revenue-administration/",
+      "taluks": [
+        "Coimbatore South",
+        "Perur",
+        "Madukkarai",
+        "Sulur",
+        "Coimbatore North",
+        "Annur",
+        "Mettupalayam",
+        "Pollachi",
+        "Kinathukadavu",
+        "Valparai",
+        "Anaimalai"
+      ]
+    },
+    "524": {
+      "nameEnglish": "Cuddalore",
+      "sourceUrl": "https://cuddalore.nic.in/revenue-administration/",
+      "taluks": [
+        "Cuddalore",
+        "Panruti",
+        "Kurinjipadi",
+        "Chidambaram",
+        "Kattumannarkoil",
+        "Bhuvanagiri",
+        "Srimushnam",
+        "Vridhachalam",
+        "Tittagudi",
+        "Veppur"
+      ]
+    },
+    "525": {
+      "nameEnglish": "Dharmapuri",
+      "sourceUrl": "https://dharmapuri.nic.in/revenue-administration/",
+      "taluks": [
+        "Dharmapuri",
+        "Nallampalli",
+        "Palacode",
+        "Karimangalam",
+        "Pennagaram",
+        "Harur",
+        "Pappireddipatti"
+      ]
+    },
+    "526": {
+      "nameEnglish": "Dindigul",
+      "sourceUrl": "https://dindigul.nic.in/revenue-administration/",
+      "taluks": [
+        "Dindigul East",
+        "Nilakkottai",
+        "Natham",
+        "Athoor",
+        "Palani",
+        "Oddanchatram",
+        "Vedasandur",
+        "Kodaikanal",
+        "Dindigul West",
+        "Gujiliamparai"
+      ]
+    },
+    "527": {
+      "nameEnglish": "Erode",
+      "sourceUrl": "https://erode.nic.in/about-district/administrative-setup/revenue_administration/",
+      "taluks": [
+        "Erode",
+        "Perundurai",
+        "Modakkurichi",
+        "Kodumudi",
+        "Gobichettipalayam",
+        "Sathyamangalam",
+        "Bhavani",
+        "Anthiyur",
+        "Thalavadi",
+        "Nambiyur"
+      ]
+    },
+    "296959": {
+      "nameEnglish": "Kallakurichi",
+      "sourceUrl": "https://kallakurichi.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Tirukkoilur",
+        "Ulundurpet",
+        "Kallakurichi",
+        "Sankarapuram",
+        "Chinnaselam",
+        "Kalvarayan Hills",
+        "Vanapuram"
+      ]
+    },
+    "528": {
+      "nameEnglish": "Kancheepuram",
+      "sourceUrl": "https://kancheepuram.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Kancheepuram",
+        "Uthiramerur",
+        "Walajabad",
+        "Sriperumbudur",
+        "Kundrathur"
+      ]
+    },
+    "529": {
+      "nameEnglish": "Kanniyakumari",
+      "sourceUrl": "https://kanniyakumari.nic.in/revenue-administration/",
+      "taluks": [
+        "Agasteeswaram",
+        "Thovalai",
+        "Kalkulam",
+        "Vilavancode",
+        "Thiruvattar",
+        "Killiyoor"
+      ]
+    },
+    "530": {
+      "nameEnglish": "Karur",
+      "sourceUrl": "https://karur.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Karur",
+        "Aravakurichi",
+        "Manmangalam",
+        "Pugalur",
+        "Kulithalai",
+        "Krishnarayapuram",
+        "Kadavur"
+      ]
+    },
+    "531": {
+      "nameEnglish": "Krishnagiri",
+      "sourceUrl": "https://krishnagiri.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Krishnagiri",
+        "Bargur",
+        "Uthangarai",
+        "Pochampalli",
+        "Hosur",
+        "Denkanikottai",
+        "Shoolagiri",
+        "Anchetty"
+      ]
+    },
+    "532": {
+      "nameEnglish": "Madurai",
+      "sourceUrl": "https://madurai.nic.in/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Madurai North",
+        "Madurai West",
+        "Vadipatti",
+        "Melur",
+        "Madurai East",
+        "Madurai South",
+        "Usilampatti",
+        "Peraiyur",
+        "Thirumangalam",
+        "Thirupparankundram",
+        "Kallikudi"
+      ]
+    },
+    "299380": {
+      "nameEnglish": "Mayiladuthurai",
+      "sourceUrl": "https://mayiladuthurai.nic.in/revenue-administration/",
+      "taluks": [
+        "Mayiladuthurai",
+        "Kuthalam",
+        "Sirkali",
+        "Tharangambadi"
+      ]
+    },
+    "533": {
+      "nameEnglish": "Nagapattinam",
+      "sourceUrl": "https://nagapattinam.nic.in/about-district/administrative-setup/revenue/",
+      "taluks": [
+        "Nagapattinam",
+        "Vedaranyam",
+        "Thirukuvalai",
+        "Kilvelur"
+      ]
+    },
+    "534": {
+      "nameEnglish": "Namakkal",
+      "sourceUrl": "https://namakkal.nic.in/revenue-administration/",
+      "taluks": [
+        "Namakkal",
+        "Rasipuram",
+        "Tiruchengode",
+        "Paramathivelur",
+        "Kolli Hills",
+        "Sendamangalam",
+        "Kumarapalayam",
+        "Mohanur"
+      ]
+    },
+    "541": {
+      "nameEnglish": "The Nilgiris",
+      "sourceUrl": "https://nilgiris.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Udhagai",
+        "Kundah",
+        "Coonoor",
+        "Kotagiri",
+        "Gudalur",
+        "Pandalur"
+      ]
+    },
+    "535": {
+      "nameEnglish": "Perambalur",
+      "sourceUrl": "https://perambalur.nic.in/revenue-administration/",
+      "taluks": [
+        "Kunnam",
+        "Perambalur",
+        "Veppanthattai",
+        "Alathur"
+      ]
+    },
+    "536": {
+      "nameEnglish": "Pudukkottai",
+      "sourceUrl": "https://pudukkottai.nic.in/revenue-administration/",
+      "taluks": [
+        "Alangudi",
+        "Gandarvakottai",
+        "Pudukkottai",
+        "Thirumayam",
+        "Karambakkudi",
+        "Aranthangi",
+        "Avudaiyarkoil",
+        "Manamelkudi",
+        "Illuppur",
+        "Kulathur",
+        "Ponnamaravathi",
+        "Viralimalai"
+      ]
+    },
+    "537": {
+      "nameEnglish": "Ramanathapuram",
+      "sourceUrl": "https://ramanathapuram.nic.in/administrative-setup/sub-divisions-and-taluks/",
+      "taluks": [
+        "Ramanathapuram",
+        "Rameswaram",
+        "Tiruvadanai",
+        "Kilakarai",
+        "Rajasingamangalam",
+        "Kadaladi",
+        "Kamuthi",
+        "Mudukulathur",
+        "Paramakudi"
+      ]
+    },
+    "296957": {
+      "nameEnglish": "Ranipet",
+      "sourceUrl": "https://ranipet.nic.in/",
+      "taluks": [
+        "Arcot",
+        "Walajah",
+        "Kalavai",
+        "Sholinghur",
+        "Arakkonam",
+        "Nemili"
+      ]
+    },
+    "538": {
+      "nameEnglish": "Salem",
+      "sourceUrl": "https://salem.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Salem",
+        "Salem West",
+        "Salem South",
+        "Yercaud",
+        "Valapaddy",
+        "Attur",
+        "Pethanaickenpalayam",
+        "Gangavalli",
+        "Thalaivasal",
+        "Sankari",
+        "Edappadi",
+        "Mettur",
+        "Omalur",
+        "Kadayampatti"
+      ]
+    },
+    "539": {
+      "nameEnglish": "Sivagangai",
+      "sourceUrl": "https://sivaganga.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Sivagangai",
+        "Manamadurai",
+        "Ilayangudi",
+        "Thiruppuvanam",
+        "Kalaiyarkoil",
+        "Karaikkudi",
+        "Devakottai",
+        "Thiruppattur",
+        "Singampunari"
+      ]
+    },
+    "296956": {
+      "nameEnglish": "Tenkasi",
+      "sourceUrl": "https://tenkasi.nic.in/revenue-administration/",
+      "taluks": [
+        "Tenkasi",
+        "Kadayanallur",
+        "Thiruvengadam",
+        "Sankarankoil",
+        "Shencottai",
+        "Veerakeralampudur",
+        "Alangulam",
+        "Sivagiri"
+      ]
+    },
+    "540": {
+      "nameEnglish": "Thanjavur",
+      "sourceUrl": "https://thanjavur.nic.in/revenue-details/",
+      "taluks": [
+        "Thanjavur",
+        "Orathanadu",
+        "Thiruvaiyaru",
+        "Budalur",
+        "Kumbakonam",
+        "Papanasam",
+        "Thiruvidaimaruthur",
+        "Pattukottai",
+        "Peravurani",
+        "Thiruvonam"
+      ]
+    },
+    "542": {
+      "nameEnglish": "Theni",
+      "sourceUrl": "https://theni.nic.in/tehsil/",
+      "taluks": [
+        "Theni",
+        "Andipatti",
+        "Periyakulam",
+        "Bodinayakkanur",
+        "Uthamapalayam"
+      ]
+    },
+    "548": {
+      "nameEnglish": "Thoothukkudi",
+      "sourceUrl": "https://thoothukudi.nic.in/about-district/revenue-administration/",
+      "taluks": [
+        "Thoothukudi",
+        "Srivaikundam",
+        "Tiruchendur",
+        "Sattankulam",
+        "Eral",
+        "Kovilpatti",
+        "Ettayapuram",
+        "Vilathikulam",
+        "Ottapidaram",
+        "Kayathar"
+      ]
+    },
+    "545": {
+      "nameEnglish": "Tiruchirappalli",
+      "sourceUrl": "https://tiruchirappalli.nic.in/revenue-department/",
+      "taluks": [
+        "Tiruchirappalli West",
+        "Lalgudi",
+        "Manapparai",
+        "Musiri",
+        "Thuraiyur",
+        "Mannachanallur",
+        "Srirangam",
+        "Thottiyam",
+        "Thiruverambur",
+        "Marungapuri",
+        "Tiruchirappalli East"
+      ]
+    },
+    "546": {
+      "nameEnglish": "Tirunelveli",
+      "sourceUrl": "https://tirunelveli.nic.in/revenue-administration/",
+      "taluks": [
+        "Tirunelveli",
+        "Palayamkottai",
+        "Ambasamudram",
+        "Nanguneri",
+        "Radhapuram",
+        "Manur",
+        "Cheranmahadevi",
+        "Tisaiyanvilai"
+      ]
+    },
+    "296958": {
+      "nameEnglish": "Tirupathur",
+      "sourceUrl": "https://tirupathur.nic.in/revenue-administration/",
+      "taluks": [
+        "Tirupathur",
+        "Natrampalli",
+        "Vaniyambadi",
+        "Ambur"
+      ]
+    },
+    "578": {
+      "nameEnglish": "Tiruppur",
+      "sourceUrl": "https://tiruppur.nic.in/administrative-setup/revtlk/",
+      "taluks": [
+        "Tiruppur North",
+        "Tiruppur South",
+        "Avinashi",
+        "Uthukuli",
+        "Palladam",
+        "Dharapuram",
+        "Kangayam",
+        "Udumalpet",
+        "Madathukulam"
+      ]
+    },
+    "543": {
+      "nameEnglish": "Tiruvallur",
+      "sourceUrl": "https://tiruvallur.nic.in/revenue-administration/",
+      "taluks": [
+        "Ponneri",
+        "Gummidipoondi",
+        "Tiruvallur",
+        "Poonamallee",
+        "Uthukottai",
+        "Avadi",
+        "Tiruttani",
+        "Pallipet",
+        "R.K. Pet"
+      ]
+    },
+    "547": {
+      "nameEnglish": "Tiruvannamalai",
+      "sourceUrl": "https://tiruvannamalai.nic.in/revenue-administration/",
+      "taluks": [
+        "Tiruvannamalai",
+        "Chengam",
+        "Thandrampattu",
+        "Kilpennathur",
+        "Cheyyar",
+        "Vandavasi",
+        "Chetpet",
+        "Vembakkam",
+        "Arni",
+        "Polur",
+        "Kalasapakkam",
+        "Jamunamarathur"
+      ]
+    },
+    "544": {
+      "nameEnglish": "Tiruvarur",
+      "sourceUrl": "https://tiruvarur.nic.in/about-district/administrative-setup/revenue-administration/",
+      "taluks": [
+        "Thiruvarur",
+        "Nannilam",
+        "Kudavasal",
+        "Valangaiman",
+        "Needamangalam",
+        "Mannargudi",
+        "Thiruthuraipoondi",
+        "Koothanallur",
+        "Muthupettai"
+      ]
+    },
+    "549": {
+      "nameEnglish": "Vellore",
+      "sourceUrl": "https://vellore.nic.in/revenue-administration/",
+      "taluks": [
+        "Vellore",
+        "Katpadi",
+        "Anaicut",
+        "Gudiyattam",
+        "Pernambut",
+        "K.V.Kuppam"
+      ]
+    },
+    "550": {
+      "nameEnglish": "Viluppuram",
+      "sourceUrl": "https://viluppuram.nic.in/about-district/administrative-setup/revenue/",
+      "taluks": [
+        "Viluppuram",
+        "Vikkiravandi",
+        "Vanur",
+        "Kandachipuram",
+        "Thiruvennainallur",
+        "Tindivanam",
+        "Gingee",
+        "Marakkanam",
+        "Melmalaianur"
+      ]
+    },
+    "551": {
+      "nameEnglish": "Virudhunagar",
+      "sourceUrl": "https://virudhunagar.nic.in/revenue/",
+      "taluks": [
+        "Rajapalayam",
+        "Srivilliputtur",
+        "Sattur",
+        "Sivakasi",
+        "Virudhunagar",
+        "Aruppukottai",
+        "Tiruchuli",
+        "Kariapatti",
+        "Vembakottai",
+        "Watrap"
+      ]
+    }
+  }
+}

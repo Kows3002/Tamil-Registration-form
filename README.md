@@ -65,7 +65,9 @@ English reference files are included in `backend/data/master-source/`:
 - [English village panchayat PDF](https://tnrd.tn.gov.in/pdf/village_eng.pdf)
 - [English district/block/village/habitation workbook](https://tnrd.tn.gov.in/databases/dist_blk_vill_hab.xlsx)
 
-Taluk, independent village/town, ward and street directories are community-managed because the uploaded files do not contain reliable complete mappings for these levels. Open **Admin > Location directory** (`/admin/locations`) to add verified English names and their parent locations. Active entries immediately appear in the public dropdowns; deactivating an entry retains historical family records. Community administrators and the platform owner can maintain these lists; other community staff can read them.
+The uploaded rural files contain blocks, not revenue taluks. The Taluk dropdown now combines a bundled revenue taluk snapshot for all 37 imported districts with community-managed entries. `backend/src/config/taluks.json` records each district's government source URL and verification date. The backend uses the district's master code to filter the list; no extra database import is needed. `talukCode` is an application key and is stored separately from community `talukChoiceId` ObjectIds. Submission validation checks that the taluk belongs to the selected district. Refresh the snapshot when government revenue boundaries change; its named lists take precedence over inconsistent summary counts on source pages.
+
+Independent village/town, ward and street directories remain community-managed. Open **Admin > Location directory** (`/admin/locations`) to add verified English names and their parent locations. Active entries immediately appear in the public dropdowns; deactivating an entry retains historical family records. A community taluk entry overrides a bundled taluk with the same name (ignoring case and surrounding whitespace), including hiding that name when inactive. Community administrators and the platform owner can maintain these lists; other community staff can read them.
 
 Families can explicitly choose a village with the same name as the selected panchayat; a panchayat is not silently treated as a village. For missing taluks or streets, the form records a `locationMissing` flag rather than inventing a location ID. Names, contact details, a house/door number and request descriptions remain text inputs because they cannot be supplied from a fixed master list.
 
@@ -164,4 +166,11 @@ The optional MongoDB integration check needs the running database, default commu
 node scripts/checkCommunityCollection.js
 ```
 
+District/taluk regression tests run without a database:
+
+```powershell
+node --test tests/taluks.test.js
+```
+
 It validates a write/read round trip inside a transaction and aborts the transaction, leaving no committed test family. It also checks invalid age, categories and location selections.
+

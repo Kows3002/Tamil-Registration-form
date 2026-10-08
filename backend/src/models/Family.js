@@ -38,6 +38,7 @@ const familySchema = new mongoose.Schema({
   talukChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' }, villageChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' },
   streetChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' }, wardChoiceId: { type: mongoose.Schema.Types.ObjectId, ref: 'LocationChoice' },
   villageSameAsPanchayat: Boolean, locationMissing: [String],
+  talukCode: { type: String, trim: true, maxlength: 160 },
   housingType: { type: String, trim: true, maxlength: 100 }, familyAnnualIncome: { type: String, trim: true, maxlength: 100 },
   mainOccupation: { type: String, trim: true, maxlength: 200 }, governmentSchemes: { type: String, trim: true, maxlength: 1000 },
   accessibilityNeeds: { type: String, trim: true, maxlength: 1000 }, householdNotes: { type: String, trim: true, maxlength: 1000 },
@@ -69,3 +70,4 @@ const familySchema = new mongoose.Schema({
 familySchema.index({ communityId: 1, createdAt: -1 })
 
 module.exports = mongoose.model('Family', familySchema)
+
