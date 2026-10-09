@@ -1,0 +1,242 @@
+[
+  {
+    "key": "primary",
+    "title": "Primary information",
+    "description": "Start with the person we can contact and the basics of your family.",
+    "fields": [
+      {
+        "key": "familyHeadName",
+        "label": "Family head / primary contact",
+        "type": "text",
+        "required": true,
+        "options": [],
+        "order": 1
+      },
+      {
+        "key": "phoneNumber",
+        "label": "Mobile number",
+        "type": "phone",
+        "required": true,
+        "options": [],
+        "order": 2
+      },
+      {
+        "key": "email",
+        "label": "Email address",
+        "type": "email",
+        "required": false,
+        "options": [],
+        "order": 3
+      },
+      {
+        "key": "alternatePhone",
+        "label": "Alternate mobile number",
+        "type": "phone",
+        "required": false,
+        "options": [],
+        "order": 4
+      },
+      {
+        "key": "familyType",
+        "label": "Family type",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Nuclear family",
+          "Joint family",
+          "Single-person household",
+          "Other"
+        ],
+        "order": 5
+      },
+      {
+        "key": "preferredContact",
+        "label": "Preferred way to contact you",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Phone call",
+          "WhatsApp",
+          "Email"
+        ],
+        "order": 6
+      }
+    ],
+    "order": 1
+  },
+  {
+    "key": "location",
+    "title": "Residential location",
+    "description": "Select your location in order. Each list follows the choices above it.",
+    "fields": [
+      {
+        "key": "district",
+        "label": "Location directory",
+        "type": "location",
+        "required": true,
+        "options": [],
+        "order": 1
+      },
+      {
+        "key": "villageName",
+        "label": "Village / town name",
+        "type": "text",
+        "required": true,
+        "options": [],
+        "order": 2
+      },
+      {
+        "key": "address",
+        "label": "House / door number",
+        "type": "text",
+        "required": true,
+        "options": [],
+        "order": 3
+      }
+    ],
+    "order": 2
+  },
+  {
+    "key": "members",
+    "title": "Your family members",
+    "description": "Include yourself and every person in your household. Add as many members as you need.",
+    "fields": [
+      {
+        "key": "members",
+        "label": "Family members",
+        "type": "members",
+        "required": true,
+        "options": [],
+        "order": 1
+      }
+    ],
+    "order": 3
+  },
+  {
+    "key": "household",
+    "title": "Household & livelihood",
+    "description": "These details help the community understand your family’s circumstances. Optional fields can be skipped.",
+    "fields": [
+      {
+        "key": "housingType",
+        "label": "Housing situation",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Own home",
+          "Rented home",
+          "Living with relatives",
+          "Temporary accommodation",
+          "Other"
+        ],
+        "order": 1
+      },
+      {
+        "key": "familyAnnualIncome",
+        "label": "Annual household income",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Below ₹1 lakh",
+          "₹1–3 lakh",
+          "₹3–5 lakh",
+          "₹5–10 lakh",
+          "Above ₹10 lakh",
+          "Prefer not to say"
+        ],
+        "order": 2
+      },
+      {
+        "key": "mainOccupation",
+        "label": "Primary livelihood",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Salaried employment",
+          "Self-employed",
+          "Agriculture",
+          "Daily wage work",
+          "Business",
+          "Pension",
+          "Not currently employed",
+          "Other"
+        ],
+        "order": 3
+      },
+      {
+        "key": "governmentSchemes",
+        "label": "Government benefits",
+        "type": "select",
+        "required": false,
+        "options": [
+          "None",
+          "Public distribution / ration card",
+          "Health insurance",
+          "Pension",
+          "Education scholarship",
+          "Housing assistance",
+          "Employment scheme",
+          "Other"
+        ],
+        "order": 4
+      },
+      {
+        "key": "accessibilityNeeds",
+        "label": "Care / accessibility needs",
+        "type": "select",
+        "required": false,
+        "options": [
+          "None",
+          "Mobility assistance",
+          "Disability support",
+          "Elder care",
+          "Chronic illness support",
+          "Child care",
+          "Other"
+        ],
+        "order": 5
+      },
+      {
+        "key": "householdNotes",
+        "label": "Additional information (optional)",
+        "type": "textarea",
+        "required": false,
+        "options": [],
+        "order": 6
+      }
+    ],
+    "order": 4
+  },
+  {
+    "key": "support",
+    "title": "Support from the community",
+    "description": "Tell us if your family would like help. The community team can contact you to discuss what is available.",
+    "fields": [
+      {
+        "key": "support",
+        "label": "Help your family needs",
+        "type": "support",
+        "required": false,
+        "options": [],
+        "order": 1
+      }
+    ],
+    "order": 5
+  },
+  {
+    "key": "contribution",
+    "title": "Give back to the community",
+    "description": "Share your time, skills or resources. You can request help and contribute at the same time.",
+    "fields": [
+      {
+        "key": "contribution",
+        "label": "Ways you can contribute",
+        "type": "contribution",
+        "required": false,
+        "options": [],
+        "order": 1
+      }
+    ],
+    "order": 6
+  }
+]

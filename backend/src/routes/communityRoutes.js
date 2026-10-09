@@ -2,6 +2,7 @@ const router = require('express').Router()
 const controller = require('../controllers/communityController')
 const { authenticateAdmin, requirePermission, requireCommunity } = require('../middleware/adminAccess')
 
+router.get('/public', controller.publicList)
 router.get('/public/:slug', controller.publicBySlug)
 router.get('/', authenticateAdmin, controller.list)
 router.post('/', authenticateAdmin, requirePermission('communities:manage'), controller.create)

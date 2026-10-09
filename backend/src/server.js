@@ -19,6 +19,13 @@ async function prepareTenantFoundation() {
   await Admin.updateMany({ status: { $exists: false } }, { $set: { status: 'ACTIVE' } })
   await Admin.updateMany({ role: 'COMMUNITY_ADMIN', communityIds: { $size: 0 } }, { $set: { communityIds: [legacyCommunity._id] } })
   await communityController.ensureForm(legacyCommunity._id)
+  // Add the public directory without changing existing profiles or access settings.
+  const directory = require('./config/communities.json')
+  await Community.bulkWrite(directory.map(([, english], index) => ({ updateOne: {
+    filter: { slug: `${english.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '').slice(0, 50)}-community` },
+    update: { $setOnInsert: { name: `${english} Community`, code: `COMMUNITY-${String(index + 1).padStart(3, '0')}`, description: 'Family information register.', status: 'ACTIVE', settings: { allowPublicRegistration: true, defaultLanguage: 'en' } } },
+    upsert: true,
+  } })))
   console.log(`Tenant foundation ready: ${mongoose.connection.name}`)
 }
 async function start() {

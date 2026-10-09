@@ -8,3 +8,4 @@ backend/data/generated/
 .qa-browser/
 artifacts/community-checks/
 __pycache__/
+backend/.venv/

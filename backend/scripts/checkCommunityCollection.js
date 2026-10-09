@@ -9,6 +9,19 @@ const FormConfiguration = require('../src/models/FormConfiguration')
 const { District, Block, VillagePanchayat, Habitation, Pincode, PostOffice } = require('../src/models/MasterData')
 const { createFamily } = require('../src/controllers/familyController')
 const collection = require('../src/controllers/familyCollection')
+const reports = require('../src/controllers/reportController')
+const { publicReceipt } = require('../src/controllers/familyController')
+const { hashReceiptToken } = require('../src/utils/receipt')
+const { PassThrough } = require('node:stream')
+
+async function captureDownload(handler, request) {
+  const response = new PassThrough(), chunks = []
+  response.setHeader = () => {}
+  const ended = new Promise((resolve, reject) => { response.on('data', chunk => chunks.push(chunk)); response.on('end', resolve); response.on('error', reject) })
+  await handler(request, response, error => { throw error })
+  await ended
+  return Buffer.concat(chunks)
+}
 
 async function main() {
   await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 15000 })
@@ -37,6 +50,7 @@ async function main() {
   }
   const session = await mongoose.startSession()
   const originalCreate = Family.create
+  const originalAggregate = Family.aggregate, originalFind = Family.find, originalFindOne = Family.findOne
   let result
   try {
     session.startTransaction()
@@ -65,6 +79,30 @@ async function main() {
     assert.deepEqual(saved.locationMissing, ['taluk', 'street'])
     assert.equal(saved.status, 'PENDING')
     assert(saved.consent && saved.consentAt)
+    assert.match(result.data.receiptToken, /^[a-f0-9]{64}$/)
+    assert.equal(result.data.receiptTokenHash, undefined)
+    const secret = await Family.findById(saved._id).select('+receiptTokenHash +receiptExpiresAt').session(session).lean()
+    assert.equal(secret.receiptTokenHash, hashReceiptToken(result.data.receiptToken))
+    Family.aggregate = function (pipeline) { return originalAggregate.call(this, pipeline).session(session) }
+    Family.find = function (...args) { return originalFind.apply(this, args).session(session) }
+    Family.findOne = function (...args) { return originalFindOne.apply(this, args).session(session) }
+    const reportRequest = { admin: { role: 'SUPER_ADMIN' }, query: { communityId: String(community._id), search: body.familyHeadName } }
+    let report
+    await reports.list(reportRequest, { json(value) { report = value } }, error => { throw error })
+    assert.equal(report.data.totals.families, 1)
+    assert.equal(report.data.totals.members, 1)
+    assert.equal(report.data.summary[0].district, district.nameEnglish)
+    assert.equal(report.data.summary[0].community, community.name)
+    assert.equal(report.data.records[0].receiptTokenHash, undefined)
+    for (const kind of ['summary', 'families', 'members']) {
+      const csv = await captureDownload(reports.exportCsv, { ...reportRequest, query: { ...reportRequest.query, kind } })
+      assert.ok(csv.toString().includes(community.name))
+      assert.ok(csv.toString().includes(district.nameEnglish))
+      if (kind !== 'summary') assert.ok(csv.toString().includes(body.familyHeadName))
+    }
+    const pdf = await captureDownload(publicReceipt, { params: { id: String(saved._id) }, get: () => result.data.receiptToken })
+    assert.equal(pdf.subarray(0, 5).toString(), '%PDF-')
+    console.log('PASS: real report aggregation, three CSV formats and token-protected PDF download inside the uncommitted transaction.')
     await session.abortTransaction()
     assert.equal(await Family.findById(saved._id), null)
     assert.throws(() => collection.members([{ name: 'QA', age: 121 }], community._id), /age/)
@@ -74,6 +112,7 @@ async function main() {
     console.log('PASS: MongoDB transaction round trip preserves family, member, location, support, contribution, tenant, form version and consent data; invalid input rejected; transaction aborted and no test record committed.')
   } finally {
     Family.create = originalCreate
+    Family.aggregate = originalAggregate; Family.find = originalFind; Family.findOne = originalFindOne
     if (session.inTransaction()) await session.abortTransaction()
     await session.endSession()
   }

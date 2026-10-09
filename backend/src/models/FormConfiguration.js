@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const fieldSchema = new mongoose.Schema({
   key: { type: String, required: true, trim: true, match: /^[a-z][a-zA-Z0-9_]{1,63}$/ },
   label: { type: String, required: true, trim: true, maxlength: 120 },
-  type: { type: String, enum: ['text', 'textarea', 'number', 'phone', 'email', 'date', 'select', 'checkbox', 'location', 'members', 'support', 'contribution'], default: 'text' },
+  type: { type: String, enum: ['text', 'textarea', 'number', 'phone', 'email', 'date', 'select', 'checkbox', 'checkbox-group', 'location', 'members', 'support', 'contribution'], default: 'text' },
   required: { type: Boolean, default: false },
   visible: { type: Boolean, default: true },
   helpText: { type: String, trim: true, maxlength: 300, default: '' },

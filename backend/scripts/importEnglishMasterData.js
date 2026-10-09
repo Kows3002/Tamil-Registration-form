@@ -8,7 +8,8 @@ const { Block, VillagePanchayat, Habitation } = require('../src/models/MasterDat
 const { englishText } = require('../src/utils/english')
 
 async function main() {
-  const extracted = spawnSync(process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3'), [path.join(__dirname, 'extractEnglishMasterData.py')], { encoding: 'utf8', env: { ...process.env, PYTHONIOENCODING: 'utf-8' }, maxBuffer: 4 * 1024 * 1024 })
+  const localPython = path.join(root, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python')
+  const extracted = spawnSync(process.env.PYTHON || (fs.existsSync(localPython) ? localPython : process.platform === 'win32' ? 'python' : 'python3'), [path.join(__dirname, 'extractEnglishMasterData.py')], { encoding: 'utf8', env: { ...process.env, PYTHONIOENCODING: 'utf-8' }, maxBuffer: 4 * 1024 * 1024 })
   if (extracted.status !== 0) throw new Error(extracted.stderr || 'English master extraction failed.')
   console.log(extracted.stdout.trim())
   const data = JSON.parse(fs.readFileSync(path.join(root, 'data/generated/english-master-data.json'), 'utf8'))

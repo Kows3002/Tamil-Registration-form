@@ -4,8 +4,10 @@ const Family = require('../models/Family')
 const LocationChoice = require('../models/LocationChoice')
 const { taluksForDistrict, normalizeName } = require('../config/taluks')
 const { englishText } = require('../utils/english')
-const SUPPORT = ['Education', 'Healthcare', 'Employment', 'Food & essentials', 'Housing', 'Elder care', 'Disability support', 'Other']
-const CONTRIBUTIONS = ['Volunteer time', 'Teaching & mentoring', 'Professional skills', 'Job opportunities', 'Food & supplies', 'Financial support', 'Other']
+const { validMobile } = require('../utils/phone')
+const SUPPORT = ['Education', 'Healthcare', 'Employment', 'Marriage arrangement', 'Food & essentials', 'Housing', 'Elder care', 'Disability support', 'Other']
+const CONTRIBUTIONS = ['Volunteer time', 'Teaching & mentoring', 'Professional skills', 'Job opportunities', 'Marriage arrangement', 'Food & supplies', 'Financial support', 'Other']
+const WORKING_OCCUPATIONS = ['Government employee', 'Private employee', 'Salaried employee', 'Self-employed', 'Farmer', 'Business owner', 'Daily wage worker']
 function invalid(message) { const error = new Error(message); error.status = 400; throw error }
 function text(value, max, label) {
   if (value === undefined || value === null || value === '') return ''
@@ -29,7 +31,7 @@ function engagement(kind, value = {}) {
   } else { result.skills = text(value.skills, 1000, 'skills'); result.availability = text(value.availability, 160, 'availability') }
   return result
 }
-function members(input, communityId) {
+function members(input, communityId, { requireWorkLocation = false } = {}) {
   if (!Array.isArray(input) || !input.length || input.length > 100) invalid('Add between 1 and 100 family members.')
   const schema = Family.schema.path('members').schema
   return input.map((member, index) => {
@@ -47,7 +49,8 @@ function members(input, communityId) {
       if (!Number.isInteger(age) || age < 0 || age > 120) invalid(`Enter an age between 0 and 120 for member ${index + 1}.`)
       result.age = age
     }
-    if (result.phoneNumber && !/^[+\d\s()-]{7,16}$/.test(result.phoneNumber)) invalid(`Enter a valid phone number for member ${index + 1}.`)
+    if (!validMobile(result.phoneNumber) || !validMobile(result.additionalPhone)) invalid(`Enter a valid 10-digit Indian mobile number for member ${index + 1}.`)
+    if (requireWorkLocation && WORKING_OCCUPATIONS.includes(result.occupation) && !result.workLocation) invalid(`Enter the work location for member ${index + 1}.`)
     return { ...result, communityId, serialNumber: index + 1 }
   })
 }
@@ -81,7 +84,15 @@ async function resolveLocation(input, required = false, communityId) {
     if (!state || !['Rural', 'Urban'].includes(input.settlementType)) invalid('Select a valid state and rural or urban residence.')
     const district = await District.findById(result.districtId).lean()
     if (!district || (district.stateCode || 'TN') !== state.code) invalid('District does not belong to the selected state.')
-    if (required && !result.pincodeId) invalid('Select your PIN code.')
+    const postalCode = text(input.postalCode, 6, 'PIN code')
+    if (postalCode && !/^[1-9]\d{5}$/.test(postalCode)) invalid('Enter a valid 6-digit PIN code.')
+    if (postalCode && result.pincodeId && postalCode !== result.postalCode) invalid('The PIN code does not match the selected postal directory entry.')
+    if (required && !postalCode && !result.pincodeId) invalid('Enter your 6-digit PIN code.')
+    if (postalCode && !result.pincodeId) {
+      const pincode = await Pincode.findOne({ code: postalCode }).lean()
+      result.postalCode = postalCode
+      if (pincode) { result.pincodeId = pincode._id; result.pincodeCode = pincode.code }
+    }
     result.state = state.nameEnglish; result.stateCode = state.code; result.settlementType = input.settlementType
     if (input.talukCode) {
       if (input.talukChoiceId) invalid('Choose only one taluk.')
@@ -109,6 +120,10 @@ async function resolveLocation(input, required = false, communityId) {
     if (input.wardNumber && !input.wardChoiceId) {
       if (!/^(?:[1-9]\d{0,2}|Not applicable|Not listed)$/.test(String(input.wardNumber))) invalid('Choose a valid ward number.')
       result.wardNumber = String(input.wardNumber)
+    }
+    if (input.settlementType === 'Urban' && input.villageManual === true && !input.villageChoiceId) {
+      result.villageName = text(input.villageName, 120, 'town or city')
+      result.villageManual = true
     }
     if (required && !result.villageName) invalid('Select your village or town.')
     result.locationMissing = ['taluk', 'street'].filter(key => Array.isArray(input.locationMissing) && input.locationMissing.includes(key) && !(key === 'taluk' ? result.talukCode || result.talukChoiceId : result.streetChoiceId))

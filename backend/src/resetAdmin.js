@@ -33,13 +33,18 @@ function readHidden(prompt) {
 async function main() {
   if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI is not configured in backend/.env')
   if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET is not configured in backend/.env')
-  const username = (process.argv[2] || 'Admin').trim().toLowerCase()
+  const username = (process.argv[2] || 'Adminshree').trim().toLowerCase()
+  const superAdmin = process.argv.includes('--super-admin')
   const password = await readHidden(`New password for ${username}: `)
-  if (password.length < 10) throw new Error('Use a password with at least 10 characters.')
+  if (password.length < 12) throw new Error('Use a password with at least 12 characters.')
+  const confirmation = await readHidden('Confirm new password: ')
+  if (password !== confirmation) throw new Error('Passwords do not match.')
   await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 15000 })
   const passwordHash = await bcrypt.hash(password, 12)
-  await Admin.updateOne({ username }, { $set: { username, password: passwordHash } }, { upsert: true, runValidators: true })
-  console.log(`Admin credentials saved for "${username}".`)
+  const existing = await Admin.findOne({ username }).select('role').lean()
+  if (!existing && !superAdmin) throw new Error('To create the platform administrator, run npm.cmd run reset-admin -- Adminshree --super-admin.')
+  await Admin.updateOne({ username }, { $set: { username, password: passwordHash, status: 'ACTIVE', ...(superAdmin ? { role: 'SUPER_ADMIN' } : {}) } }, { upsert: true, runValidators: true })
+  console.log(`Admin credentials saved for "${username === 'adminshree' ? 'Adminshree' : username}"${superAdmin ? ' (platform administrator)' : ''}.`)
 }
 
 main()

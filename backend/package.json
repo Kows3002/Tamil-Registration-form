@@ -9,7 +9,10 @@
     "create-admin": "node src/createAdmin.js",
     "reset-admin": "node src/resetAdmin.js",
     "import:master": "node scripts/importMasterData.js",
-    "import:english": "node scripts/importEnglishMasterData.js"
+    "import:english": "node scripts/importEnglishMasterData.js",
+    "check:master": "node scripts/checkMasterData.js",
+    "check:registration": "node scripts/checkCommunityCollection.js",
+    "test": "node --test tests/*.test.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +23,8 @@
     "dotenv": "^18.0.5",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.10.4"
+    "mongoose": "^9.10.4",
+    "pdfkit": "^0.20.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

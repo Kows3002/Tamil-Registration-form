@@ -35,7 +35,8 @@ function checkSourceFiles() {
 }
 
 function extract() {
-  const python = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')
+  const localPython = path.join(backendDir, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python')
+  const python = process.env.PYTHON || (fs.existsSync(localPython) ? localPython : process.platform === 'win32' ? 'python' : 'python3')
   console.log(`Reading and validating master source files with ${python}...`)
   const result = spawnSync(python, [path.join(__dirname, 'extractMasterData.py'), '--source-dir', sourceDir, '--output', generated], {
     encoding: 'utf8', env: { ...process.env, PYTHONIOENCODING: 'utf-8' }, maxBuffer: 20 * 1024 * 1024,
@@ -92,7 +93,7 @@ async function verifyIndexes() {
 }
 
 async function importRecords(data) {
-  const districts = data.records.districts.map(record => ({ ...record, nameSearchTamil: normalizeName(record.nameTamil), nameSearchEnglish: normalizeName(record.nameEnglish), sourceKey: `lgd-district:${record.code}` }))
+  const districts = data.records.districts.map(record => ({ ...record, stateCode: 'TN', nameSearchTamil: normalizeName(record.nameTamil), nameSearchEnglish: normalizeName(record.nameEnglish), sourceKey: `lgd-district:${record.code}` }))
   await upsert(District, districts, 'code', 'Districts')
   const districtIds = await mapBy(District, 'code')
 

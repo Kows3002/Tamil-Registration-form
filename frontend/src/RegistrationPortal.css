@@ -1,0 +1,55 @@
+/* Restrained, accessible public registration portal. */
+.registration-workspace{background:#fff;color:#303640}
+.register-header{border-top:4px solid #213e5c;height:80px;padding:0 32px}
+.register-wordmark{font-size:25px;letter-spacing:0;font-weight:650;color:#213e5c}
+.register-wordmark span{font-size:14px;color:#515b66}
+.community-picker{display:grid;grid-template-columns:246px minmax(0,1fr);border-bottom:1px solid #d3d9df;background:#f6f8fa}
+.community-picker-title{padding:18px 24px;border-right:1px solid #d3d9df;display:flex;flex-direction:column;gap:5px;min-width:0}
+.community-picker-title small{font-size:11px;letter-spacing:.6px;color:#526374}
+.community-picker-title strong{font-size:19px;line-height:1.5;color:#213e5c;overflow-wrap:anywhere}
+.community-picker-title>span{font-size:12px;color:#5c6773}
+.community-picker-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;align-content:center;padding:18px 32px;max-width:740px;width:100%;min-width:0}
+.community-picker label{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:#434c57;min-width:0}
+.community-picker input,.community-picker select{width:100%;min-width:0;min-height:46px;border:1px solid #adb7c1;border-radius:2px;padding:10px 12px;background:#fff;color:#303640;font-size:15px;font-weight:400}
+.community-picker-controls p{grid-column:1/-1;margin:0;font-size:12px;color:#586572}
+.register-body{min-height:calc(100vh - 250px)}
+.register-content{max-width:1120px;padding:28px 42px}
+.register-community{display:none}
+.registration-preview .register-community{display:flex}
+.register-rail{background:#fafbfc;padding-top:24px}
+.register-rail nav button{font-size:13px;color:#505d69}
+.register-rail nav button.current{background:#eaf0f5;color:#213e5c;border-left-color:#213e5c}
+.rail-number{color:#65717f}
+.rail-foot,.rail-foot small{color:#5f6b77}
+.workspace-heading h1{font-size:28px;font-weight:500;letter-spacing:0}
+.workspace-heading>div>span{color:#65717f}
+.workspace-panel{border:1px solid #d5d9df;border-radius:2px;padding:28px;background:#fff}
+.registration-workspace .collection-label{font-weight:400;color:#414b56}
+.registration-workspace .collection-field input:not([type=checkbox]),.registration-workspace .collection-field select,.registration-workspace .collection-field textarea,.registration-workspace .place-trigger{border-radius:2px;border-color:#b8c0c8}
+.workspace-primary{background:#213e5c;border-color:#213e5c;border-radius:2px;font-size:14px}
+.workspace-primary:hover{background:#182f47}
+.workspace-secondary{border-radius:2px;font-size:14px}
+.workspace-footer{color:#5e6a77;font-size:11px}
+.registration-workspace .add-member{background:#fafbfc;border-style:solid}
+.registration-workspace :focus-visible{outline:2px solid #215d9b;outline-offset:3px}
+.register-content .benefit-options{padding:20px 0;border-top:1px solid #d5d9df;margin-top:4px}
+.benefit-options legend{padding:0 8px 0 0}
+.benefit-options p{font-size:12px;color:#586572;margin:4px 0 14px}
+.benefit-options>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px}
+.benefit-options label{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.6;color:#414b56;cursor:pointer}
+.benefit-options input{width:18px;height:18px;flex-shrink:0;accent-color:#213e5c;margin:2px 0 0}
+.registration-workspace .collection-field small.field-error{color:#963b31}
+.registration-workspace .collection-field input[aria-invalid=true]{border-color:#963b31}
+.review-member dd{display:flex;flex-direction:column;gap:5px}
+.review-member dd strong{font-weight:600;margin-bottom:3px}
+@media(max-width:760px){.benefit-options>div{grid-template-columns:1fr}.benefit-options label{min-height:32px}}
+@media(max-width:1100px){.community-picker{grid-template-columns:215px minmax(0,1fr)}.community-picker-title{padding:22px}.community-picker-controls{padding:22px 24px}.register-content{padding:24px}}
+@media(max-width:760px){
+  .register-header{height:72px;padding:0 18px;gap:10px}.register-wordmark{font-size:23px}.register-wordmark span{font-size:11px;max-width:100px;line-height:1.5}
+  .community-picker{grid-template-columns:1fr}.community-picker-title{padding:18px 20px 8px;border-right:0;gap:4px}.community-picker-title strong{font-size:21px}.community-picker-title>span{display:none}
+  .community-picker-controls{grid-template-columns:1fr;padding:12px 20px 20px;gap:14px}.community-picker input,.community-picker select{font-size:16px;min-height:48px}
+  .register-rail{padding:0}.register-rail nav{padding:0 10px}.register-rail nav button{font-size:12px;min-height:48px}.register-rail nav button.current{border-bottom-color:#213e5c;background:#eaf0f5}
+  .register-content{padding:22px 20px}.workspace-heading h1{font-size:25px}.workspace-panel{padding:22px 18px}.workspace-actions{padding-top:20px}
+  .registration-workspace .collection-grid,.registration-workspace .place-grid{grid-template-columns:1fr}.workspace-footer{font-size:11px}
+}
+@media(max-width:380px){.register-header{padding:0 14px}.register-wordmark span{display:none}.register-content{padding:20px 12px}.community-picker-title{padding-left:16px}.community-picker-controls{padding-left:16px;padding-right:16px}.workspace-panel{padding:20px 14px}}

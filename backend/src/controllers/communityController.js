@@ -18,7 +18,8 @@ const starterSections = [
 ]
 const defaultSections = require('../config/communityForm')
 const priorSections = require('../config/legacyCommunityForm.json')
-const templateKey = 'family-directory-v3'
+const previousDirectory = require('../config/communityFormV3.json')
+const templateKey = 'family-directory-v4'
 const signature = sections => JSON.stringify(sections.map(section => ({ key: section.key, title: section.title, description: section.description || '', enabled: section.enabled !== false, order: section.order, fields: section.fields.map(field => ({ key: field.key, label: field.label, type: field.type, required: Boolean(field.required), visible: field.visible !== false, helpText: field.helpText || '', placeholder: field.placeholder || '', order: field.order, options: Array.from(field.options || []) })) })))
 
 function toSlug(value) {
@@ -33,7 +34,7 @@ async function ensureForm(communityId) {
     const original = starterSections[index]
     return section.key === original.key && section.title === original.title && section.enabled && section.fields.length === original.fields.length && section.fields.every((item, i) => item.key === original.fields[i].key && item.label === original.fields[i].label && item.type === original.fields[i].type && item.required === original.fields[i].required && item.visible)
   })
-  const untouchedDirectory = active && signature(active.sections) === signature(priorSections) && !form.versions.some(version => version.status === 'DRAFT')
+  const untouchedDirectory = active && [priorSections, previousDirectory].some(sections => signature(active.sections) === signature(sections)) && !form.versions.some(version => version.status === 'DRAFT')
   if (active?.templateKey !== templateKey && (untouchedStarter || untouchedDirectory)) {
     active.status = 'ARCHIVED'
     const number = Math.max(...form.versions.map(version => version.version)) + 1
@@ -66,6 +67,13 @@ exports.create = async (req, res, next) => {
   } catch (error) { next(error) }
 }
 
+exports.publicList = async (req, res, next) => {
+  try {
+    const communities = await Community.find({ status: 'ACTIVE', 'settings.allowPublicRegistration': true }).select('name slug').sort({ name: 1 }).lean()
+    res.json({ success: true, data: communities })
+  } catch (error) { next(error) }
+}
+
 exports.publicBySlug = async (req, res, next) => {
   try {
     const community = await Community.findOne({ slug: req.params.slug.toLowerCase(), status: 'ACTIVE', 'settings.allowPublicRegistration': true }).lean()
@@ -94,7 +102,7 @@ exports.update = async (req, res, next) => {
 
 exports.getForm = async (req, res, next) => {
   try {
-    const form = await FormConfiguration.findOne({ communityId: req.communityId }).lean()
+    const form = await ensureForm(req.communityId)
     res.json({ success: true, data: form })
   } catch (error) { next(error) }
 }
@@ -109,17 +117,17 @@ exports.saveDraft = async (req, res, next) => {
       for (const field of section.fields) {
         const structuredKeys = { location: 'district', members: 'members', support: 'support', contribution: 'contribution' }
         if (structuredKeys[field.type] && structuredKeys[field.type] !== field.key) return res.status(400).json({ success: false, message: `The ${field.type} field must use the key "${structuredKeys[field.type]}".` })
-        if (['_id', 'communityId', 'formVersion', 'status', 'archivedAt', 'verifiedAt', 'verifiedBy', 'rejectionReason', 'createdAt', 'updatedAt', 'customData', 'consentAt'].includes(field.key)) return res.status(400).json({ success: false, message: 'This field key is reserved for registration management.' })
+        if (['_id', 'communityId', 'formVersion', 'status', 'archivedAt', 'verifiedAt', 'verifiedBy', 'rejectionReason', 'createdAt', 'updatedAt', 'customData', 'consentAt', 'receiptTokenHash', 'receiptExpiresAt'].includes(field.key)) return res.status(400).json({ success: false, message: 'This field key is reserved for registration management.' })
         if (!field.key || !field.label?.trim() || keys.has(field.key)) return res.status(400).json({ success: false, message: 'Field keys must be unique and every field needs a label.' })
         keys.add(field.key)
       }
     }
     const requiredSystemKeys = ['familyHeadName', 'district', 'villageName', 'members']
     for (const key of requiredSystemKeys) if (!keys.has(key)) return res.status(400).json({ success: false, message: `The system field "${key}" must remain in the registration form.` })
-    const form = await FormConfiguration.findOne({ communityId: req.communityId })
-    if (!form) return res.status(404).json({ success: false, message: 'Form configuration not found.' })
+    const form = await ensureForm(req.communityId)
     const number = Math.max(0, ...form.versions.map(v => v.version)) + 1
-    form.versions.push({ version: number, status: 'DRAFT', sections })
+    const active = form.versions.find(version => version.version === form.activeVersion)
+    form.versions.push({ version: number, templateKey: active?.templateKey, status: 'DRAFT', sections })
     await form.save()
     res.json({ success: true, data: form })
   } catch (error) { next(error) }
